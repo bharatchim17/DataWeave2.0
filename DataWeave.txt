@@ -1,0 +1,31 @@
+////////////////////////////////////////////////////////////////////////////////////////////
+Datawave0001:-
+
+// Object is always enclosed with {} and contains key:value pairs.
+// An Array is always enclosed with [] and contains only Value
+// MapObject use for object and object of object -> output is object
+// Map use for Array and array of object -> output is array
+// reduce use for Array --> output form is object with single value
+// pluck use for object --> output form is Array
+// flatten work on array it accepts single argument i.e.(one parameter)as input  --> output form is Array (Turn set of array into single array as output)
+// $ represent value $$ represent index
+// if(condition) value1 else value2
+
+////////////////////////////////////////////////////////////////////////////////
+Datawave0002:-
+
+// Q:- Does the desendent selector select all the keys or just first one in nested object.. ?? 
+ A:- Desendent selector, select just first one in nested object.
+
+// Q:- Does the multi value selector select keys on nested level of the object.. ??
+ A:- No , multi value selector does'not select keys on nested level of the object.
+
+// Q:- What happens if you combine both Descendent and Multi-value selectors.. ??
+ A:- it will select all the keys that we want to access.
+
+// Logical operators allow you to write true/false kind of expression.
+
+// Flow control used when you want to execute certain part of your code in some situations ,
+ while not excecuting others. (its way to add logic to your scripts.)
+ example:- if(condition) code1 else code2
+/////////////////////////////////////////////////////////////////////////
