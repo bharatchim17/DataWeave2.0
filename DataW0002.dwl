@@ -12,16 +12,16 @@
 */
 
 
-//  %dw 2.0
-// output application/json
+  %dw 2.0
+ output application/json
 // skipNullOn = "everywhere"
-// ---
-// {
+ ---
+ {
 //     "Technology" : payload.Technology ,
 //    "City" : payload.City ,
 //    "Coutry" : payload.City ,
 //    "EmpID" : payload.EmpID
-// }
+ }
  
 //  %dw 2.0
 //  output application/xml
