@@ -26,6 +26,37 @@ Datawave0002:-
 // Logical operators allow you to write true/false kind of expression.
 
 // Flow control used when you want to execute certain part of your code in some situations ,
- while not excecuting others. (its way to add logic to your scripts.)
- example:- if(condition) code1 else code2
+ while not excecuting others. (its way to add logic to your scripts). DataWeave use if else expression that returns value.. 
+ example:- 1. if(condition) code1 else code2
+           2. (expression) match 
+           {
+case (condition) -> execute_if_condition_pass
+else (condition) -> if_no_condition_pass
+           }
+           
+// function without name called as Lambda , Lambda is value just like string we can assign it to varaibles.
+:-  ((argument) -> body) () 
+Lambda became useful when you want to use function as argument to other function or return function from function is called as higher ordered function..
+
+// prefix function:- In Prefix notation function name came first (before argument function name is written) then argument made :- functionName_(argument).
+// Infix notation :- In infix notation function takes two argument , Lambda be the second argument of it :- (argument_1) functionName_ (argument_2)
+
+
+// $ , $$ , $$$ :- 
+$ first argument ,$$ second argument , $$$ third argument
+
+// Scope are created by using do statement , where we can declare varaibles and more function..
+
+// Filter function :- it iterates over array and applies an expression that returns matching values. expression must return true or false.
+Filter work on array -> output form as array.
+
+//pluck function :- The pluck function iterates over each key-value pairs of an input object. 
+it used to retrieve the values($), keys($$) and index ($$$) from object and return -> output form as array.
+
+//Map function:- The map function iterates over each element of array applies transformation (Lambda expression) to each element and return as Array. 
+it takes two input array and Lambda expression in which array input comes before map function and lambda expression comes after map function. 
+
+// Map Object :-  it use to transform data in object , by iterating each key-value pair (it work on object and return output as object..)
+map object take two input 1> object to transform (written left  to MapObject) 
+                          2> lambda expression.. (written right to MapObject)
 /////////////////////////////////////////////////////////////////////////
