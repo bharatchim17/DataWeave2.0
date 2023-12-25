@@ -1,4 +1,5 @@
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Datawave0001:-
 
 // Object is always enclosed with {} and contains key:value pairs.
@@ -12,7 +13,8 @@ Datawave0001:-
 // if(condition) value1 else value2
 
 ////////////////////////////////////////////////////////////////////////////////
-Datawave0002:-
+
+Datawave0002/0003:-
 
 // Q:- Does the desendent selector select all the keys or just first one in nested object.. ?? 
  A:- Desendent selector, select just first one in nested object.
@@ -59,4 +61,41 @@ it takes two input array and Lambda expression in which array input comes before
 // Map Object :-  it use to transform data in object , by iterating each key-value pair (it work on object and return output as object..)
 map object take two input 1> object to transform (written left  to MapObject) 
                           2> lambda expression.. (written right to MapObject)
-/////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Datawave0004:-
+
+// Datawave (dw) format is canonical format (generical format i.e. predefined structure) , for all transformation. 
+
+// ~= :- When types are different it coerce one value of types to other.
+
+// and operators :- all of the value must be true for output as true if even one value is false then output print false.. 
+// or operators :- one of the value must be true for output as true if all value is false then output print false..
+
+//Metadata :- Is data that provides information about other data , but not the content of other data. (content that be manipultable)
+//index value selector :-  payload[1/-1] -> can have both positive and negative value.
+//Range value selector :-  payload[1 to -3] -> can have both positive and negative value.
+
+//output of multi-value selector is an array , it works for both array and objects..
+
+//Prepend >> [] :- Data is left hand side and array is right hand side.. 
+//Append  [] << :- Data is right hand side and array is left hand side..
+
+//predefined varaibles :-
+1. correlationID
+2. Error
+3. Authentification
+4. Flow
+5. mule 
+6. server
+7. var
+8. app 
+9. Datatypes
+10. attribute
+11. message
+12. payload
+
+//function syntax :-
+ (fun)key_functionName_(parameter1,2,3) = {logic}
+ whenever there value associate to the first argument , assign value direction  will be right to left..
