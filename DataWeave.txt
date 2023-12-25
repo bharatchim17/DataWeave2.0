@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Datawave0001:-
 
@@ -12,7 +12,7 @@ Datawave0001:-
 // $ represent value $$ represent index
 // if(condition) value1 else value2
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Datawave0002/0003:-
 
@@ -62,7 +62,7 @@ it takes two input array and Lambda expression in which array input comes before
 map object take two input 1> object to transform (written left  to MapObject) 
                           2> lambda expression.. (written right to MapObject)
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Datawave0004:-
 
@@ -99,3 +99,23 @@ Datawave0004:-
 //function syntax :-
  (fun)key_functionName_(parameter1,2,3) = {logic}
  whenever there value associate to the first argument , assign value direction  will be right to left..
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Datawave0005:-
+ 
+ import * from dw::core::Arrays
+
+ //countBy :- it takes array (right hand side of the function) it count based upon matchingFunction (left hand side of the function)  return output as object 
+ countBy works as boolean (true/false), if it is true it will be print in the output.
+
+ //divideBy:- it takes array (right hand side) it dividation (make unit) based on amount of number (amount is left hand side of function) it returns output as form of object of array..
+
+ //indexOf :- it find first accurance value's index in array and print it.
+  example: indexOf(var_name , value)
+
+  //slice :- it slice from value to unit value from an array and gives output as part of array.
+example: slice(var_name , from , unit)..
+
+
+
