@@ -45,7 +45,7 @@ Lambda became useful when you want to use function as argument to other function
 
 
 // $ , $$ , $$$ :- 
-$ first argument ,$$ second argument , $$$ third argument
+$ first argument ,$$ second argument , $$$ third argument   //(in lambda functions)
 
 // Scope are created by using do statement , where we can declare varaibles and more function..
 
@@ -112,10 +112,55 @@ Datawave0005:-
  //divideBy:- it takes array (right hand side) it dividation (make unit) based on amount of number (amount is left hand side of function) it returns output as form of object of array..
 
  //indexOf :- it find first accurance value's index in array and print it.
-  example: indexOf(var_name , value)
+  example: indexOf(var_name , "value")
 
-  //slice :- it slice from value to unit value from an array and gives output as part of array.
-example: slice(var_name , from , unit)..
+  //slice :- it slice from value to unit value from an array and gives output as (part of) array .
+example: slice(var_name , from_index , unitil_index)..
 
+//sumby :- it works on array and Returns the sum of the values of the elements.
+example: [ ]sumBy $.key
 
+//////////////////////////////////////////////////////////////////////////////////////
+// import * from dw::core::Strings
 
+// camelize("hi_mule")  // In input underscore use for camelize
+// capitalize("hello mule")  // space added between words for capitalize first letter. output:- "Hello Mule"
+//upper("hello") // output:- "HELLO"
+//lower("CHIM")  // output:- "chim"
+//isUpperCase("hi")  //output :- false (return boolean value)
+//isLowerCase("hi")  //output :- true (return boolean value)
+//replaceAll(" Hello , CHIM " ,  "CHIM" , "Mule")  // (value  , target , replacement) output:- "Hello , Mule"
+//substring("bharat" , 0 , 3) // output :- bha
+//singularize("boys") // output:- boy
+//pluralize("girl") // output:- girls
+//wrapWith("bharat" , "*") // output:- "*bharat*"
+
+//////////////////////////////////////////////////////////////////////////////////////
+//Datawave operators:-
+
+//distinctBy:- Iterates over the input and returns the unique elements in it( finds unique values in an array)..
+
+//endsWith:- Returns true if a string ends with a provided substring, false if not.
+
+//find:- Returns indices of an input that match a specified value.
+
+//indexOf :- Returns the index of the first occurrence of the specified element in this array, or -1 if this list does not contain the element.
+
+*//isBlank:- Returns true if the given string is empty (""), completely composed of whitespaces("    "), or null. Otherwise, the function returns false.
+//isEmpty:- Returns true if the input string is empty.
+
+//min :- Returns the highest Comparable value in an array.
+// max :- Returns the lowest Comparable value in an array.
+
+//mod:- Returns the modulo (the remainder after dividing the dividend by the divisor).
+
+//isDecimal:- Returns true if the given number contains a decimal, false if not.
+
+//flatten:- Turns a set of subarrays into a single, flattened array.
+
+// function within function called higher order function.
+
+//Q.Define:-
+1.Anonymus function 
+2.Lambda function
+3.higher order function

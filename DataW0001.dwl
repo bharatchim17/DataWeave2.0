@@ -4,15 +4,15 @@
 // // "Mule" ++ "Soft"  // to concanate use ++ 
 //  3 / 2
 
-// Object is always enclosed with {} and contains key:value pairs.
-// An Array is always enclosed with [] and contains only Value
-// MapObject use for object and object of object -> output is object
-// Map use for Array and array of object -> output is array
-// reduce use for Array --> output form is object with single value
-// pluck use for object --> output form is Array
-// flatten work on array it accepts single argument i.e.(one parameter)as input  --> output form is Array (Turn set of array into single array as output)
-// $ represent value $$ represent index
-// if(condition) value1 else value2
+
+// %dw 2.0 
+// output application/json
+// ---
+// {
+//     "addNumber" : [1 , 2 , 3 ] ++ [4 , 5 , 6] ++ ["a"] ,
+//     "subNumber" : [1 , 2 , 3 ] -- [1] ,
+//     "addString" : "hi" ++ " " ++ "bharat chim"
+// }
 
 //////////////////////////////////////////////////////////////
 /////// Map operator -
