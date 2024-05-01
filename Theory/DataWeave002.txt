@@ -1,0 +1,101 @@
+---------------------------------------------------------------------------------
+//pluck function:
+pluck iterates over an object and returns an array of keys, values, or indices from 
+the object...
+{   
+  
+}pluck $ | $$ | $$$ <--- $ value , $$ key , $$$ index
+--------------------------------------------------------------------------------
+//Read function:
+reads a string or binary and returns parsed content. This function can be useful if 
+the reader cannot determine the content type..
+//Reads: it reads a string or binary and returns parsed content..
+//read(" " , "content-type")
+//readUrl("classpath://fileName" , "file_Content-type")
+
+//reduce function:
+Applies a reduction expression to the elements($) in an array. For each element of the 
+input array, in order, reduce applies the reduction lambda expression (function), 
+then replaces the accumulator($$) with the new result. The lambda expression can use both 
+the current input array element and the current accumulator value...
+---------------------------------------------------------------------------------
+//Date & Time
+
+1. Date: 2012-10-11
+Creates a Date value from values specified for year, month, and day fields.
+
+2. DateTime:  2012-10-11T10:10:10-03:00
+Creates a DateTime value from values specified for year, month, day, hour, minutes, 
+seconds, and timezone fields.
+
+3. LocalTime: 10:10:10
+Creates a LocalTime value from values specified for hour, minutes, and seconds fields.
+
+4. LocalDateTime: 2012-10-11T10:10:10
+LocalDateTime value from values specified for year, month, day, hour, minutes..
+
+5. Time: |05:00|
+Creates a Time value from values specified for hour, minutes, seconds, and timezone 
+fields.
+
+6. Timezone: |+05:00|
+Period (Amount of time)
+1. DatePeriod: |p1Y|
+2. Duration: |PT1H|
+----------------------------------------------------------------------------------
+//How to add xml attributes ,  xml CDATA and namespace..?
+
+The CDATA means , character data CDATA is defined as blocks of text that are not parsed
+by the parser , but recognized as markup..
+predefined entities such as &it , &gt and &amp require typing and are generally difficult
+to read in markup in such case CDATA use..
+<![CDATA[
+    character with markup
+]]>
+
+---------------------------------------------------------------------------------
+//Scan:  
+Returns an array with all of the matches found in an input string...
+"www.mathoman.com" scan(/([a-z]*).([a-z]*).([a-z]*)/)
+----------------------------------------------------------------------------------
+
+
+//groupBy:
+Returns an object of array {[]} that groups items from an array[] based on specified 
+criteria, such as an expression or matching selector...
+
+//zip & unzip:
+zip Merges elements from two arrays into an array of arrays , unzip is opposite of zip..
+
+
+match:
+match {
+    case "" -> $
+    else -> "  "
+}
+
+//Explain lookup function..?
+ 
+----------------------------------------------------------------------------
+import * from dw::util::Values
+mask:  mask  "keyName" with "******"
+The value to use for masking. The value can be any DataWeave type..
+-------------------------------------------------------------------------------
+//size of:
+Returns the number of characters (including white space) in an string. Returns the 
+number of elements in an array. It returns 0 if the array is empty. This version of 
+sizeOf takes an array or an array of arrays as input...
+
+//then:
+This function works as a pipe that passes the value returned from the preceding 
+expression to the next (a callback) only if the value returned , by the preceding 
+expression is not `null`...
+-----------------------------------------------------------------------------------
+// import * from dw::util::Coercions
+
+//toString:     toString([" " , " " ])
+A variant of toString that joins an Array of characters into a single String value...
+
+// keysOf | namesOf:
+Returns an array of strings with the names of all the keys within the given object..
+---------------------------------------------------------------------------------

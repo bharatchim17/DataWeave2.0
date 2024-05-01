@@ -1,6 +1,6 @@
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-----------------------------------------------------------------------------------
 
-Datawave0001:-
+//Datawave0001:-
 
 // Object is always enclosed with {} and contains key:value pairs.
 // An Array is always enclosed with [] and contains only Value
@@ -12,9 +12,8 @@ Datawave0001:-
 // $ represent value $$ represent index
 // if(condition) value1 else value2
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-Datawave0002/0003:-
+-----------------------------------------------------------------------------------
+//Datawave0002/0003:-
 
 // Q:- Does the desendent selector select all the keys or just first one in nested object.. ?? 
  A:- Desendent selector, select just first one in nested object.
@@ -55,16 +54,18 @@ Filter work on array -> output form as array.
 //pluck function :- The pluck function iterates over each key-value pairs of an input object. 
 it used to retrieve the values($), keys($$) and index ($$$) from object and return -> output form as array.
 
-//Map function:- The map function iterates over each element of array applies transformation (Lambda expression) to each element and return as Array. 
-it takes two input array and Lambda expression in which array input comes before map function and lambda expression comes after map function. 
+//Map function:- The map function iterates over each element of array applies 
+transformation (Lambda expression) to each element and return as Array. 
+it takes two input array and Lambda expression in which array input comes before 
+map function and lambda expression comes after map function. 
 
-// Map Object :-  it use to transform data in object , by iterating each key-value pair (it work on object and return output as object..)
+// Map Object :-  it use to transform data in object , by iterating each key-value 
+pair (it work on object and return output as object..)
 map object take two input 1> object to transform (written left  to MapObject) 
                           2> lambda expression.. (written right to MapObject)
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-Datawave0004:-
+-----------------------------------------------------------------------------------
+//Datawave0004:-
 
 // Datawave (dw) format is canonical format (generical format i.e. predefined structure) , for all transformation. 
 
@@ -82,27 +83,52 @@ Datawave0004:-
 //Prepend >> [] :- Data is left hand side and array is right hand side.. 
 //Append  [] << :- Data is right hand side and array is left hand side..
 
-//predefined varaibles :-
-1. correlationID
-2. Error
-3. Authentification
-4. Flow
-5. mule 
-6. server
-7. var
-8. app 
-9. Datatypes
-10. attribute
-11. message
-12. payload
 
+-----------------------------------------------------------------------------
+//In DataWeave, there are several predefined variables and functions that you can use 
+to access and manipulate data. Here are some commonly used ones:
+
+1. **payload**: Represents the main data being processed in a DataWeave transformation.
+It's the input data that you want to transform or manipulate.
+
+2. **attributes**: Contains metadata associated with the input data, such as headers, 
+properties, or any other additional information.
+
+3. **vars**: Allows you to declare and store variables within a DataWeave script. 
+You can use these variables to store intermediate results or reusable values.
+
+4. **vars.correlationID**: A variable often used to store a unique identifier that can
+be used for correlating messages or tracking transactions.
+
+5. **error**: Represents an error object that contains information about any errors 
+that occur during the transformation process.
+
+6. **server**: Provides access to server-related information or configuration 
+settings, such as hostname, port number, or environment variables.
+
+7. **flow**: Contains information about the current Mule flow being executed, 
+including properties, variables, and metadata associated with the flow.
+
+8. **message**: Represents the entire message being processed, including both the 
+payload and any associated metadata or attributes.
+
+9. **now**: Returns the current date and time.
+
+10. **p()**: Shortcut for accessing properties of an object. For example, 
+`payload.propertyName` can be abbreviated as `p().propertyName`.
+
+11. **sizeOf()**: Returns the size or length of a data structure, such as an array 
+or object.
+These predefined variables and functions provide a powerful set of tools for 
+performing data transformations and manipulations within DataWeave.
+-------------------------------------------------------------------------------------
 //function syntax :-
  (fun)key_functionName_(parameter1,2,3) = {logic}
  whenever there value associate to the first argument , assign value direction  will be right to left..
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-----------------------------------------------------------------------------------
 
-Datawave0005:-
+//Datawave0005:-
  
  import * from dw::core::Arrays
 
@@ -120,7 +146,7 @@ example: slice(var_name , from_index , unitil_index)..
 //sumby :- it works on array and Returns the sum of the values of the elements.
 example: [ ]sumBy $.key
 
-//////////////////////////////////////////////////////////////////////////////////////
+-----------------------------------------------------------------------------------
 // import * from dw::core::Strings
 
 // camelize("hi_mule")  // In input underscore use for camelize
@@ -135,7 +161,7 @@ example: [ ]sumBy $.key
 //pluralize("girl") // output:- girls
 //wrapWith("bharat" , "*") // output:- "*bharat*"
 
-//////////////////////////////////////////////////////////////////////////////////////
+-----------------------------------------------------------------------------------
 //Datawave operators:-
 
 //distinctBy:- Iterates over the input and returns the unique elements in it( finds unique values in an array)..
@@ -165,8 +191,8 @@ example: [ ]sumBy $.key
 2.Lambda function
 3.higher order function
 
-////////////////////////////////////////////////////////////////////
-DataWeave0006:-
+-----------------------------------------------------------------------------------
+//DataWeave0006:-
 // map function:- Iterates over items and indices in an array and outputs the results into a new array.
 in which mapper take two input item ($) and index ($$)..
   example:-     ($$) : $  here, $$ is index and $ represent object. 
@@ -180,4 +206,6 @@ Filter works with map and filterObject works with MapObject.
 //filterObject:- Iterates a list of key-value pairs in an object and applies an expression that returns only matching objects, filtering out the rest from the output.
 The expression must return true or false
 
-//startsWith:- Returns true or false depending on whether the input string starts with a matching prefix. #(wrap)
+//startsWith:- Returns true or false depending on whether the input string starts 
+with a matching prefix. #(wrap)
+-------------------------------------------------------------------------------------
