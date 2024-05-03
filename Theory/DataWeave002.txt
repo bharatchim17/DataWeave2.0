@@ -1,11 +1,11 @@
----------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 //pluck function:
 pluck iterates over an object and returns an array of keys, values, or indices from 
 the object...
 {   
   
-}pluck $ | $$ | $$$ <--- $ value , $$ key , $$$ index
---------------------------------------------------------------------------------
+} pluck $ | $$ | $$$ <--- $ value , $$ key , $$$ index
+-------------------------------------------------------------------------------------
 //Read function:
 reads a string or binary and returns parsed content. This function can be useful if 
 the reader cannot determine the content type..
@@ -16,10 +16,10 @@ the reader cannot determine the content type..
 //reduce function:
 Applies a reduction expression to the elements($) in an array. For each element of the 
 input array, in order, reduce applies the reduction lambda expression (function), 
-then replaces the accumulator($$) with the new result. The lambda expression can use both 
-the current input array element and the current accumulator value...
----------------------------------------------------------------------------------
-//Date & Time
+then replaces the accumulator($$) with the new result. The lambda expression can use 
+both the current input array element and the current accumulator value...
+-----------------------------------------------------------------------------------
+//Date & Time:
 
 1. Date: 2012-10-11
 Creates a Date value from values specified for year, month, and day fields.
@@ -40,9 +40,9 @@ fields.
 
 6. Timezone: |+05:00|
 Period (Amount of time)
-1. DatePeriod: |p1Y|
+1. DatePeriod: |P1Y|
 2. Duration: |PT1H|
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 //How to add xml attributes ,  xml CDATA and namespace..?
 
 The CDATA means , character data CDATA is defined as blocks of text that are not parsed
@@ -76,8 +76,9 @@ match {
 
 //Explain lookup function..?
  
-----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 import * from dw::util::Values
+
 mask:  mask  "keyName" with "******"
 The value to use for masking. The value can be any DataWeave type..
 -------------------------------------------------------------------------------
@@ -99,3 +100,12 @@ A variant of toString that joins an Array of characters into a single String val
 // keysOf | namesOf:
 Returns an array of strings with the names of all the keys within the given object..
 ---------------------------------------------------------------------------------
+import * from dw::Runtime
+
+wait: 
+Stops the execution for the specified timeout period (in milliseconds).
+WARNING: Stopping the execution blocks the thread, potentially causing slowness, low 
+performance and potentially freezing of the entire runtime. This operation is intended 
+for limited functional testing purposes. Do not use this function in a production 
+application, performance testing, or with multiple applications deployed...
+------------------------------------------------------------------------------------

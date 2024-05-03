@@ -3,78 +3,104 @@
 //Datawave0001:-
 
 // Object is always enclosed with {} and contains key:value pairs.
-// An Array is always enclosed with [] and contains only Value
-// MapObject use for object and object of object -> output is object
-// Map use for Array and array of object -> output is array
-// reduce use for Array --> output form is object with single value
-// pluck use for object --> output form is Array
-// flatten work on array it accepts single argument i.e.(one parameter)as input  --> output form is Array (Turn set of array into single array as output)
-// $ represent value $$ represent index
-// if(condition) value1 else value2
+// An Array is always enclosed with [] and contains only Value..
 
------------------------------------------------------------------------------------
+// MapObject iterates over object and {{}} -> output is object
+// Map iterates over Array [[]] and array of object [{}] -> output is array..
+
+// reduce iterates over Array[] --> output form is object with single value..
+// pluck iterates over object{} --> output form is Array
+// flatten work on array it accepts single argument i.e.(one parameter)as 
+input ----> output form is Array (Turn set of array into single array as output)..
+
+--------------------------------------------------------------------------------------
 //Datawave0002/0003:-
 
-// Q:- Does the desendent selector select all the keys or just first one in nested object.. ?? 
- A:- Desendent selector, select just first one in nested object.
+// Q:- Does the desendent(..) selector select all the keys or just first one in nested 
+object.. ?? 
+ A:- Desendent selector, select just first one in nested object..
 
-// Q:- Does the multi value selector select keys on nested level of the object.. ??
+// Q:- Does the multi value selector(.*) select keys on nested level of the object.. ??
  A:- No , multi value selector does'not select keys on nested level of the object.
 
-// Q:- What happens if you combine both Descendent and Multi-value selectors.. ??
+// Q:- What happens if you combine both Descendent and Multi-value selectors(..*) ??
  A:- it will select all the keys that we want to access.
 
 // Logical operators allow you to write true/false kind of expression.
 
-// Flow control used when you want to execute certain part of your code in some situations ,
- while not excecuting others. (its way to add logic to your scripts). DataWeave use if else expression that returns value.. 
- example:- 1. if(condition) code1 else code2
+// Flow control used when you want to execute certain part of your code in some 
+situations, while not excecuting others. (its way to add logic to your scripts). 
+DataWeave use if else expression that returns value.. 
+ example:- 1. if(condition) code1 else code2 i.e. if(condition) value1 else value2
            2. (expression) match 
            {
 case (condition) -> execute_if_condition_pass
 else (condition) -> if_no_condition_pass
            }
            
-// function without name called as Lambda , Lambda is value just like string we can assign it to varaibles.
+// function without name called as Lambda , Lambda is value just like string we can 
+assign it to varaibles.
 :-  ((argument) -> body) () 
-Lambda became useful when you want to use function as argument to other function or return function from function is called as higher ordered function..
+Lambda became useful when you want to use function as argument to other function or 
+return function from function is called as higher ordered function..
 
-// prefix function:- In Prefix notation function name came first (before argument function name is written) then argument made :- functionName_(argument).
-// Infix notation :- In infix notation function takes two argument , Lambda be the second argument of it :- (argument_1) functionName_ (argument_2)
+// prefix function:- In Prefix notation function name came first (before argument 
+function name is written) then argument made :- functionName_(argument).
+// Infix notation :- In infix notation function takes two argument , Lambda be the 
+second argument of it :- (argument_1) functionName_ (argument_2)..
 
 
 // $ , $$ , $$$ :- 
-$ first argument ,$$ second argument , $$$ third argument   //(in lambda functions)
+$ first argument ,$$ second argument , $$$ third argument   //(in lambda functions)..
 
-// Scope are created by using do statement , where we can declare varaibles and more function..
+//pluck function :- The pluck function iterates over each key-value pairs of an input 
+object. 
+it used to retrieve the values($), keys($$) and index ($$$) from object and return ->
+output form as array..
 
-// Filter function :- it iterates over array and applies an expression that returns matching values. expression must return true or false.
-Filter work on array -> output form as array.
+// When there is No key  ----> $ represent value $$ represent index..
 
-//pluck function :- The pluck function iterates over each key-value pairs of an input object. 
-it used to retrieve the values($), keys($$) and index ($$$) from object and return -> output form as array.
+// Scope are created by using do statement , where we can declare varaibles and more 
+function..
+
+// Filter function :- it iterates over array[] and applies an expression that returns 
+matching values. expression must return true or false. Filter work on array -> output 
+form as an array...
+
 
 //Map function:- The map function iterates over each element of array applies 
-transformation (Lambda expression) to each element and return as Array. 
+transformation (Lambda expression) to each element and return as Array.. 
 it takes two input array and Lambda expression in which array input comes before 
-map function and lambda expression comes after map function. 
+map function and lambda expression comes after map function... 
+
+Iterates over items and indices in an array and outputs the results into a new array. 
+in which mapper take two input item ($) and index ($$)
+  example:-     ($$) : $  In case of [{}] here, $$ is index and $ represent object... 
 
 // Map Object :-  it use to transform data in object , by iterating each key-value 
-pair (it work on object and return output as object..)
+pair (it work on object and return output as object)..
 map object take two input 1> object to transform (written left  to MapObject) 
                           2> lambda expression.. (written right to MapObject)
+Iterates over an object using a mapper that acts on values ($) , keys ($$) or indices 
+($$$) of that object...
 
 -----------------------------------------------------------------------------------
 //Datawave0004:-
 
-// Datawave (dw) format is canonical format (generical format i.e. predefined structure) , for all transformation. 
+// Datawave (dw) format is canonical format (generical format i.e. predefined 
+structure) , for all transformation.. 
 
-// ~= :- When types are different it coerce one value of types to other.
+// ~= :- When types are different it coerce one value of types to other..
 
-// and operators :- all of the value must be true for output as true if even one value is false then output print false.. 
-// or operators :- one of the value must be true for output as true if all value is false then output print false..
+// and operators :- all of the value must be true for output as true if even one value
+is false then output print false..
 
-//Metadata :- Is data that provides information about other data , but not the content of other data. (content that be manipultable)
+// or operators :- one of the value must be true for output as true if all value is 
+false then output print false..
+
+//Metadata :- Is data that provides information about other data , but not the content
+of other data (content that be manipultable)...
+
 //index value selector :-  payload[1/-1] -> can have both positive and negative value.
 //Range value selector :-  payload[1 to -3] -> can have both positive and negative value.
 
@@ -88,43 +114,52 @@ map object take two input 1> object to transform (written left  to MapObject)
 //In DataWeave, there are several predefined variables and functions that you can use 
 to access and manipulate data. Here are some commonly used ones:
 
-1. **payload**: Represents the main data being processed in a DataWeave transformation.
+1. payload: Represents the main data being processed in a DataWeave transformation.
 It's the input data that you want to transform or manipulate.
 
-2. **attributes**: Contains metadata associated with the input data, such as headers, 
+2. attributes: Contains metadata associated with the input data, such as headers, 
 properties, or any other additional information.
 
-3. **vars**: Allows you to declare and store variables within a DataWeave script. 
-You can use these variables to store intermediate results or reusable values.
+3. vars: Allows you to declare and store variables within a DataWeave script. 
+You can use these variables to store intermediate results or reusable values...
 
-4. **vars.correlationID**: A variable often used to store a unique identifier that can
+4. vars.correlationID: A variable often used to store a unique identifier that can
 be used for correlating messages or tracking transactions.
 
-5. **error**: Represents an error object that contains information about any errors 
+5. error: Represents an error object that contains information about any errors 
 that occur during the transformation process.
 
-6. **server**: Provides access to server-related information or configuration 
-settings, such as hostname, port number, or environment variables.
+6. server: Provides access to server-related information or configuration 
+settings, such as hostname, port number or environment variables.
 
-7. **flow**: Contains information about the current Mule flow being executed, 
+7. flow: Contains information about the current Mule flow being executed, 
 including properties, variables, and metadata associated with the flow.
 
-8. **message**: Represents the entire message being processed, including both the 
+8. message: Represents the entire message being processed, including both the 
 payload and any associated metadata or attributes.
 
-9. **now**: Returns the current date and time.
+9. now: Returns the current date and time.
 
-10. **p()**: Shortcut for accessing properties of an object. For example, 
+10. p(): Shortcut for accessing properties of an object. For example, 
 `payload.propertyName` can be abbreviated as `p().propertyName`.
 
-11. **sizeOf()**: Returns the size or length of a data structure, such as an array 
+11. sizeOf(): Returns the size or length of a data structure, such as an array 
 or object.
 These predefined variables and functions provide a powerful set of tools for 
-performing data transformations and manipulations within DataWeave.
+performing data transformations and manipulations within DataWeave...
 -------------------------------------------------------------------------------------
 //function syntax :-
- (fun)key_functionName_(parameter1,2,3) = {logic}
- whenever there value associate to the first argument , assign value direction  will be right to left..
+
+ (fun)key_functionName_(parameter 1,2,3) = {logic}
+ Whenever there value associate to the first argument , assign value direction  will 
+ be right to left..
+
+// function within function called higher order function.
+
+//Q.Define:-
+1.Anonymus function :- function without name..
+2.Lambda function
+3.higher order function
 
 -----------------------------------------------------------------------------------
 
@@ -132,20 +167,33 @@ performing data transformations and manipulations within DataWeave.
  
  import * from dw::core::Arrays
 
- //countBy :- it takes array (right hand side of the function) it count based upon matchingFunction (left hand side of the function)  return output as object 
+ //countBy :- it takes array (right hand side of the function) it count based upon 
+ matchingFunction (left hand side of the function)  return output as object 
  countBy works as boolean (true/false), if it is true it will be print in the output.
 
- //divideBy:- it takes array (right hand side) it dividation (make unit) based on amount of number (amount is left hand side of function) it returns output as form of object of array..
+ //divideBy:- it takes array (right hand side) it dividation (make unit) based on 
+ amount of number (amount is left hand side of function) it returns output as form of 
+ object of array..
 
  //indexOf :- it find first accurance value's index in array and print it.
   example: indexOf(var_name , "value")
 
-  //slice :- it slice from value to unit value from an array and gives output as (part of) array .
+  //slice :- it slice from value to unit value from an array and gives output as 
+  (part of) array .
 example: slice(var_name , from_index , unitil_index)..
 
 //sumby :- it works on array and Returns the sum of the values of the elements.
 example: [ ]sumBy $.key
 
+//splitAt: 
+Splits an array into two at a given pairs...
+
+//dropWhile:
+Drops elements from the array while the condition is met but stops the selection 
+process when it reaches an element that fails to satisfy the condition...
+
+//join:
+Joins two arrays of objects by a same given value criteria.
 -----------------------------------------------------------------------------------
 // import * from dw::core::Strings
 
@@ -164,15 +212,20 @@ example: [ ]sumBy $.key
 -----------------------------------------------------------------------------------
 //Datawave operators:-
 
-//distinctBy:- Iterates over the input and returns the unique elements in it( finds unique values in an array)..
+//distinctBy:- Iterates over the input and returns the unique elements in it
+(finds unique values in an array  i.e. not repeatable)..
+
 
 //endsWith:- Returns true if a string ends with a provided substring, false if not.
 
 //find:- Returns indices of an input that match a specified value.
 
-//indexOf :- Returns the index of the first occurrence of the specified element in this array, or -1 if this list does not contain the element.
+//indexOf :- Returns the index of the first occurrence of the specified element in 
+this array, or -1 if this list does not contain the element.
 
-*//isBlank:- Returns true if the given string is empty (""), completely composed of whitespaces("    "), or null. Otherwise, the function returns false.
+*//isBlank:- Returns true if the given string is empty (""), completely composed of 
+whitespaces("    "), or null. Otherwise, the function returns false.
+
 //isEmpty:- Returns true if the input string is empty.
 
 //min :- Returns the highest Comparable value in an array.
@@ -184,28 +237,17 @@ example: [ ]sumBy $.key
 
 //flatten:- Turns a set of subarrays into a single, flattened array.
 
-// function within function called higher order function.
-
-//Q.Define:-
-1.Anonymus function :- function without name..
-2.Lambda function
-3.higher order function
 
 -----------------------------------------------------------------------------------
 //DataWeave0006:-
-// map function:- Iterates over items and indices in an array and outputs the results into a new array.
-in which mapper take two input item ($) and index ($$)..
-  example:-     ($$) : $  here, $$ is index and $ represent object. 
-
-//MapObject:- Iterates over an object using a mapper that acts on values ($) , keys ($$) or indices ($$$) of that object.
 
 //Filter :- Iterates over an array and applies an expression that returns matching values.
 The expression must return true or false.
 Filter works with map and filterObject works with MapObject.
 
 //filterObject:- Iterates a list of key-value pairs in an object and applies an expression that returns only matching objects, filtering out the rest from the output.
-The expression must return true or false
+The expression must return true or false..
 
 //startsWith:- Returns true or false depending on whether the input string starts 
-with a matching prefix. #(wrap)
+with a matching prefix. 
 -------------------------------------------------------------------------------------

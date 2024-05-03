@@ -22,14 +22,14 @@
 // }
 // ]
 
-%dw 2.0
-output application/csv  separator= "|"
----
-payload map ((item, index) -> 
-{
-    "id" : item.id ,
-    "status" : item.status
-})
+// %dw 2.0
+// output application/csv  separator= "|"
+// ---
+// payload map ((item, index) -> 
+// {
+//     "id" : item.id ,
+//     "status" : item.status
+// })
 
 
 

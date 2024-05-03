@@ -266,10 +266,19 @@
 //                           keysOf(myVar.users) map $.@])
 // }
 
-// ------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 //csv:
+// id , fName , lName , email , gender , location
+// 101 , bharat , chim , bharatchim17@gmail.com , M , khamgaon
+// 102 , akshay , chim , akshaychim17@gmail.com , M , nashik
+// 103 , ram , chim , ramchim17@gmail.com , M , ayodhya
+// 104 , gautam , chim , gautamchim17@gmail.com , M , sagar
+// 105 , mayank , chim , mayankchim17@gmail.com , M , khamgaon
+// 106 , rutuja , chim , rutujachim17@gmail.com , F , khamgaon
 
-%dw 2.0
-output application/json
----
-payload
+// %dw 2.0
+// output application/json
+// ---
+// payload
+
+// ----------------------------------------------------------------------------
