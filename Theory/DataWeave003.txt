@@ -126,7 +126,12 @@ if(paylaod == reverse(paylaod)) "Palindrome" else "Not a palindrome"
 == will check data types too ---->  5 == 5 , 5 =❌= "5"
 ~= will only check the data  ---->  5 ~= "5" , 5 ~= 5
 -----------------------------------------------------------------------------
-
+//To extract all resulting payloads to an array, use a DataWeave script:
+flatten(valuesOf(payload) map ((item, index) -> item.*payload))
+----------------------------------------------------------------------------------------
+//payload orderBy -$ give descending order value..
+//(payload orderBy -$)[0] give descending order highest value..
+---------------------------------------------------------------------------------
 
 
 
