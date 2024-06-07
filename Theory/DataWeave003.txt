@@ -9,19 +9,23 @@ dataweave scripts and expressions in mule application..
 -> 2.4
 
 //List out frequently used dataweave inbuilt functions..?
--> you can list out few dataweave functions that you have worked in realtime projects..
+-> We can list out few dataweave functions that you have worked in realtime projects..
 map , mapObject , filter, filterObject , flatten , pluck etc..
 
 //How can we invoke or call flows from dataweave..?
-We can use lookup functions..but , we can call only call private flow but not 
-subflow..  Mule::lookup('privateFlow_Name') 
+We can use lookup functions but , we can call private flow but not subflow..  
+Mule::lookup('privateFlow_Name') 
 
 //How to access property in dataweave..?
 -> by using P function.  p('http.port')
 
 //How to sort an array..?
-using orderBy function we can sort array: payload orderBy((item , index)-> item)
+using orderBy function we can sort array
+To sort in  ascending order: payload orderBy((item , index)-> item)
 To sort in descending order: (payload orderBy ((item , index)-> item))[-1 to 0] 
+
+//payload orderBy -$ give descending order value..
+//(payload orderBy -$)[0] give descending order highest value..
 
 //Find smallest and greatest numer in an array..?
 (payload orderBy((item , index)-> item))[0] <--- for smallest numer
@@ -36,19 +40,15 @@ now() as Date {format: "yyyy/MM/dd"}
 now() as Date
 
 //When to use map & map Object..?
-map: iterates over items in an array and outputs results into new array..
-Input & output for map function is an Array..
-mapObject: iterates over an object using mapper that acts on keys , values or indices
-of that object..
-The input & output for mapObject function is an Object..
 ------------------------------------------------------------------------------
 //How to update value of key..?
+
 import * from dw::util::Values
 ---
 payload map((item , index)-> item update "key" with "value")
 -----------------------------------------------------------------------------
 //How to convert all keys in object to uppercase..? 
---> upper()
+-->by using upper() from the string as by import * from dw::core::Strings
 
 //How to fetch keys and values of an object..?
 ---> keysOf(payload) ; valuesOf(payload)
@@ -62,13 +62,13 @@ payload scan /\d/
 
 //How to use splitBy function to "192,88.99.0/24"..?
 payload splitBy (/[,.\/]/)
------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 //How to skip null value..?
 %dw 2.0 
 output application/json skipNullOn="everywhere"
 ---
 payload
---------------------------------------------------------------------------
+---------------------------------------------------------------------------------
 //Merge two Arrays and remove duplicates..?
  --> flatten(valuesOf(payload))
  --> flatten(valuesOf(payload)) distinctBy((item , index) -> item)
@@ -79,12 +79,12 @@ paylaod map((item , index) -> item mapObject ((value , key , index) -> "$(value)
 ":key))
 
 //What's differene between mapObject & pluck..?
-mapObject: The input & output for mapObject function is an object..
-pluck: The input is object & output is an Array..
+mapObject: The input & output for mapObject function is an object{}..
+pluck: The input is object{} & output is an Array[]..
 ----------------------------------------------------------------------
 //Write dataweave script to check if input is prime number..?
---> A prime number is natural number greater than 1 , which is only divisible by 1 and 
-itself..
+--> A prime number is natural number greater than 1 , which is only divisible by 1 
+and itself..
 
 //How to convert datetime to specific timezone..?
 now() >> "PST|EST"
@@ -102,20 +102,20 @@ payload
 output application/json indent=false
 ---
 paylaod
-------------------------------------------------------------------------
+---------------------------------------------------------------------------------
 //How to print $(doller) in the output..? --> \$
 
 //How to convert JSON string to JSON..? 
 --> payload mapObject((value , key , index)->{
     "$(key)": read(value , "application/json")
 })
-------------------------------------------------------------
+---------------------------------------------------------------------------------
 //How many types of targets can created in transform message..?
 Three types of targets can created in transform message:
 1. payload
 2. attributes
 3. variable
-----------------------------------------------------------------------
+--------------------------------------------------------------------------------
 //How to check if the given string palindrome..?
 import * from dw::core::strings
 output application/json
@@ -123,14 +123,13 @@ output application/json
 if(paylaod == reverse(paylaod)) "Palindrome" else "Not a palindrome"
 ------------------------------------------------------------------------------
 //What's differene between == and ~= ?
-== will check data types too ---->  5 == 5 , 5 =❌= "5"
+== will check data & data_types too ---->  5 == 5 , 5 =❌= "5"
 ~= will only check the data  ---->  5 ~= "5" , 5 ~= 5
 -----------------------------------------------------------------------------
 //To extract all resulting payloads to an array, use a DataWeave script:
 flatten(valuesOf(payload) map ((item, index) -> item.*payload))
 ----------------------------------------------------------------------------------------
-//payload orderBy -$ give descending order value..
-//(payload orderBy -$)[0] give descending order highest value..
+
 ---------------------------------------------------------------------------------
 
 

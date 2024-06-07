@@ -3,21 +3,33 @@
 //Datawave0001:-
 
 // Object is always enclosed with {} and contains key:value pairs.
-// An Array is always enclosed with [] and contains only Value..
+// An Array is always enclosed with [] and contains only Value(item)..
 
 // MapObject iterates over object and {{}} -> output is object
-// Map iterates over Array [[]] and array of object [{}] -> output is array..
+// Map iterates over Array[] , array of array [[]] and array of object [{}] -> 
+output is array..
 
-// reduce iterates over Array[] --> output form is object with single value..
-// pluck iterates over object{} --> output form is Array
-// flatten work on array it accepts single argument i.e.(one parameter)as 
-input ----> output form is Array (Turn set of array into single array as output)..
+// reduce iterates over Array[] --> output form is object{} with single value..
+// pluck iterates over object{} --> output form is Array[]
 
+------------------------------------------------------------------------------------
+//reduce function:
+Applies a reduction expression to the elements($) in an array. For each element of the 
+input array, in order, reduce applies the reduction lambda expression (function), 
+then replaces the accumulator($$) with the new result. The lambda expression can use 
+both the current input array element and the current accumulator value...
+
+//pluck function:
+pluck iterates over an object and returns an array of keys, values, or indices from 
+the object...
+{   
+  
+} pluck $ | $$ | $$$ <--- $ value , $$ key , $$$ index
 --------------------------------------------------------------------------------------
 //Datawave0002/0003:-
 
 // Q:- Does the desendent(..) selector select all the keys or just first one in nested 
-object.. ?? 
+object..?? 
  A:- Desendent selector, select just first one in nested object..
 
 // Q:- Does the multi value selector(.*) select keys on nested level of the object.. ??
@@ -26,10 +38,10 @@ object.. ??
 // Q:- What happens if you combine both Descendent and Multi-value selectors(..*) ??
  A:- it will select all the keys that we want to access.
 
-// Logical operators allow you to write true/false kind of expression.
+// Logical operators allow us to write true/false kind of expression.
 
-// Flow control used when you want to execute certain part of your code in some 
-situations, while not excecuting others. (its way to add logic to your scripts). 
+// Flow control used when we want to execute certain part of our code in some 
+situations, while not excecuting others. (its way to add logic to our scripts). 
 DataWeave use if else expression that returns value.. 
  example:- 1. if(condition) code1 else code2 i.e. if(condition) value1 else value2
            2. (expression) match 
@@ -39,9 +51,8 @@ else (condition) -> if_no_condition_pass
            }
            
 // function without name called as Lambda , Lambda is value just like string we can 
-assign it to varaibles.
-:-  ((argument) -> body) () 
-Lambda became useful when you want to use function as argument to other function or 
+assign it to varaibles:-  ((argument) -> body) () 
+Lambda became useful when we want to use function as argument to other function or 
 return function from function is called as higher ordered function..
 
 // prefix function:- In Prefix notation function name came first (before argument 
@@ -51,22 +62,28 @@ second argument of it :- (argument_1) functionName_ (argument_2)..
 
 
 // $ , $$ , $$$ :- 
-$ first argument ,$$ second argument , $$$ third argument   //(in lambda functions)..
+$ first argument , $$ second argument , $$$ third argument   //(in lambda functions)..
 
 //pluck function :- The pluck function iterates over each key-value pairs of an input 
-object. 
+object{}. 
 it used to retrieve the values($), keys($$) and index ($$$) from object and return ->
-output form as array..
+output form as array[]..
 
 // When there is No key  ----> $ represent value $$ represent index..
 
 // Scope are created by using do statement , where we can declare varaibles and more 
 function..
 
-// Filter function :- it iterates over array[] and applies an expression that returns 
-matching values. expression must return true or false. Filter work on array -> output 
-form as an array...
+// Filter function :- it iterates over array and applies an expression that returns 
+matching values. expression must return true or false. Filter work on array[] -> output 
+form as an array[]...
+//Filter works with map and filterObject works with MapObject.
 
+//filterObject:- Iterates a list of key-value pairs in an object and applies an expression that returns only matching objects, filtering out the rest from the output.
+The expression must return true or false..
+
+//startsWith:- Returns true or false depending on whether the input string starts 
+with a matching prefix. 
 
 //Map function:- The map function iterates over each element of array applies 
 transformation (Lambda expression) to each element and return as Array.. 
@@ -111,17 +128,17 @@ of other data (content that be manipultable)...
 
 
 -----------------------------------------------------------------------------
-//In DataWeave, there are several predefined variables and functions that you can use 
+//In DataWeave, there are several predefined variables and functions that can use 
 to access and manipulate data. Here are some commonly used ones:
 
 1. payload: Represents the main data being processed in a DataWeave transformation.
-It's the input data that you want to transform or manipulate.
+It's the input data that we want to transform or manipulate.
 
 2. attributes: Contains metadata associated with the input data, such as headers, 
 properties, or any other additional information.
 
-3. vars: Allows you to declare and store variables within a DataWeave script. 
-You can use these variables to store intermediate results or reusable values...
+3. vars: Allows to declare and store variables within a DataWeave script we ,
+can use these variables to store intermediate results or reusable values...
 
 4. vars.correlationID: A variable often used to store a unique identifier that can
 be used for correlating messages or tracking transactions.
@@ -183,7 +200,7 @@ performing data transformations and manipulations within DataWeave...
 example: slice(var_name , from_index , unitil_index)..
 
 //sumby :- it works on array and Returns the sum of the values of the elements.
-example: [ ]sumBy $.key
+example: []sumBy $.key
 
 //splitAt: 
 Splits an array into two at a given pairs...
@@ -209,7 +226,7 @@ Joins two arrays of objects by a same given value criteria.
 //pluralize("girl") // output:- girls
 //wrapWith("bharat" , "*") // output:- "*bharat*"
 
------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
 //Datawave operators:-
 
 //distinctBy:- Iterates over the input and returns the unique elements in it
@@ -221,10 +238,10 @@ Joins two arrays of objects by a same given value criteria.
 //find:- Returns indices of an input that match a specified value.
 
 //indexOf :- Returns the index of the first occurrence of the specified element in 
-this array, or -1 if this list does not contain the element.
+ array, or -1 if this list does not contain the element.
 
 *//isBlank:- Returns true if the given string is empty (""), completely composed of 
-whitespaces("    "), or null. Otherwise, the function returns false.
+whitespaces("  "), or null. Otherwise, the function returns false.
 
 //isEmpty:- Returns true if the input string is empty.
 
@@ -235,19 +252,6 @@ whitespaces("    "), or null. Otherwise, the function returns false.
 
 //isDecimal:- Returns true if the given number contains a decimal, false if not.
 
-//flatten:- Turns a set of subarrays into a single, flattened array.
-
-
------------------------------------------------------------------------------------
-//DataWeave0006:-
-
-//Filter :- Iterates over an array and applies an expression that returns matching values.
-The expression must return true or false.
-Filter works with map and filterObject works with MapObject.
-
-//filterObject:- Iterates a list of key-value pairs in an object and applies an expression that returns only matching objects, filtering out the rest from the output.
-The expression must return true or false..
-
-//startsWith:- Returns true or false depending on whether the input string starts 
-with a matching prefix. 
+//flatten:- Turns a set of subarrays[[]] into a single, flattened array[],Turn set of 
+array into single array as output..
 -------------------------------------------------------------------------------------
