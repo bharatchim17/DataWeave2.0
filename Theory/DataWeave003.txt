@@ -129,7 +129,11 @@ if(paylaod == reverse(paylaod)) "Palindrome" else "Not a palindrome"
 //To extract all resulting payloads to an array, use a DataWeave script:
 flatten(valuesOf(payload) map ((item, index) -> item.*payload))
 ----------------------------------------------------------------------------------------
-
+Difference between flatMap and flatten? 
+flatMap: Iterates over each item in an array and flattens the results, can act on 
+values and indices of items in the array.. 
+Flatten: Turns a nested array into a simple array. only acts on the values of the 
+arrays..
 ---------------------------------------------------------------------------------
 
 

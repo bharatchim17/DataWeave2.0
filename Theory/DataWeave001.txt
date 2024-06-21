@@ -22,6 +22,7 @@ both the current input array element and the current accumulator value...
 //pluck function:
 pluck iterates over an object and returns an array of keys, values, or indices from 
 the object...
+
 {   
   
 } pluck $ | $$ | $$$ <--- $ value , $$ key , $$$ index
@@ -77,9 +78,11 @@ function..
 // Filter function :- it iterates over array and applies an expression that returns 
 matching values. expression must return true or false. Filter work on array[] -> output 
 form as an array[]...
+
 //Filter works with map and filterObject works with MapObject.
 
-//filterObject:- Iterates a list of key-value pairs in an object and applies an expression that returns only matching objects, filtering out the rest from the output.
+//filterObject:- Iterates a list of key-value pairs in an object and applies an 
+expression that returns only matching objects, filtering out the rest from the output.
 The expression must return true or false..
 
 //startsWith:- Returns true or false depending on whether the input string starts 
@@ -119,7 +122,8 @@ false then output print false..
 of other data (content that be manipultable)...
 
 //index value selector :-  payload[1/-1] -> can have both positive and negative value.
-//Range value selector :-  payload[1 to -3] -> can have both positive and negative value.
+//Range value selector :-  payload[1 to -3] -> can have both positive and negative 
+value.
 
 //output of multi-value selector is an array , it works for both array and objects..
 
@@ -255,3 +259,7 @@ whitespaces("  "), or null. Otherwise, the function returns false.
 //flatten:- Turns a set of subarrays[[]] into a single, flattened array[],Turn set of 
 array into single array as output..
 -------------------------------------------------------------------------------------
+What is causedBy function in Dataweave? 
+The causedBy function matches an error by its type, like an error handler does..
+p function is used for reading data from properties file in transform message 
+generally we use “p” function...
