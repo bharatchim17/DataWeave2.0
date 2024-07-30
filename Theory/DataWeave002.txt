@@ -1,4 +1,3 @@
-
 -------------------------------------------------------------------------------------
 //Read function:
 reads a string or binary and returns parsed content. This function can be useful if 
@@ -33,10 +32,10 @@ Period (Amount of time)
 -------------------------------------------------------------------------------------
 //How to add xml attributes ,  xml CDATA and namespace..?
 
-The CDATA means , character data CDATA is defined as blocks of text that are not parsed
-by the parser , but recognized as markup..
-predefined entities such as &it , &gt and &amp require typing and are generally difficult
-to read in markup in such case CDATA use..
+The CDATA means , character data CDATA is defined as blocks of text that are not 
+parsed by the parser , but recognized as markup..
+predefined entities such as &it , &gt and &amp require typing and are generally 
+difficult to read in markup in such case CDATA use..
 <![CDATA[
     character with markup
 ]]>
@@ -51,8 +50,8 @@ Returns an object of array {[]} that groups items from an array[] based on speci
 criteria, such as an expression or matching selector...
 
 //zip & unzip:
-zip Merges elements from two arrays into an array of arrays[[]] , unzip is opposite of
- zip..
+zip Merges elements from two arrays into an array of arrays[[]] , unzip is opposite 
+of zip..
 
 
 match:
@@ -70,7 +69,7 @@ mask:  mask  "keyName" with "******"
 The value to use for masking , the value can be any DataWeave type..
 -------------------------------------------------------------------------------
 //size of:
-Returns the number of characters (including white space) in an string. Returns the 
+Returns the number of characters (including white space) in  string. Returns the 
 number of elements in an array. It returns 0 if the array is empty. This version of 
 sizeOf takes an array[] or an array of arrays[[]] as input...
 
@@ -89,7 +88,7 @@ Returns an array of strings with the names of all the keys within the given obje
 ---------------------------------------------------------------------------------
 import * from dw::Runtime
 
-wait: 
+Wait: 
 Stops the execution for the specified timeout period (in milliseconds).
 WARNING: Stopping the execution blocks the thread, potentially causing slowness, low 
 performance and potentially freezing of the entire runtime. This operation is intended 

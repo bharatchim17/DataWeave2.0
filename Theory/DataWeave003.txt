@@ -1,15 +1,13 @@
 -------------------------------------------------------------------------------------
 //What is dataweave & why we have to use it..?
 Dataweave is a programming language designed by mulesoft for accessing and transforming
-data that travels through mule application.. mule runtime engine incorporates dataweave
-in several core components like transform and set payload , which enable to execute 
-dataweave scripts and expressions in mule application..
+data that travels through mule application.. 
 
 //What is the latest version for dataweave..?
 -> 2.4
 
 //List out frequently used dataweave inbuilt functions..?
--> We can list out few dataweave functions that you have worked in realtime projects..
+-> We can list out few dataweave functions that we have worked in realtime projects..
 map , mapObject , filter, filterObject , flatten , pluck etc..
 
 //How can we invoke or call flows from dataweave..?
@@ -28,8 +26,8 @@ To sort in descending order: (payload orderBy ((item , index)-> item))[-1 to 0]
 //(payload orderBy -$)[0] give descending order highest value..
 
 //Find smallest and greatest numer in an array..?
-(payload orderBy((item , index)-> item))[0] <--- for smallest numer
-(payload orderBy((item , index)-> item))[-1] <--- for greatest numer
+(payload orderBy((item , index)-> item))[0] <--- for smallest number
+(payload orderBy((item , index)-> item))[-1] <--- for greatest number
 
 //Filter out even and odd numbers..?
 payload filter ((item , index) -> (item mod 2) == 0) <--- even number
