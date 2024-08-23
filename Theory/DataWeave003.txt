@@ -11,7 +11,7 @@ data that travels through mule application..
 map , mapObject , filter, filterObject , flatten , pluck etc..
 
 //How can we invoke or call flows from dataweave..?
-We can use lookup functions but , we can call private flow but not subflow..  
+-> We can use lookup functions but , we can call private flow but not subflow..  
 Mule::lookup('privateFlow_Name') 
 
 //How to access property in dataweave..?
