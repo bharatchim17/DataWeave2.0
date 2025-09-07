@@ -1,7 +1,16 @@
-//To convert json output to xml..
-%dw 2.0
-output application/xml
----
-producuts: {
-    (payload)
-}
+------------------------------------------------------------------------------------
+//DataWeave is the primary data trasformation language for use in Mule flows...
+//DataWeave 2.0 is for Mule 4 apps and dataweave 1.0 is for Mule 3 app..
+----------------------------------------------------------------------------------
+//%dw: Is dataweave version %dw2.0
+//import: For importing dataWeave function module...
+var: Global variables for defining constants that we can reference throughout the body of the DataWeave script..
+fun: For creating custom functions that can be called from within the body of the script..
+type: For specifying custom type that we can use as expression...
+na: Use to import namespace...
+output: Commonly used directive that specifies the mime...
+If there is no output then default output is application/java ...
+If mime types of the inputs differ , and no output is specified , the script throws an exception so that
+we know to specify an output mime type...
+-----------------------------------------------------------------------------------------
+
