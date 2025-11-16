@@ -1,9 +1,13 @@
 -------------------------------------------------------------------------------------
 //Read function:
- it reads a string or binary and returns parsed content..This function can be useful if 
-the reader cannot determine the content type..
-//read(" " , "content-type")
-//readUrl("classpath://fileName" , "file_Content-type")
+read() is used to parse a string or binary data into a structured DataWeave value (object, array, number, etc)..
+Use read() when:
+The content type cannot be detected automatically..
+we have a JSON/XML/CSV string that we want to convert into real structured data..
+we want to force a specific content type while parsing..
+
+read(" " , "content-type")
+readUrl("classpath://fileName", "file-content-type")
 -----------------------------------------------------------------------------------
 //Date & Time:
 
@@ -25,17 +29,31 @@ Creates a Time value from values specified for hour, minutes, seconds, and timez
 fields...
 
 6. Timezone: |+05:00|
-Period (Amount of time)
-1. DatePeriod: |P1Y|
-2. Duration: |PT1H|
+
+6.1. Timezone: +05:00
+This indicates a time offset of 5 hours ahead of UTC...
+Example:
+2025-11-16T19:00:00+05:00
+
+6.2. DatePeriod: P1Y
+P1Y means a period of 1 year...
+DatePeriod is used for calendar-based periods (years, months, days)...
+Examples:
+P1Y → 1 year
+P3M → 3 months
+P2Y6M5D → 2 years, 6 months, 5 days
+
+6.3. Duration: PT1H
+PT1H means a duration of 1 hour...
+Duration is used for time-based lengths (hours, minutes, seconds)...
+Examples:
+PT1H → 1 hour
+PT30M → 30 minutes
+PT1H20M15S → 1 hour 20 minutes 15 seconds
 -------------------------------------------------------------------------------------
-The CDATA means , character data CDATA is defined as blocks of text that are not 
-parsed by the parser , but recognized as markup..
-predefined entities such as &it , &gt and &amp require typing and are generally 
-difficult to read in markup in such case CDATA use..
-<![CDATA[
-    character with markup
-]]>
+//CDATA stands for Character Data:
+A CDATA section is used in XML-like markup languages to include text that should not be parsed as markup 
+by the XML parser...
 ---------------------------------------------------------------------------------
 //Scan:  
 Returns an array with all of the matches found in an input string...
@@ -51,8 +69,6 @@ expression or matching selector...
 
 //zip & unzip:
 zip Merges elements from two arrays into an array of arrays[[]] , unzip is opposite of zip..
-
-
 match:
 match {
     case "" -> $
@@ -85,17 +101,18 @@ Returns an array of strings with the names of all the keys within the given obje
 import * from dw::Runtime
 
 Wait: 
-Stops the execution for the specified timeout period (in milliseconds).
+Stops the execution for the specified timeout period (in milliseconds)..
 WARNING: Stopping the execution blocks the thread, potentially causing slowness, low 
 performance and potentially freezing of the entire runtime. This operation is intended 
 for limited functional testing purposes. Do not use this function in a production 
 application, performance testing , or with multiple applications deployed...
 ------------------------------------------------------------------------------------
 //Explain lookup function..?
+-->
 lookup() is a DataWeave built-in function used to call a private flow from inside a DataWeave script..
 A private flow is an internal flow without an inbound connector, but it can be invoked by the application.
-The lookup() function triggers that private flow and returns its output so we can use it in our DataWeave 
-transformation.
+The lookup() function triggers that private flow and returns its output so we can use it in our dataWeave 
+transformation...
 Subflows cannot be called using lookup() because they are not independent or executable on their own...
 
 %dw 2.0

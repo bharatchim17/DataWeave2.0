@@ -1,5 +1,6 @@
 -------------------------------------------------------------------------------------
 //What is dataweave & why we have to use it..?
+-->
 Dataweave is a programming language designed by mulesoft for accessing and transforming
 data that travels through mule application.. 
 Datawave (dw) format is canonical format (generical format i.e. predefined 
@@ -10,19 +11,23 @@ structure) , for all transformation..
 we can't write it in header because DataWeave does not support patch/minor version numbers in the header.
 ---------------------------------------------------------------------------------------------
 //List out frequently used dataweave inbuilt functions..?
--> We can list out few dataweave functions that we have worked in realtime projects..
+--> 
+We can list out few dataweave functions that we have worked in realtime projects..
 map , mapObject , filter, filterObject , flatten , pluck etc..
 
 //How can we invoke or call flows from dataweave..?
--> We can use lookup functions but , we can call private flow but not subflow..  
+--> 
+We can use lookup functions but , we can call private flow but not subflow..  
 Mule::lookup('privateFlow_Name') 
 
 //How to access property in dataweave..?
--> by using P function...  p('http.port')
+--> 
+by using P function...  p('http.port')
 ---------------------------------------------------------------------------------------------
 //How to sort an array..?
-using orderBy function we can sort array
-To sort in  ascending order: payload orderBy((item , index)-> item)
+-->
+using orderBy function we can sort array:
+To sort in  ascending order: payload orderBy ((item , index)-> item)
 To sort in descending order: payload orderBy ((item , index)-> item))[-1 to 0] 
 
 //payload orderBy $ give ascending order value..
@@ -30,41 +35,49 @@ To sort in descending order: payload orderBy ((item , index)-> item))[-1 to 0]
 //(payload orderBy -$)[0] to get the highest value from descending order..
 -----------------------------------------------------------------------------------------
 //Find smallest and greatest number in an array..?
+-->
 (payload orderBy((item , index)-> item))[0] <--- for smallest number
 (payload orderBy((item , index)-> item))[-1] <--- for greatest number
 
 //Filter out even and odd numbers..?
+-->
 payload filter ((item , index) -> (item mod 2) == 0) <--- even number
 payload filter ((item , index) -> (item mod 2) != 0) <--- Odd number
 -------------------------------------------------------------------------------
 //How to print current date..?
+-->
 now() as Date { format: "yyyy-MM-dd" }
 now() as Date <-- This outputs only the date part of the current timestamp...
 ----------------------------------------------------------------------------------
 //What is causedBy function in Dataweave..? 
 -->
 causedBy() is a DataWeave function used inside a try-catch (error handling) block to check whether the
- error was thrown by a specific error type.
-It works just like checking an error type in a Mule error handler, but inside DataWeave.
+error was thrown by a specific error type..
+It works just like checking an error type in a Mule error handler, but inside DataWeave..
 --------------------------------------------------------------------------------------
 //Does the desendent(..) selector select all the keys or just first one in nested
  object..?? 
- A: The descendant selector (..) selects all matching keys at any nested level, not just the first one.
-paylod..name
+--> 
+The descendant selector (..) selects all matching keys at any nested level, not just the first one.
+paylod..name..Use payload..name[0] to access only the first match 
 
 //Does the multi value selector(.*) select keys on nested level of the object.. ??
- A:- No , multi value selector doesn't select keys on nested level of the object.
+--> 
+No , multi value selector doesn't select keys on nested level of the object.
+.* only selects immediate child values of an object, not keys nested deeper..
 payload.*name
 
+
 //What happens if we combine both Descendent and Multi-value selectors(..*) ??
- A: ..* selects all matching keys at all nested levels, that we want to access.
+--> 
+..* selects all matching keys at all nested levels, that we want to access..
  payload..*name
 
 //output of multi-value selector is an array(The result of .* is always an array) , it works for both
  array and objects..
 ------------------------------------------------------------------------------
 //How to update value of key..?
-
+-->
 import * from dw::util::Values
 ---
 payload map((item , index)-> item update "key" with "value")
@@ -82,7 +95,7 @@ keysOf(payload) ; valuesOf(payload)
 payload -"key1" - "key2"
 payload - (["key1", "key2"])
 Works only for keys at the same level...
-Doesn’t delete nested keys (you must use other methods for that)...
+Doesn't delete nested keys (must use other methods for that)...
 -------------------------------------------------------------------------------
 //How to extract integers only from "a1b2c3d4"..?
 -->
@@ -146,12 +159,13 @@ mapObject → loops through the key/value pairs inside each object..
 (value as String): key → creates a new key using the original value..
 ------------------------------------------------------------------------
 //What's differene between mapObject & pluck..?
+-->
 mapObject: The input & output for mapObject function is an object{}..
 pluck: The input is object{} & output is an Array[]..
 ----------------------------------------------------------------------
 //Write dataweave script to check if input is prime number..?
---> A prime number is natural number greater than 1 , which is only divisible by 1 
-and itself..
+--> 
+A prime number is natural number greater than 1 , which is only divisible by 1 and itself..
 %dw 2.0
 output application/json
 var n = 29
@@ -160,6 +174,7 @@ n > 1 and not ((2 to (n - 1)) any (i -> n mod i == 0))
 
 --------------------------------------------------------
 //How to convert datetime to specific timezone..?
+-->
 %dw 2.0
 output application/json
 ---
@@ -171,8 +186,9 @@ now() >> "America/Los_Angeles"
 now() >> "Europe/London"
 ----------------------------------------------------------------
 //what is factorial value and how to find it..?
+-->
 The factorial of a number n (written as n!) means:
-👉 Multiply all whole numbers from n down to 1.
+👉 Multiply all whole numbers from n down to 1..
 Example:
 
 5! = 5 × 4 × 3 × 2 × 1 = 120
@@ -206,25 +222,43 @@ output application/csv header=false
 payload
 ------------------------------------------------------------------------------
 //How to remove indentation from json output to save memory..?
+-->
 %dw 2.0
 output application/json indent=false
 ---
 paylaod
 
 //What this does:
-Removes all pretty formatting
-Produces compact JSON
-Reduces output size (memory + disk)
+Removes all pretty formatting..
+Produces compact JSON..
+Reduces output size (memory + disk)..
 ---------------------------------------------------------------------------------
-//How to print $(doller) in the output..? --> \$
+//How to print $(doller) in the output..? 
+-->
+by using \$:
 
+%dw 2.0
+output application/json
+var price = 99
+---
+"\$${price}"
+
+%dw 2.0
+output application/json
+---
+"\$100"
+-------------------------------------------------------
 //How to convert JSON string to JSON..? 
 --> 
 %dw 2.0
 output application/json
+var payload = {
+  user: "{\"name\":\"Bharat\",\"age\":30}",
+  status: "\"active\""
+}
 ---
 payload mapObject ((value, key) -> {
-    (key): read(value, "application/json")
+  (key): read(value, "application/json")
 })
 ---------------------------------------------------------------------------------
 //How many types of targets can created in transform message..?
@@ -242,9 +276,10 @@ if(paylaod == reverse(paylaod)) "Palindrome" else "Not a palindrome"
 ------------------------------------------------------------------------------
 //What's differene between == and ~= ?
 == will check data & data_types too ---->  5 == 5 , 5 =❌= "5"
-~= will only check the data  ---->  5 ~= "5" , 5 ~= 5
+~= will only check the data  ---->  5 ~= "5" same as 5 ~= 5
 -----------------------------------------------------------------------------
 //To extract all resulting payloads to an array, use a DataWeave script:
+-->
 flatten(valuesOf(payload) map ((item, index) -> item.*payload))
 
 %dw 2.0
@@ -252,9 +287,9 @@ output application/json
 var items = if (payload is Object) valuesOf(payload) else payload
 ---
 flatten(items map (item -> item.payload))
-
 ----------------------------------------------------------------------------------------
-Difference between flatMap and flatten? 
+Difference between flatMap and flatten..?
+--> 
 flatMap: Iterates over each item in an array and flattens the results, can act on 
 values and indices of items in the array.. 
 Flatten: Turns a nested array into a simple array. only acts on the values of the 

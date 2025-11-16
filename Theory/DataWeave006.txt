@@ -63,18 +63,28 @@ objectPayload filterObject(key , value , index)-> condition..
 ----------------------------------------------------------------
 //Dataweave core flatten & flatMap functions:
 
-flatten: Turns a set of subarrays (such as [1,2,3],[4,5] ) into a single
-array[1,2,3,4,5]
-the flatten of arrays of array will give us a single array...
+flatten: Turns a set of subarrays (such as [1,2,3],[4,5]) into a single array[1,2,3,4,5] ...
+the flatten of arrays[[]] of array will give us a single array...
 
 flatMap: itterates over each item in an array and flattens the results..
+flatMap = map + flatten combined...
+It iterates over each element, applies the transformation, Flattens the results automatically...
+
 syntax-1: without parameters:
 arrayOfArrayPayload flatMap{
 ($$):$
 }
+where, $ = current value ; $$ = current index.......
+
 syntax-2: with parameters
 arrayOfarrayPayload flatmap(value,index)->{
 (index):value
+}
+
+%dw 2.0 output application/json
+---
+[[1,2], [3,4]] flatMap {
+    $  // returns inner arrays
 }
 ----------------------------------------------------------------
 //dataweave core by functions:
@@ -83,8 +93,7 @@ distinctBy: iterates over the input and returns the unique elements in it...
 syntax-1: arrayPayload distinctBy $
 syntax-2: arrayPayload distinctBy(value)-> value
 
-orderBy: Reorders the elements of an input using criteria that acts on selected
-elements of that input..
+orderBy: Reorders the elements of an input using criteria that acts on selected elements of that input..
 syntax-1: arrayPayload orderBy $
 syntax-2: arrayPaylaod orderBy(value)-> value
 
@@ -97,7 +106,9 @@ joinBy:
 merges an array into single string value and uses the provided string 
 as separator between each item in the list.. Note that joinBy performs the opposite task 
 of splitBy..
-syntax: arrayPayload joinBy "separator"..
+syntax: arrayPayload joinBy "separator" joinBy ", " joinBy " - "..
+All elements are converted to string, Useful for creating CSV lines, readable messages, or formatted 
+outputs...
 ------------------------------------------------------------------------------
 //reduce function: 
 The reduce function in DataWeave is used to iterate over an array and accumulate a result by applying lambda 
@@ -109,6 +120,7 @@ Applies a reduction lambda expression to the elements($) in an array..
 
 syntax-1: arrayOfPayload reduce($,$$)
 example: [2,3,4]reduce($+$$)
+
 syntax-2: arrayOfPayload reduce(item,acc)->item + acc
 example:[2,3,4] reduce(item,acc)-> item + acc
 Explanation:
@@ -131,11 +143,9 @@ var numberArray = [2,3,4]
 ++: this statement ++ concatenates the string with string , adds objects together
 into single object.. add two arrays into a new array..
 
---: The statement -- removes all instances of the specified items from an array, 
-other versions act on objects..
+--: The statement -- removes all instances of the specified items from an array, other versions act on objects..
 
-Pluck: iterates over object{} --> output form is an Array[] of keys , value or indices
-from the oject....
+Pluck: iterates over object{} --> output form is an Array[] of keys , value or indices from the oject....
 The pluck function iterates over each key-value pairs of an input object{}...  
 it used to retrieve the values($), keys($$) and index ($$$) from object and return   -->
 output form as array[]..

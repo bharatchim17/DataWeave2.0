@@ -157,12 +157,14 @@ var covidObjectArray = [
 		}
   }]
 
+//! is the logical NOT (negation) operator. It inverts the truth value of the expression that follows it..
+ 
 //Prepend >> [] :- Data is left hand side and array is right hand side.. it prepend to 0 postion i.e. first 
 postion of array..
 //Append  [] << :- Data is right hand side and array is left hand side.. it append to the last postion of an 
 array..
 + operator: Appends data on right-hand side of the operator to items in the array 
-on left-hand side..For example, [1] + 2 result in [1,2], appending 2 to 1 in the array..
+on left-hand side..For example, [1] + 2 result in [1,2], appending 2 to in the array..
 The array always on the left-hand side of the operator..
 
 // - : Removes specific element of any supported type from an array..
@@ -171,18 +173,16 @@ The array always on the left-hand side of the operator..
 Conditional statement are 1. If else 2. Else if..
 
 If else:
-An if statement evaluates a conditional expression and returns, the value
-under the if only if the conditional expression...
-returns true otherwise , it returns the expression under else..
-every if expression must have matching else expression...
+An if statement evaluates a conditional expression and returns, the value under the if only if the conditional
+expression...
+returns true otherwise , it returns the expression under else.. every if expression must have matching else 
+expression...
 
 Else if:
-We can chain several else expressions together within an if-else construct 
-by incoroporating else if...
+We can chain several else expressions together within an if-else construct by incoroporating else if...
 
-// Flow control used when we want to execute certain part of our code in some 
-situations, while not excecuting others. (its way to add logic to our scripts). 
-DataWeave use if else expression that returns value.. 
+// Flow control used when we want to execute certain part of our code in some situations, while not excecuting 
+others. (its way to add logic to our scripts)..DataWeave use if else expression that returns value.. 
  example:- 1. if(condition) code1 else code2 i.e. if(condition) value1 else value2
            2. (expression) match 
            {
@@ -206,7 +206,7 @@ var covidObject = {
   "firstName": if(covidObject.firstName != null) covidObject.firstName else "Undefined",
   "lastName": covidObject.lastName default "Undefined",
   "phone": covidObject.phone,
-  ("email": covidObject.email) if(covidObject.email != null),
+  "email": if(covidObject.email != null) covidObject.email ,
   "caseType": if(covidObject.caseType == "positive") "POS" else if(covidObject.caseType == "recovered")
    "REC" else ""
 }
@@ -223,14 +223,13 @@ var city = null
 -------------------------------------------------------------------------------------------
 //Dataweave set default values:
 Conditional statement:
-default: default is used to default the values on fields when the values are empty..
-it works as if-else internally..
+default: default is used to default the values on fields when the values are empty..it works as if-else 
+internally..
 example: "userName": payload.name default"Undefined"
 
 //Dataweave pattern matching:
-match: The match statement behaves like a match or switch statement in other 
-languages , like java or C++ and routes an input expression to particular 
-output expression based on some conditions..
+match: The match statement behaves like a match or switch statement in other languages , like java or C++ 
+and routes an input expression to particular output expression based on some conditions..
 Syntax:
 inputExpression match{
 case <condition> -> <routing expression>

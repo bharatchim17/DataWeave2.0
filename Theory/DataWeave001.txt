@@ -13,9 +13,9 @@ $ first argument , $$ second argument , $$$ third argument   //(in lambda functi
 When there is No key  ----> $ represent value $$ represent index..
 
 // prefix function:- In Prefix notation function name came first (before argument 
-function name is written) then argument made :- functionName_(argument).
+function name is written) then argument made :- functionName_(argument)...
 // Infix notation :- In infix notation function takes two argument , Lambda be the 
-second argument of it :- (argument_1) functionName_ ->(argument_2)..
+second argument of it :- (argument_1) functionName ->(argument_2)..
 -----------------------------------------------------------------------------------
 // and operators :- all of the value must be true for output as true if even one value
 is false then output print false..
@@ -31,7 +31,7 @@ of other data...
 -----------------------------------------------------------------------------
 //Variables are two types pre-defined variables and user defined variables:
 
-//predefined variables: (The scope of variables are application level):
+//predefined variables(The scope of variables are application level):
 These predefined variables and functions provide a powerful set of tools for performing data transformations
 and manipulations within DataWeave...
 1. message
@@ -70,23 +70,23 @@ These variables will be created by us in our mule flow , their are two types mai
 2. Datawave variables..
 
 1. Flow level variables(The scope of variable is flow level) ;
-By using transform message component we use flow level varaibles , click on add new target then
-assign value for varaibles and save it...
+By creating target , using transform message component we use flow level varaibles , click on add new target 
+then assign value for varaibles and save it...
 
 2. Datawave variables(The scope of variable is Datawave level)..
-🧠 DataWeave Script Structure
-A typical DataWeave script has two main parts:
+--> 
+typical DataWeave script has two main parts:
 1. Header Section (Above the --- line)
 - This is where we define:
 - Global variables
 - Functions
 - Imports
 - Namespaces
-- These elements are accessible throughout the entire script — both in the header and body..
 2. Body Section (Below the --- line)
 - This is where we apply the main transformation logic...
 - we can define local variables here using var, but their scope is limited to the block or expression they 
 are defined in...
+These elements are accessible throughout the entire script both in the header and body..
 --------------------------------------------------------------------------------------------------
 //In DataWeave, there are several predefined variables and functions that can use 
 to access and manipulate data. Here are some commonly used ones:
@@ -207,8 +207,8 @@ example: []sumBy $.key
 Splits an array into two at a given pairs...
 
 //dropWhile:
-Drops elements from the array while the condition is met but stops the selection process when it reaches an 
-element that fails to satisfy the condition...
+Drops elements from the array while the condition is met but stops the selection process when it reaches 
+an element that fails to satisfy the condition...
 
 //join:
 Joins two arrays of objects by a same given value criteria...
