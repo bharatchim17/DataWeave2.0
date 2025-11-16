@@ -234,7 +234,7 @@ output application/json
 
 
 
-// //variables and if else construct 
+// //s and if else construct 
 
 // %dw 2.0
 // output application/json

@@ -7,7 +7,7 @@
  {
 //     // "countBy1" :  [ 1 , 2 , 3 , 4 , 5 , 6 ] countBy (($ mod 2) == 0) ,
 //     // "countBy2" :  [ 1 , 2 , 3 , 4 , 5 , 6 ] countBy (($ / 2) == 0) ,
-//     // "countBy3" :  [ 1 , 2 , 3 , 4 , 5 , 6 ] countBy (($ / 2) == 2) 
+//     // "countBy3" :  [ 1 , 2 , 3 , 4 , 5 , 6 ] countBy (($ / 2) == 2) , 
     
 //     "divideBy2" :  [ 1 , 2 , 3 , 4 , 5 , 6 ] divideBy 2 ,
 //     "divideBy4" :  [ 1 , 2 , 3 , 4 , 5 , 6 ] divideBy 4 ,

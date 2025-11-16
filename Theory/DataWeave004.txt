@@ -1,16 +1,266 @@
-------------------------------------------------------------------------------------
-//DataWeave is the primary data trasformation language for use in Mule flows...
-//DataWeave 2.0 is for Mule 4 apps and dataweave 1.0 is for Mule 3 app..
+-----------------------------------------------------------------------------
+//📘 .xml — Extensible Markup Language
+- Purpose: Stores and transports data in a structured, human-readable format..
+- Content: Contains actual data organized in tags..
+
+//📐 .xsd — XML Schema Definition
+- Purpose: Defines the structure, rules, and data types for an XML document..
+- Content: Specifies what elements and attributes are allowed, their order, data types, 
+and constraints..
+-----------------------------------------------------------------------------
+// %dw 2.0
+output application/csv headerLineNumber = 0, header = true
+---
+[
+  {
+    title: "Everyday Italian",
+    author: "Giada De Laurentiis",
+    year: 2005,
+    language: "en",
+    price: 30
+  }
+]
+-->
+🧠 Notes:
+- headerLineNumber = 0 means the header will be placed at the first line..
+- header = true ensures column names are included..
+- CSV output requires a list of objects, hence the square brackets..
 ----------------------------------------------------------------------------------
-//%dw: Is dataweave version %dw2.0
-//import: For importing dataWeave function module...
-var: Global variables for defining constants that we can reference throughout the body of the DataWeave script..
-fun: For creating custom functions that can be called from within the body of the script..
-type: For specifying custom type that we can use as expression...
-na: Use to import namespace...
-output: Commonly used directive that specifies the mime...
-If there is no output then default output is application/java ...
-If mime types of the inputs differ , and no output is specified , the script throws an exception so that
-we know to specify an output mime type...
------------------------------------------------------------------------------------------
+// %dw 2.0
+output application/json
+---
+{
+"singleValueSelector": payload[0].source,
+"multiValueSelector": payload.*source,
+"indexSelector": payload[0],
+"rangeSelector": payload[0 to 2] ,
+"singleValueSelector": payload.covidCases.*covidCase[0].source,
+"xmlNamespaceSelector": payload.covidCases.*covidCase[0].source.@id,
+"multiValueSelector": payload.covidCases.*covidCase.source,
+"indexSelector": payload.covidCases.*covidCase[1] ,
+"rangeSelector": payload.covidCases.*covidCase[0 to 2]
+}
+
+---------------------------------------------------------------------------
+//Type coercion:
+The process of changing field value from one type to other type..
+- Type can be coerced from one type to other using the 'as' operator...
+- Input: {"caseId": 667"}
+- Type coercion from string to number: payload.caseId as Number..
+
+%dw 2.0
+output application/java
+---
+payload.dateOfBirth as Date  {format: "dd-MM-yyyy"}/{format: "yyyy/MM/dd"}
+
+
+%dw 2.0
+output application/java
+---
+{
+"date-now": now() as Date,
+"date-time": now() as Time,
+"date-in-yyyy/MM/dd-format": now() as String {format: "MMMM"},
+"date-in-yyyy-MM-dd-format": now() as String {format: "yyyy-MM-dd"}
+}
+
+// ~= :- When types are different it coerce one value types to other..
+--------------------------------------------------------
+//operator:
+
+Dataweave-arithemetic-relational-logical-operators:
+ Logical operators allow us to write true/false kind of expression...
+
+%dw 2.0
+output application/json
+var number1 = 1
+var number2 = 2
+var boolean1 = true
+var boolean2 = false
+var numberArray = [1,2,3]
+var stringArray = ["3","hello","mule"]
+var mixedArray = [1,1,2,3,"hello","mule"]
+---
+[{
+	"mathemeticalOperators": {
+		"+": number1+number2,
+		"-": number2-number1,
+		"*": numberArray[1] * numberArray[2],
+		"/": numberArray[2]/numberArray[1],
+	},
+	"relationalOperators": {
+		"<": number1 < number2,
+		">": number1 > number2,
+		"<=": numberArray[1] <= numberArray[2],
+		">=": numberArray[1] >= numberArray[2],
+		"==": mixedArray[0] == mixedArray[1],
+		"~=": numberArray[2] ~= stringArray[0]
+	},
+	"logicalOperator": {
+		"and-ex1": boolean1 and boolean2,
+		"and-ex2": (number1 < number2) and (number1 + 1 == number2),
+		"or-ex1": boolean1 or boolean2,
+		"or-ex2": (number1 > number2) or (number1 + 2 == number2),
+		"not-ex1": not (boolean1 or boolean2),
+		"not-ex2": not ((number1 < number2) or (number1 + 1 == number2)),
+		"!-ex1": ! (boolean1 or boolean2),
+		"!-ex2": ! ((number1 < number2) or (number1 + 1 == number2))
+	}
+		
+}]
+
+*dataweave-append-prepend-(+)-(-)-operators:
+
+%dw 2.0
+output application/json
+var numberArray = [1,2,3]
+var stringArray = ["3","hello","mule"]
+var mixedArray = [1,1,2,3,"hello","mule"]
+var covidObject = {
+  "firstName": "Mike",
+  "lastName": "Tyson",
+  "phone": "789-655-3878",
+  "email": "mike@gmail.com"
+}
+var covidObjectArray = [
+{
+  "firstName": "John",
+  "lastName": "Nix",
+  "phone": "541-754-3010",
+  "email": "john@gmail.com"
+},
+{
+  "firstName": "Jake",
+  "lastName": "Vend",
+  "phone": "655-789-2345",
+  "email": "jake@yahoo.com"
+}
+]
+---
+[{
+  	 // Array on right side when prepending.
+      "prepend" : 1 >> numberArray,
+      "prepend-string" : "a" >> stringArray,
+      "prepend-object" :  covidObject >> covidObjectArray,
+  	 // Array is on left side when appending.
+      "append-number" : numberArray << 2 ,
+      "append-string" : stringArray << "a" ,
+      "append-object" : covidObjectArray <<  covidObject ,
+     // + always appends within the array
+      "append-with-+" : numberArray + 2 ,
+      "removeNumberFromArray" : numberArray - 2 ,
+      "removeObjectFromArray" : covidObjectArray -  {
+		  "firstName": "John",
+		  "lastName": "Nix",
+		  "phone": "541-754-3010",
+		  "email": "john@gmail.com"
+		}
+  }]
+
+//Prepend >> [] :- Data is left hand side and array is right hand side.. it prepend to 0 postion i.e. first 
+postion of array..
+//Append  [] << :- Data is right hand side and array is left hand side.. it append to the last postion of an 
+array..
++ operator: Appends data on right-hand side of the operator to items in the array 
+on left-hand side..For example, [1] + 2 result in [1,2], appending 2 to 1 in the array..
+The array always on the left-hand side of the operator..
+
+// - : Removes specific element of any supported type from an array..
+--------------------------------------------------------------------------------------------
+//Dataweave control statements:
+Conditional statement are 1. If else 2. Else if..
+
+If else:
+An if statement evaluates a conditional expression and returns, the value
+under the if only if the conditional expression...
+returns true otherwise , it returns the expression under else..
+every if expression must have matching else expression...
+
+Else if:
+We can chain several else expressions together within an if-else construct 
+by incoroporating else if...
+
+// Flow control used when we want to execute certain part of our code in some 
+situations, while not excecuting others. (its way to add logic to our scripts). 
+DataWeave use if else expression that returns value.. 
+ example:- 1. if(condition) code1 else code2 i.e. if(condition) value1 else value2
+           2. (expression) match 
+           {
+case (condition) -> execute_if_condition_pass
+else (condition) -> if_no_condition_pass
+           }
+
+%dw 2.0
+output application/json
+
+var covidObject = {
+  "firstName": "Mike",
+  //"lastName": "Tyson",
+  "phone": "789-655-3878",
+  "email": "mike@gmail.com",
+  "caseType": "positive"
+}
+
+---
+{
+  "firstName": if(covidObject.firstName != null) covidObject.firstName else "Undefined",
+  "lastName": covidObject.lastName default "Undefined",
+  "phone": covidObject.phone,
+  ("email": covidObject.email) if(covidObject.email != null),
+  "caseType": if(covidObject.caseType == "positive") "POS" else if(covidObject.caseType == "recovered")
+   "REC" else ""
+}
+
+%dw 2.0
+output application/json
+var country = "India"
+var city = null
+---
+{
+	currency: if(country == "USA") "USD" else if(country == "India") "IRS" else "None",
+	city: if(city != null) city as String else ""
+}
+-------------------------------------------------------------------------------------------
+//Dataweave set default values:
+Conditional statement:
+default: default is used to default the values on fields when the values are empty..
+it works as if-else internally..
+example: "userName": payload.name default"Undefined"
+
+//Dataweave pattern matching:
+match: The match statement behaves like a match or switch statement in other 
+languages , like java or C++ and routes an input expression to particular 
+output expression based on some conditions..
+Syntax:
+inputExpression match{
+case <condition> -> <routing expression>
+case <condition> -> <routing expression>
+else -> <default routing expression>
+}
+
+%dw 2.0
+output application/json
+
+var covidObject = {
+  "firstName": "Mike",
+  "lastName": "Tyson",
+  "phone": "789-655-3878",
+  "email": "",
+  "caseType": "Recovered"
+} 
+
+---
+{
+  "firstName": covidObject.firstName,
+  "lastName": covidObject.lastName,
+  "phone": covidObject.phone,
+  "email": covidObject.email,
+  "caseType-if-else": if(covidObject.caseType == "positive") "POS" else if(covidObject.caseType == "Recovered") "REC" else "",
+  "caseType-match": covidObject.caseType match {
+  	case "positive" -> "POS"
+  	case "Recovered" -> "REC"
+  	else -> ""
+  }
+}
+---------------------------------------------------------------------------
 

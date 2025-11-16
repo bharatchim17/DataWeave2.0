@@ -1,8 +1,7 @@
 -------------------------------------------------------------------------------------
 //Read function:
-reads a string or binary and returns parsed content. This function can be useful if 
+ it reads a string or binary and returns parsed content..This function can be useful if 
 the reader cannot determine the content type..
-//Reads: it reads a string or binary and returns parsed content..
 //read(" " , "content-type")
 //readUrl("classpath://fileName" , "file_Content-type")
 -----------------------------------------------------------------------------------
@@ -30,8 +29,6 @@ Period (Amount of time)
 1. DatePeriod: |P1Y|
 2. Duration: |PT1H|
 -------------------------------------------------------------------------------------
-//How to add xml attributes ,  xml CDATA and namespace..?
-
 The CDATA means , character data CDATA is defined as blocks of text that are not 
 parsed by the parser , but recognized as markup..
 predefined entities such as &it , &gt and &amp require typing and are generally 
@@ -39,19 +36,21 @@ difficult to read in markup in such case CDATA use..
 <![CDATA[
     character with markup
 ]]>
-
 ---------------------------------------------------------------------------------
 //Scan:  
 Returns an array with all of the matches found in an input string...
-"www.mathoman.com" scan(/([a-z]*).([a-z]*).([a-z]*)/)
+
+%dw 2.0
+output application/json
+---
+"www.mathoman.com" scan(/([a-z]*)\.([a-z]*)\.([a-z]*)/)
 ----------------------------------------------------------------------------------
 //groupBy:
-Returns an object of array {[]} that groups items from an array[] based on specified 
-criteria, such as an expression or matching selector...
+Returns an object of array {[]} that groups items from an array[] based on specified criteria, such as an 
+expression or matching selector...
 
 //zip & unzip:
-zip Merges elements from two arrays into an array of arrays[[]] , unzip is opposite 
-of zip..
+zip Merges elements from two arrays into an array of arrays[[]] , unzip is opposite of zip..
 
 
 match:
@@ -59,9 +58,6 @@ match {
     case "" -> $
     else -> "  "
 }
-
-//Explain lookup function..?
- 
 --------------------------------------------------------------------------------
 import * from dw::util::Values
 
@@ -95,3 +91,15 @@ performance and potentially freezing of the entire runtime. This operation is in
 for limited functional testing purposes. Do not use this function in a production 
 application, performance testing , or with multiple applications deployed...
 ------------------------------------------------------------------------------------
+//Explain lookup function..?
+lookup() is a DataWeave built-in function used to call a private flow from inside a DataWeave script..
+A private flow is an internal flow without an inbound connector, but it can be invoked by the application.
+The lookup() function triggers that private flow and returns its output so we can use it in our DataWeave 
+transformation.
+Subflows cannot be called using lookup() because they are not independent or executable on their own...
+
+%dw 2.0
+output application/json
+---
+Mule::lookup('flow2', {test:'hello '})
+--------------------------------------------------------------------------------------

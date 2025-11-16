@@ -1,0 +1,156 @@
+---------------------------------------------------------------------------------------------
+//Dataweave core map function:
+Map:
+iterates over Array[] , array of array [[]] and array of object [{}] -> 
+output is array..
+The map function iterates over each element of an array applies transformation 
+to each element and return as Array.. 
+it takes two input array[] and Lambda expression -> in which array input comes before 
+map function and lambda expression comes after map function... 
+Iterates over items and indices in an array and outputs the results into a new array. 
+in which mapper take two input item ($) and index ($$)
+example:-     ($$) : $  In case of [{}] here, $$ is index and $ represent object... 
+
+syntax-1:without parameter
+arrayPayload map{
+($$):$
+}
+syntax-2:with parameter
+arrayPayload map(value,index)->{
+(index):value
+}
+
+map function works as a for loop on top of the array, and on each iteration it will pick the values one after 
+other , and it will hold the values into the parameter payload..
+
+
+mapObject:
+it use to transform data in object , by iterating each key-value pair (MapObject iterates 
+over object{} and {{}} -->  return output as object..
+map object take two input 1> object to transform (written left  to MapObject) 
+                          2> lambda expression   (written right to MapObject)
+Iterates over an object using a mapper that acts on values ($) , keys ($$) or indices ($$$) of that object...
+
+syntax-1: without parameters
+objectPayload mapObject{
+    ($$$): {($):$$}
+}
+syntax-2: with parameters
+objectPayload mapObject(value,key,index)->{
+(key): value
+}
+----------------------------------------------------------------
+// Filter function :- it iterates over array and applies an expression that returns 
+matching values. expression must return true or false. Filter work on array[] -> 
+output form as an array[]...
+
+syntax-1: without parameters
+arrayPayload filter(condition)
+$ represents the current value on each iteration..
+syntax-2: with parameters
+arrayPayload filter(value,index)->condition
+
+//filterObject:- Iterates a list of key-value pairs in an object and applies an 
+expression that returns only matching objects, filtering out the rest from the output
+The expression must return true or false..
+
+syntax-1: without parameters
+objectPayload filterObject(condition)
+syntax-2: with parameters
+objectPayload filterObject(key , value , index)-> condition..
+
+//Filter works with map and filterObject works with MapObject..
+----------------------------------------------------------------
+//Dataweave core flatten & flatMap functions:
+
+flatten: Turns a set of subarrays (such as [1,2,3],[4,5] ) into a single
+array[1,2,3,4,5]
+the flatten of arrays of array will give us a single array...
+
+flatMap: itterates over each item in an array and flattens the results..
+syntax-1: without parameters:
+arrayOfArrayPayload flatMap{
+($$):$
+}
+syntax-2: with parameters
+arrayOfarrayPayload flatmap(value,index)->{
+(index):value
+}
+----------------------------------------------------------------
+//dataweave core by functions:
+
+distinctBy: iterates over the input and returns the unique elements in it...
+syntax-1: arrayPayload distinctBy $
+syntax-2: arrayPayload distinctBy(value)-> value
+
+orderBy: Reorders the elements of an input using criteria that acts on selected
+elements of that input..
+syntax-1: arrayPayload orderBy $
+syntax-2: arrayPaylaod orderBy(value)-> value
+
+groupBy: 
+returns an object that groups items from an array based on specified criteria..
+syntax-1: arrayPayload groupBy $
+syntax-2: arrayPayload groupBy(value)-> value..
+
+joinBy:
+merges an array into single string value and uses the provided string 
+as separator between each item in the list.. Note that joinBy performs the opposite task 
+of splitBy..
+syntax: arrayPayload joinBy "separator"..
+------------------------------------------------------------------------------
+//reduce function: 
+The reduce function in DataWeave is used to iterate over an array and accumulate a result by applying lambda 
+function to each element...
+It's useful for aggregating values, such as summing numbers, concatenating strings, or building complex 
+objects...
+reduce iterates over Array[] --> output form is object{} with single value..
+Applies a reduction lambda expression to the elements($) in an array.. 
+
+syntax-1: arrayOfPayload reduce($,$$)
+example: [2,3,4]reduce($+$$)
+syntax-2: arrayOfPayload reduce(item,acc)->item + acc
+example:[2,3,4] reduce(item,acc)-> item + acc
+Explanation:
+iteration-1: item is 2 (assigns first item to acc = 2)..
+iteration-2: item is 3 & acc is 2 -> 3 + 2 (assigns result to acc = 5)..
+iteration-3: item is 4 & acc is 5 -> 4 + 5 (assigns result to acc = 9)..
+result:9
+
+%dw 2.0
+output application/json
+var numberArray = [2,3,4]
+---
+{
+	"a": numberArray reduce($+$$),
+	"b": numberArray reduce(i, a) -> (i + a)
+}
+
+-----------------------------------------------------------------------------------
+//dataweave core other functions:
+++: this statement ++ concatenates the string with string , adds objects together
+into single object.. add two arrays into a new array..
+
+--: The statement -- removes all instances of the specified items from an array, 
+other versions act on objects..
+
+Pluck: iterates over object{} --> output form is an Array[] of keys , value or indices
+from the oject....
+The pluck function iterates over each key-value pairs of an input object{}...  
+it used to retrieve the values($), keys($$) and index ($$$) from object and return   -->
+output form as array[]..
+{   
+  
+} pluck $ | $$ | $$$ <--- $ value , $$ key , $$$ index
+
+to: returns a range with the specified boundaries..
+
+uuid: returns a v4 UUID using random numbers as source...
+
+zip: merges elements from two array of arrays..
+
+unzip: performs the opposite of zip it takes an array of array as input...
+----------------------------------------------------------------------------------
+
+
+
