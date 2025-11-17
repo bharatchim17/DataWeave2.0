@@ -43,7 +43,7 @@ output application/json
 
 ---------------------------------------------------------------------------
 //Type coercion:
-The process of changing field value from one type to other type..
+The process of changing field value from one data-type to other data-type..
 - Type can be coerced from one type to other using the 'as' operator...
 - Input: {"caseId": 667"}
 - Type coercion from string to number: payload.caseId as Number..
@@ -64,12 +64,13 @@ output application/java
 "date-in-yyyy-MM-dd-format": now() as String {format: "yyyy-MM-dd"}
 }
 
-// ~= :- When types are different it coerce one value types to other..
+//Lua: ~= means “not equal” 
+print(1 == "1")    -- false
+print(1 ~= "1")    -- true
 --------------------------------------------------------
 //operator:
-
 Dataweave-arithemetic-relational-logical-operators:
- Logical operators allow us to write true/false kind of expression...
+Logical operators allow us to write true/false kind of expression...
 
 %dw 2.0
 output application/json
@@ -170,6 +171,7 @@ The array always on the left-hand side of the operator..
 // - : Removes specific element of any supported type from an array..
 --------------------------------------------------------------------------------------------
 //Dataweave control statements:
+
 Conditional statement are 1. If else 2. Else if..
 
 If else:
@@ -254,7 +256,8 @@ var covidObject = {
   "lastName": covidObject.lastName,
   "phone": covidObject.phone,
   "email": covidObject.email,
-  "caseType-if-else": if(covidObject.caseType == "positive") "POS" else if(covidObject.caseType == "Recovered") "REC" else "",
+  "caseType-if-else": if(covidObject.caseType == "positive") "POS" else if(covidObject.caseType == "Recovered")"
+  REC" else "",
   "caseType-match": covidObject.caseType match {
   	case "positive" -> "POS"
   	case "Recovered" -> "REC"

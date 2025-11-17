@@ -10,8 +10,7 @@ header
 body
 }.. 
 
-Do statement syntax looks like same as data we've syntax , if we would like to create any variable 
-local to the this function, then we can make use of do scope..
+if we would like to create any variable local to the this function, then we can make use of do scope..
 
 %dw 2.0
 output application/json
@@ -109,12 +108,12 @@ returns an array of key-value pairs that describe the key , value and any attrib
 *//isBlank:- Returns true if the given string is empty (""), completely composed of 
 whitespaces("  "), or null. Otherwise, the function returns false.
 
-//isEmpty:- Returns true if the input string is empty.
+//isEmpty:- Returns true if the input string is empty("")..
 
-//min :- Returns the highest Comparable value in an array.
-// max :- Returns the lowest Comparable value in an array.
+//min :- Returns the highest Comparable value in an array...
+// max :- Returns the lowest Comparable value in an array...
 
-//mod:- Returns the modulo (the remainder after dividing the dividend by the divisor).
+//mod:- Returns the modulo (the remainder after dividing the dividend by the divisor)....
 
 //isDecimal:- Returns true if the given number contains a decimal, false if not.
 
