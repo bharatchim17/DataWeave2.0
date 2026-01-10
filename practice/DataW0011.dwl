@@ -133,3 +133,103 @@
 // 	"unzip-ex": unzip(mixedArray)
 // }
 // --------------------------------------------------------------
+// %dw 2.0
+// output application/json
+//  var numberArray = [0, 1, 2, 3, 3, 2, 1, 4]
+// ---
+// //numberArray orderBy $
+// //numberArray orderBy -$
+// //(numberArray orderBy -$)[0]
+// //numberArray orderBy ((item , index)-> item)
+// //numberArray orderBy ((item , index)-> - item)
+// //(numberArray orderBy ((item , index)-> - item))[0]
+// (numberArray orderBy ((item , index)-> - item))[0 to -1]
+// ------------------------------------------------------------------------------
+Dataweave-arithemetic-relational-logical-operators:
+
+%dw 2.0
+output application/json
+var number1 = 1
+var number2 = 2
+var boolean1 = true
+var boolean2 = false
+var numberArray = [1,2,3]
+var stringArray = ["3","hello","mule"]
+var mixedArray = [1,1,2,3,"hello","mule"]
+---
+[{
+	"mathemeticalOperators": {
+		"+": number1+number2,
+		"-": number2-number1,
+		"*": numberArray[1] * numberArray[2],
+		"/": numberArray[2]/numberArray[1],
+	},
+	"relationalOperators": {
+		"<": number1 < number2,
+		">": number1 > number2,
+		"<=": numberArray[1] <= numberArray[2],
+		">=": numberArray[1] >= numberArray[2],
+		"==": mixedArray[0] == mixedArray[1],
+		"~=": numberArray[2] ~= stringArray[0]
+	},
+	"logicalOperator": {
+		"and-ex1": boolean1 and boolean2,
+		"and-ex2": (number1 < number2) and (number1 + 1 == number2),
+		"or-ex1": boolean1 or boolean2,
+		"or-ex2": (number1 > number2) or (number1 + 2 == number2),
+		"not-ex1": not (boolean1 or boolean2),
+		"not-ex2": not ((number1 < number2) or (number1 + 1 == number2)),
+		"!-ex1": ! (boolean1 or boolean2),
+		"!-ex2": ! ((number1 < number2) or (number1 + 1 == number2))
+	}
+		
+}]
+
+*dataweave-append-prepend-(+)-(-)-operators:
+
+%dw 2.0
+output application/json
+var numberArray = [1,2,3]
+var stringArray = ["3","hello","mule"]
+var mixedArray = [1,1,2,3,"hello","mule"]
+var covidObject = {
+  "firstName": "Mike",
+  "lastName": "Tyson",
+  "phone": "789-655-3878",
+  "email": "mike@gmail.com"
+}
+var covidObjectArray = [
+{
+  "firstName": "John",
+  "lastName": "Nix",
+  "phone": "541-754-3010",
+  "email": "john@gmail.com"
+},
+{
+  "firstName": "Jake",
+  "lastName": "Vend",
+  "phone": "655-789-2345",
+  "email": "jake@yahoo.com"
+}
+]
+---
+[{
+  	 // Array on right side when prepending.
+      "prepend" : 1 >> numberArray,
+      "prepend-string" : "a" >> stringArray,
+      "prepend-object" :  covidObject >> covidObjectArray,
+  	 // Array is on left side when appending.
+      "append-number" : numberArray << 2 ,
+      "append-string" : stringArray << "a" ,
+      "append-object" : covidObjectArray <<  covidObject ,
+     // + always appends within the array
+      "append-with-+" : numberArray + 2 ,
+      "removeNumberFromArray" : numberArray - 2 ,
+      "removeObjectFromArray" : covidObjectArray -  {
+		  "firstName": "John",
+		  "lastName": "Nix",
+		  "phone": "541-754-3010",
+		  "email": "john@gmail.com"
+		}
+  }]
+//   -----------------------------------------------------------------------------

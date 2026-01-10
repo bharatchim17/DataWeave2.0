@@ -1,9 +1,9 @@
 -------------------------------------------------------------------------------------
 //What is dataweave & why we have to use it..?
 -->
-Dataweave is a programming language designed by mulesoft for accessing and transforming
-data that travels through mule application.. 
-Datawave (dw) format is canonical format (generical format i.e. predefined structure) , for all transformation.. 
+Dataweave is a programming language designed by mulesoft for accessing and transforming data that travels 
+through mule application.. 
+Datawave (dw) format is canonical format (generical format i.e. predefined structure), for all transformation.. 
 
 //What is the latest version for dataweave..?
 -> 2.10.0
@@ -16,8 +16,8 @@ map , mapObject , filter, filterObject , flatten , pluck etc..
 
 //How can we invoke or call flows from dataweave..?
 --> 
-We can use lookup functions but , we can call private flow but not subflow..  
 Mule::lookup('privateFlow_Name') 
+We can use lookup functions but , we can call private flow but not subflow..  
 
 //How to access property in dataweave..?
 --> 
@@ -27,16 +27,16 @@ by using P function...  p('http.port')
 -->
 using orderBy function we can sort array:
 To sort in  ascending order: payload orderBy ((item , index)-> item)
-To sort in descending order: payload orderBy ((item , index)-> item))[-1 to 0] 
+To sort in descending order: payload orderBy ((item , index)-> item))[0 to -1] 
 
 //payload orderBy $ give ascending order value..
 //payload orderBy -$ give descending order value..
 //(payload orderBy -$)[0] to get the highest value from descending order..
------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
 //Find smallest and greatest number in an array..?
 -->
-(payload orderBy((item , index)-> item))[0] <--- for smallest number
-(payload orderBy((item , index)-> item))[-1] <--- for greatest number
+(payload orderBy((item , index)-> item))[0] <--- for greatest number
+(payload orderBy((item , index)-> item))[-1] <--- for smallest number
 
 //Filter out even and odd numbers..?
 -->
@@ -141,6 +141,7 @@ payload splitBy (/[,.\/]/)
 
 --------------------------------------------------------------------------------
 //How to skip null value..?
+-->
 %dw 2.0 
 output application/json skipNullOn="everywhere"
 ---
@@ -157,7 +158,7 @@ var payload = {
     city: null,
     country: "India"
   }
-}
+} 
 ---
 payload
 ---------------------------------------------------------------------------------
@@ -168,12 +169,12 @@ payload
 
  %dw 2.0
 output application/json
-var payload = {
+var duplicates = {
   a: [1, 2, 3],
   b: [3, 4, 5]
 }
 ---
-flatten(valuesOf(payload)) distinctBy $ 
+flatten(valuesOf(duplicates)) distinctBy $ 
 
 ------------------------------------------------------------------------------------------------
 //How to swap the key:value pairs..?
@@ -188,21 +189,15 @@ map → loops through each object in the array..
 mapObject → loops through the key/value pairs inside each object..
 (value as String): key → creates a new key using the original value..
 ------------------------------------------------------------------------
-//What's differene between mapObject & pluck..?
+//What's difference between mapObject & pluck..?
 -->
 mapObject: The input & output for mapObject function is an object{}..
-pluck: The input is object{} & output is an Array[]..
+pluck: The input of pluck is object{} & output is an Array[]..
 ----------------------------------------------------------------------
-//Write dataweave script to check if input is prime number..?
+//What is dataweave script to check if input is prime number..?
 --> 
 A prime number is a natural number greater than 1 that has no positive divisors other than 1 and 
 itself...
-%dw 2.0
-output application/json
-var n = 29
----
-n > 1 and not ((2 to (n - 1)) any (i -> n mod i == 0))
-
 --------------------------------------------------------
 //How to convert datetime to specific timezone..?
 -->
@@ -260,7 +255,6 @@ output application/json indent=false
 paylaod
 
 //What this does:
-Removes all pretty formatting..
 Produces compact JSON..
 Reduces output size (memory + disk)..
 ---------------------------------------------------------------------------------
@@ -283,12 +277,12 @@ output application/json
 --> 
 %dw 2.0
 output application/json
-var payload = {
+var jpayl = {
   user: "{\"name\":\"Bharat\",\"age\":30}",
   status: "\"active\""
 }
 ---
-payload mapObject ((value, key) -> {
+jpayl mapObject ((value, key) -> {
   (key): read(value, "application/json")
 })
 ---------------------------------------------------------------------------------
@@ -300,40 +294,29 @@ Three types of targets can created in transform message:
 3. variable
 --------------------------------------------------------------------------------
 //How to check if the given string palindrome..?
-import * from dw::core::strings
+-->
+%dw 2.0
+import * from dw::core::Strings
 output application/json
+var payml= "wow"
 ---
-if(paylaod == reverse(paylaod)) "Palindrome" else "Not a palindrome"
+if(payml == reverse(payml))
+"palindrome"
+else
+"Not palindrome"
 ------------------------------------------------------------------------------
 //What's differene between == and ~= ?
 == will check data & data_types too ---->  5 == 5 , 5 =❌= "5"
 ~= will only check the data  ---->  5 ~= "5" same as 5 ~= 5
------------------------------------------------------------------------------
-//To extract all resulting payloads to an array, use a DataWeave script:
--->
-flatten(valuesOf(payload) map ((item, index) -> item.*payload))
-
-%dw 2.0
-output application/json
-var items = if (payload is Object) valuesOf(payload) else payload
----
-flatten(items map (item -> item.payload))
 ----------------------------------------------------------------------------------------
 Difference between flatMap and flatten..?
 --> 
 flatMap: Iterates over each item in an array and flattens the results, can act on 
 values and indices of items in the array.. 
-can apply logic to every element
-can use value and index
-can return arrays, and it will flatten them
-It is both iterative + transforming + flattening
+It is iterative + transforming + flattening
 
-Flatten: Turns a nested array into a simple array. only acts on the values of the 
+Flatten: Turns a nested array into a simple array... only acts on the values of the 
 arrays..Turns a set of subarrays[[]] into a single array as output..
-No iteration logic
-No access to index
-Only removes nested arrays
-Acts only on values
 ------------------------------------------------------------------------------------
 //DataWeave is the primary data trasformation language for use in Mule flows...
 //DataWeave 2.0 is for Mule 4 apps and dataweave 1.0 is for Mule 3 app..

@@ -105,15 +105,16 @@
 // ----------------------------------------------------------------------------------
 //Coersion:
 
-// %dw 2.0 
-// output application/json
-// ---
-// {
-// "key1" : "22" as Number ,
-// "key2": 12.3 as String {format: "##"} as Number ,
-// "key3": 12.32596 as String {format: "##.##"} as Number ,
-// "key4": "2025-07-09" as Date as String {format: "dd-MMM-yy" , locale: "in"}
-// }
+%dw 2.0
+output application/json
+---
+{
+    "key1": "22" as Number ,
+    "key2": 12.3 as String {format: "##"} as Number,
+    "key3": 12.32596 as String {format: "#.##"} as Number ,
+    "key4": "2025-07-09" as Date as String{format: "dd-MMM-yy"}
+}
+
 //--------------------------------------------------------------------------
 //DateTime
 

@@ -1,13 +1,13 @@
------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 // Object is always enclosed with {} and contains key:value pairs..
 // An Array is always enclosed with [] and contains only Value(item)..
-// Scope are created by using do statement , where we can declare varaibles and more 
-function..
------------------------------------------------------------------------------------------
+// Scope are created by using do statement , where we can declare varaibles and more function..
+--------------------------------------------------------------------------------------------------
 // function without name called as Lambda , Lambda is value just like string we can assign it to 
 varaibles:-  ((argument) -> body) () 
 Lambda became useful when we want to use function as argument to other function or 
 return function from function which is called higher ordered function..
+
 $ , $$ , $$$ :- 
 $ first argument , $$ second argument , $$$ third argument   //(in lambda functions)..
 When there is No key  ----> $ represent value $$ represent index..
@@ -88,7 +88,7 @@ typical DataWeave script has two main parts:
 are defined in...
 --------------------------------------------------------------------------------------------------
 //In DataWeave, there are several predefined variables and functions that can use 
-to access and manipulate data. Here are some commonly used ones:
+to access and manipulate data...
 
 1. payload: Represents the main data being processed in a DataWeave transformation.
 It's the input data that we want to transform or manipulate...
@@ -169,11 +169,12 @@ A concise anonymous function using arrow syntax ->...In DataWeave, all anonymous
 A function that takes another function as input or returns a function.. map, filter, reduce are built-in 
 higher-order functions..
 
-%dw 2.0 output application/json
+%dw 2.0
+output application/json
 fun applyTwice(f, x) = f(f(x))
-fun square(n) = n * n
+var square = (n) -> n * n
 ---
-applyTwice(square, 2) // Output: 16
+applyTwice(square, 2)  // Output: 16
 
 %dw 2.0 output application/json
 fun applyTwice(f, x) = f(f(x))
@@ -182,6 +183,14 @@ fun increment(n) = n + 1
 applyTwice(increment, 3) // returns 5
 -----------------------------------------------------------------------------------
 import * from dw::core::Arrays
+1. countBy
+2. divideBy
+3. indexOf
+4. slice
+5. sumby
+6. splitAt
+7. dropWhile
+8. join
 
  //countBy:  
  Groups and counts elements in an array based on a matching condition or key extractor.
@@ -200,7 +209,7 @@ example: slice(var_name , from_index , until_index)..
 
 //sumby: 
 it works on array and returns the sum of the values of the elements..
-example: []sumBy $.key
+example: []sumBy $.keyName
 
 //splitAt: 
 Splits an array into two at a given pairs...

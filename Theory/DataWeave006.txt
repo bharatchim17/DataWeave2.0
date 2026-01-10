@@ -1,14 +1,13 @@
 ---------------------------------------------------------------------------------------------
 //Dataweave core map function:
 Map:
-iterates over Array[] , array of array [[]] and array of object [{}] -> 
-output is array..
-The map function iterates over each element of an array applies transformation 
-to each element and return as Array.. 
-it takes two input array[] and Lambda expression -> in which array input comes before 
-map function and lambda expression comes after map function... 
-Iterates over items and indices in an array and outputs the results into a new array. 
-in which mapper take two input item ($) and index ($$)
+iterates over Array[] , array of array [[]] and array of object [{}] -> output is array..
+The map function iterates over each element of an array applies transformation to each element and return as 
+Array.. 
+it takes two input array[] and Lambda expression -> in which array input comes before map function and lambda 
+expression comes after map function... 
+Iterates over items and indices in an array and outputs the results into a new array... in which mapper take 
+two input item ($) and index ($$)
 example:-     ($$) : $  In case of [{}] here, $$ is index and $ represent object... 
 
 syntax-1:without parameter
@@ -25,8 +24,8 @@ other , and it will hold the values into the parameter payload..
 
 
 mapObject:
-it use to transform data in object , by iterating each key-value pair (MapObject iterates 
-over object{} and {{}} -->  return output as object..
+it use to transform data in object , by iterating each key-value pair (MapObject iterates over object{} and 
+{{}} -->  return output as object..
 map object take two input 1> object to transform (written left  to MapObject) 
                           2> lambda expression   (written right to MapObject)
 Iterates over an object using a mapper that acts on values ($) , keys ($$) or indices ($$$) of that object...
@@ -40,9 +39,8 @@ objectPayload mapObject(value,key,index)->{
 (key): value
 }
 ----------------------------------------------------------------
-// Filter function :- it iterates over array and applies an expression that returns 
-matching values. expression must return true or false. Filter work on array[] -> 
-output form as an array[]...
+// Filter function :- it iterates over array and applies an expression that returns matching values... 
+expression must return true or false. Filter work on array[] -> output form as an array[]...
 
 syntax-1: without parameters
 arrayPayload filter(condition)
@@ -50,9 +48,8 @@ $ represents the current value on each iteration..
 syntax-2: with parameters
 arrayPayload filter(value,index)->condition
 
-//filterObject:- Iterates a list of key-value pairs in an object and applies an 
-expression that returns only matching objects, filtering out the rest from the output
-The expression must return true or false..
+//filterObject:- Iterates a list of key-value pairs in an object and applies an expression that returns only 
+matching objects, filtering out the rest from the output The expression must return true or false..
 
 syntax-1: without parameters
 objectPayload filterObject(condition)
@@ -64,7 +61,7 @@ objectPayload filterObject(key , value , index)-> condition..
 //Dataweave core flatten & flatMap functions:
 
 flatten: Turns a set of subarrays (such as [1,2,3],[4,5]) into a single array[1,2,3,4,5] ...
-the flatten of arrays[[]] of array will give us a single array...
+the flatten of arraysof array[[]]  will give us a single array...
 
 flatMap: itterates over each item in an array and flattens the results..
 flatMap = map + flatten combined...
@@ -103,9 +100,8 @@ syntax-1: arrayPayload groupBy $
 syntax-2: arrayPayload groupBy(value)-> value..
 
 joinBy:
-merges an array into single string value and uses the provided string 
-as separator between each item in the list.. Note that joinBy performs the opposite task 
-of splitBy..
+merges an array into single string value and uses the provided string as separator between each item in the 
+list.. Note that joinBy performs the opposite task of splitBy..
 syntax: arrayPayload joinBy "separator" joinBy ", " joinBy " - "..
 All elements are converted to string, Useful for creating CSV lines, readable messages, or formatted 
 outputs...
@@ -115,8 +111,8 @@ The reduce function in DataWeave is used to iterate over an array and accumulate
 function to each element...
 It's useful for aggregating values, such as summing numbers, concatenating strings, or building complex 
 objects...
-reduce iterates over Array[] --> output form is object{} with single value..
-Applies a reduction lambda expression to the elements($) in an array.. 
+reduce iterates over Array[] --> output form is object{} with single value..Applies a reduction lambda 
+expression to the elements($) in an array.. 
 
 syntax-1: arrayOfPayload reduce($,$$)
 example: [2,3,4]reduce($+$$)
@@ -140,8 +136,8 @@ var numberArray = [2,3,4]
 
 -----------------------------------------------------------------------------------
 //dataweave core other functions:
-++: this statement ++ concatenates the string with string , adds objects together
-into single object.. add two arrays into a new array..
+++: this statement ++ concatenates the string with string , adds objects together into single object.. add two 
+arrays into a new array..
 
 --: The statement -- removes all instances of the specified items from an array...
 

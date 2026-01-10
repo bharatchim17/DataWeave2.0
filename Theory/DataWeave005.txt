@@ -26,6 +26,7 @@ fun fullName(firstName: String, lastName: String): String = do {
 }
 --------------------------------------------------------------------------------------------
 //Dataweave core string functions(dw::core):
+
 1.contains:
 return true if an input contains given value, false if not..
 
@@ -45,12 +46,10 @@ check if an expression matches the entire input string..
 performs string replacement..
 
 7.splitBy:
-splits string into string array based on value that matches
-part of that string...
+splits string into string array based on value that matches part of that string...
 
 8.startsWith:
-returns true or false depending on whether the input string
-starts with matching prefix..
+returns true or false depending on whether the input string starts with matching prefix..
 
 9.endsWith:
 returns true if string ends with provided substring , false if not..
@@ -62,8 +61,8 @@ removes any blank spaces from the begining and end of string..
 returns true if the given input value is empty , false if not..
 
 12.isBlank:
-returns true if the given string is empty(""),completely
-composed of whitespaces , or null otherwise, the function returns false..
+returns true if the given string is empty(""),completely composed of whitespaces , or null otherwise, the 
+function returns false..
 
 13.sizeOf:
 returns the number of elements in an array.. it returns 0 if the array is empty..
@@ -105,7 +104,7 @@ returns an array of key-value pairs that describe the key , value and any attrib
 //indexOf :- Returns the index of the first occurrence of the specified element in 
  array, or -1 if this list does not contain the element.
 
-*//isBlank:- Returns true if the given string is empty (""), completely composed of 
+//isBlank:- Returns true if the given string is empty (""), completely composed of 
 whitespaces("  "), or null. Otherwise, the function returns false.
 
 //isEmpty:- Returns true if the input string is empty("")..

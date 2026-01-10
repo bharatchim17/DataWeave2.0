@@ -3,30 +3,27 @@
 read() is used to parse a string or binary data into a structured DataWeave value (object, array, number, etc)..
 Use read() when:
 The content type cannot be detected automatically..
-we have a JSON/XML/CSV string that we want to convert into real structured data..
-we want to force a specific content type while parsing..
-
+We have a JSON/XML/CSV string that we want to convert into real structured data , we use specific content type 
+while parsing..
 read(" " , "content-type")
 readUrl("classpath://fileName", "file-content-type")
 -----------------------------------------------------------------------------------
 //Date & Time:
 
 1. Date: 2012-10-11
-Creates a Date value from values specified for year, month, and day fields.
+Creates a Date value from values specified for year, month, and day fields..
 
 2. DateTime:  2012-10-11T10:10:10-03:00
-Creates a DateTime value from values specified for year, month, day, hour, minutes, 
-seconds, and timezone fields.
+Creates a DateTime value from values specified for year, month, day, hour, minutes, seconds, and timezone fields.
 
 3. LocalTime: 10:10:10
-Creates a LocalTime value from values specified for hour, minutes, and seconds fields.
+Creates a LocalTime value from values specified for hour, minutes, and seconds fields...
 
 4. LocalDateTime: 2012-10-11T10:10:10
-LocalDateTime value from values specified for year, month, day, hour, minutes..
+Creates LocalDateTime value from values specified for year, month, day, hour, minutes..
 
 5. Time: |05:00|
-Creates a Time value from values specified for hour, minutes, seconds, and timezone 
-fields...
+Creates a Time value from values specified for hour, minutes, seconds, and timezone fields...
 
 6. Timezone: |+05:00|
 
@@ -64,11 +61,12 @@ output application/json
 "www.mathoman.com" scan(/([a-z]*)\.([a-z]*)\.([a-z]*)/)
 ----------------------------------------------------------------------------------
 //groupBy:
-Returns an object of array {[]} that groups items from an array[] based on specified criteria, such as an 
+Returns an object of an array {[]} that groups items from an array[] based on specified criteria, such as an 
 expression or matching selector...
 
 //zip & unzip:
 zip Merges elements from two arrays into an array of arrays[[]] , unzip is opposite of zip..
+
 match:
 match {
     case "" -> $
@@ -78,10 +76,10 @@ match {
 import * from dw::util::Values
 
 mask:  mask  "keyName" with "******"
-The value to use for masking , the value can be any DataWeave type..
+The value to use for masking , that value can be any dataWeave type..
 -------------------------------------------------------------------------------
 //size of:
-Returns the number of characters (including white space) in  string. Returns the 
+Returns the number of characters (including white space) in  string.. returns the 
 number of elements in an array. It returns 0 if the array is empty. This version of 
 sizeOf takes an array[] or an array of arrays[[]] as input...
 
@@ -93,10 +91,10 @@ expression is not `null`...
 // import * from dw::util::Coercions
 
 //toString:     toString([" " , " " ])
-A variant of toString that joins an Array of characters into a single String value...
+A variant of toString that joins an array of characters into a single String value...
 
 // keysOf | namesOf:
-Returns an array of strings with the names of all the keys within the given object..
+Returns an array of strings with the names of all the keys within the given array[]..
 ---------------------------------------------------------------------------------
 import * from dw::Runtime
 
@@ -109,7 +107,7 @@ application, performance testing , or with multiple applications deployed...
 ------------------------------------------------------------------------------------
 //Explain lookup function..?
 -->
-lookup() is a DataWeave built-in function used to call a private flow from inside a DataWeave script..
+lookup() is a DataWeave built-in function used to call a private flow from inside a dataWeave script..
 The lookup() function triggers that private flow and returns its output so we can use it in our dataWeave 
 transformation...
 Subflows can't be called using lookup() because they are not independent or executable on their own...
