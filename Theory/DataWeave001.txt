@@ -12,18 +12,18 @@ $ , $$ , $$$ :-
 $ first argument , $$ second argument , $$$ third argument   //(in lambda functions)..
 When there is No key  ----> $ represent value $$ represent index..
 
-// prefix function:- In Prefix notation function name came first (before argument 
+//prefix notation function: In Prefix notation function name came first (before argument 
 function name is written) then argument made :- functionName(argument)...
-// Infix notation :- In infix notation function takes two argument , Lambda be the 
+//Infix notation function: In infix notation function takes two argument , Lambda be the 
 second argument of it :- (argument_1) functionName ->(argument_2)..
 -----------------------------------------------------------------------------------
-// and operators :- all of the value must be true for output as true if even one value
+// and operators: all of the value must be true for output as true if even one value
 is false then output print false..
 
-// or operators :- one of the value must be true for output as true if all value is 
+// or operators: one of the value must be true for output as true if all value is 
 false then output print false..
 
-//Metadata :- Is data that provides information about other data , but not the content
+//Metadata: Is data that provides information about other data , but not the content
 of other data...
 
 //index value selector :-  payload[1/-1] -> can have both positive and negative value...
@@ -33,7 +33,7 @@ of other data...
 
 //predefined variables(The scope of variables are application level):
 These predefined variables and functions provide a powerful set of tools for performing data transformations
-and manipulations within DataWeave...
+and manupulations within DataWeave...
 1. message
 2. attributes
 3. payload
@@ -84,11 +84,11 @@ typical DataWeave script has two main parts:
 - Namespaces
 2. Body Section (Below the --- line)
 - This is where we apply the main transformation logic...
-- we can define local variables here using var, but their scope is limited to the block or expression they 
-are defined in...
+- we can define local variables here using var, but their scope is limited to the block or expression 
+they are defined in...
 --------------------------------------------------------------------------------------------------
-//In DataWeave, there are several predefined variables and functions that can use 
-to access and manipulate data...
+//In DataWeave there are several predefined variables and functions that can use to access and manuipulate 
+data...
 
 1. payload: Represents the main data being processed in a DataWeave transformation.
 It's the input data that we want to transform or manipulate...
@@ -114,7 +114,7 @@ settings, such as hostname, port number or environment variables.
 server.host server.timezone
 
 7. flow: Contains information about the current Mule flow being executed, 
-including properties, variables, and metadata associated with the flow.
+including properties, variables and metadata associated with the flow.
 flow.name
 
 8. message: Represents the entire message being processed, including both the 
@@ -128,8 +128,7 @@ now()as String
 10. p(): Shortcut for accessing properties of an object. For example, 
 `payload.propertyName` can be abbreviated as `p().propertyName`...
 
-11. sizeOf(): Returns the size or length of a data structure, such as an array 
-or object.
+11. sizeOf(): Returns the size or length of a data structure, such as an array or object.
 sizeOf(payload.items)
 -------------------------------------------------------------------------------------
 //Types of function allows or provides piece of reusable logic to perform an operation:
@@ -158,17 +157,18 @@ Whenever there value associate to the first argument , assign value direction  w
 //Q.Define:-
 1.Anonymus function: 
 function without name, often used inline or passed as an argument..
-Use case: Commonly used with map, filter, etc...
+Use case: Commonly used with map, filter etc...
 [1, 2, 3] map ((x) -> x + 1)
 // Output: [2, 3, 4]
 
 2.Lambda function:
-A concise anonymous function using arrow syntax ->...In DataWeave, all anonymous functions are lambda functions..
+A concise anonymous function using arrow syntax --> In DataWeave, all anonymous functions are lambda functions..
 
 3.higher order function:
 A function that takes another function as input or returns a function.. map, filter, reduce are built-in 
 higher-order functions..
-
+Lambda became useful when we want to use function as argument to other function or 
+return function from function which is called higher ordered function..
 %dw 2.0
 output application/json
 fun applyTwice(f, x) = f(f(x))
@@ -176,7 +176,8 @@ var square = (n) -> n * n
 ---
 applyTwice(square, 2)  // Output: 16
 
-%dw 2.0 output application/json
+%dw 2.0 
+output application/json
 fun applyTwice(f, x) = f(f(x))
 fun increment(n) = n + 1
 ---
@@ -193,11 +194,14 @@ import * from dw::core::Arrays
 8. join
 
  //countBy:  
- Groups and counts elements in an array based on a matching condition or key extractor.
-return output as object countBy works as boolean (true/false), if it is true it will be print in the output...
+In DataWeave, countBy is a higher-order function that groups elements of an array based on a key extractor 
+(or condition) and then counts how many items fall into each group. The result is always an object where the 
+keys are the grouping values and the values are the counts...
+
 
 //divideBy: 
 Splits an array into chunks of a specified size it returns output as form of object of an array..  
+[ ] --> {[] , []}
 
 //indexOf:
 it find first accurance value's index in array and print it...
@@ -219,20 +223,18 @@ Drops elements from the array while the condition is met but stops the selection
 an element that fails to satisfy the condition...
 
 //join:
-Joins two arrays of objects by a same given value criteria...
+Joins two arrays of objects by a same given value criteria...[{}] + [{}]
 -----------------------------------------------------------------------------------
 // import * from dw::core::Strings
-
-// camelize("hi_mule")  // In input underscore use for camelize
-// capitalize("hello mule")  // space added between words for capitalize first letter. output:- "Hello Mule"
-//upper("hello") // output:- "HELLO"
-//lower("CHIM")  // output:- "chim"
-//isUpperCase("hi")  //output :- false (return boolean value)
-//isLowerCase("hi")  //output :- true (return boolean value)
+// camelize("hi_mule")  //In input underscore use for camelize
+// capitalize("hello mule")  //space added between words for capitalize first letter. output:- "Hello Mule"
+//upper("hello") //output: "HELLO"
+//lower("CHIM")  //output: "chim"
+//isUpperCase("hi")  //output: false (return boolean value)
+//isLowerCase("hi")  //output: true (return boolean value)
 //replaceAll(" Hello , CHIM " ,  "CHIM" , "Mule")  // (value  , target , replacement) output:- "Hello , Mule"
-//substring("bharat" , 0 , 3) // output :- bha 
-//singularize("boys") // output:- boy
-//pluralize("girl") // output:- girls
-//wrapWith("bharat" , "*") // output:- "*bharat*"
-
+//substring("bharat" , 0 , 3) //output: bha 
+//singularize("boys") //output: boy
+//pluralize("girl") //output: girls
+//wrapWith("bharat" , "*") //output: "*bharat*"
 ----------------------------------------------------------------------------------

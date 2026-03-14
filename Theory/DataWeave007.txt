@@ -1,0 +1,50 @@
+----------------------------------------------------------------------------------------------------------------
+//vitech-dataweave interview:
+----------------------------------------------------------------------------------------------------------------
+1. How to find the even numbers from array example: [1,2,3,4,5,6,7,9]
+-->
+%dw 2.0
+output application/json
+---
+payload filter ((item, index) -> (item mod 2) == 0)
+
+Odd numbers:
+%dw 2.0
+output application/json
+---
+payload filter ((item, index) -> (item mod 2) == 1)
+
+
+%dw 2.0
+output application/json
+---
+payload filter ((item, index) -> (item mod 2) != 0)
+
+-------------------------------------------------------------------------------------------------------------
+2. How to swap firstName and lastName from string example: name = Vitech Talks
+-->
+%dw 2.0
+output application/json
+var name =  "Vitech Talks"
+var names = name splitBy  " "
+---
+names[1] ++ " " ++ names[0]
+
+------------------------------------------------------------------------------------------------------
+3. How to generate numbers from  1 to 15..?
+-->
+%dw 2.0
+output application/json
+var num = [1 to 10]
+---
+num
+--------------------------------------------------------------------------------------------------------
+4. Generate Even numbers/Odd numbers 50 to 100 ..?
+-->
+%dw 2.0
+output application/json
+var num = 50 to 100
+---
+num filter((item) -> (item mod 2) == 0)
+num filter((item) -> (item mod 2) == 1)
+----------------------------------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 //do operator:
 A do statement creates a scope in which new variables ,functions, annotations or namespaces can be declared 
 and used.. The syntax is similar to a mapping in that it's composed of header and body separated by --- , it's 
-header is where all the declarations are defined , and its body is the result of the expression..
+header is where all the declarations are defined and its body is the result of the expression..
 syntax:
 do{
 header
@@ -10,7 +10,7 @@ header
 body
 }.. 
 
-if we would like to create any variable local to the this function, then we can make use of do scope..
+if we would like to create any variable local to this function, then we can make use of do scope..
 
 %dw 2.0
 output application/json
@@ -65,7 +65,11 @@ returns true if the given string is empty(""),completely composed of whitespaces
 function returns false..
 
 13.sizeOf:
-returns the number of elements in an array.. it returns 0 if the array is empty..
+Returns the number of characters (including white space) in  string.. returns the 
+number of elements in an array. It returns 0 if the array is empty. This version of 
+sizeOf takes an array[] or an array of arrays[[]] as input...
+sizeOf(): Returns the size or length of a data structure, such as an array or object.
+sizeOf(payload.items)
 
 14.typeOf:
 returns the primitive data type of value, such as String..
@@ -77,10 +81,10 @@ returns an array of strings with names of all the keys within the given object..
 returns an array of keys from key-value pairs within the input object..
 
 17.valuesOf:
-returns an array of the values from key-value pairs in an object..
+returns an array of the values from key-value pairs within the input object..
 
 18.indexOf:
-returns the index of the first occurence of the specified element in given array , or -1 , if this list 
+returns the index of the first occurence of the specified element in given array  or -1 , if this list 
 does not contain the element..
 
 19.lastIndexOf:
@@ -89,33 +93,13 @@ contain element..
 
 20.entriesOf:
 returns an array of key-value pairs that describe the key , value and any attributes in the input object.. 
-
 --------------------------------------------------------------------------------
-//Datawave operators:-
-
-//distinctBy:- Iterates over the input and returns the unique elements in it
-(finds unique values in an array  i.e. not repeatable)..
-
-
-//endsWith:- Returns true if a string ends with a provided substring, false if not.
-
-//find:- Returns indices of an input that match a specified value.
-
-//indexOf :- Returns the index of the first occurrence of the specified element in 
- array, or -1 if this list does not contain the element.
-
-//isBlank:- Returns true if the given string is empty (""), completely composed of 
-whitespaces("  "), or null. Otherwise, the function returns false.
+//Datawave operators:
 
 //isEmpty:- Returns true if the input string is empty("")..
-
-//min :- Returns the highest Comparable value in an array...
-// max :- Returns the lowest Comparable value in an array...
-
-//mod:- Returns the modulo (the remainder after dividing the dividend by the divisor)....
-
-//isDecimal:- Returns true if the given number contains a decimal, false if not.
-
-//p function is used for reading data from properties file in transform message generally we use “P” 
-function...
+//min → Returns the lowest (smallest) Comparable value in an array.
+//max → Returns the highest (largest) Comparable value in an array.
+//mod: Returns the modulo (the remainder after dividing the dividend by the divisor)....
+//isDecimal: Returns true if the given number contains a decimal false if not...
+//p function is used for reading data from properties file in transform message generally we use “P” function...
 -------------------------------------------------------------------------------------

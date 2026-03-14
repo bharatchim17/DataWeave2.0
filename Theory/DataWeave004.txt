@@ -5,8 +5,7 @@
 
 //📐 .xsd — XML Schema Definition
 - Purpose: Defines the structure, rules, and data types for an XML document..
-- Content: Specifies what elements and attributes are allowed, their order, data types, 
-and constraints..
+- Content: Specifies what elements and attributes are allowed, their order, data types, and constraints..
 -----------------------------------------------------------------------------
 // %dw 2.0
 output application/csv headerLineNumber = 0, header = true
@@ -24,7 +23,7 @@ output application/csv headerLineNumber = 0, header = true
 🧠 Notes:
 - headerLineNumber = 0 means the header will be placed at the first line..
 - header = true ensures column names are included..
-- CSV output requires a list of objects, hence the square brackets..
+- CSV output requires a list of objects..
 ----------------------------------------------------------------------------------
 // %dw 2.0
 output application/json
@@ -79,7 +78,7 @@ postion of array..
 //Append  [] << :- Data is right hand side and array is left hand side.. it append to the last postion of an 
 array..
 + operator: Appends data on right-hand side of the operator to items in the array 
-on left-hand side..For example, [1] + 2 result in [1,2], appending 2 to in the array..
+on left-hand side..For example, [1] + 2 result in [1,2] appending 2 to in the array..
 The array always on the left-hand side of the operator..
 
 // - : Removes specific element of any supported type from an array..
@@ -96,7 +95,7 @@ matching else expression...
 Else if:
 We can chain several else expressions together within an if-else construct by incoroporating else if...
 
-// Flow control used when we want to execute certain part of our code in some situations, while not excecuting 
+//Flow control used when we want to execute certain part of our code in some situations, while not excecuting 
 others. (its way to add logic to our scripts)..DataWeave use if else expression that returns value.. 
  example:- 1. if(condition) code1 else code2 i.e. if(condition) value1 else value2
            2. (expression) match 
@@ -169,8 +168,8 @@ var covidObject = {
   "lastName": covidObject.lastName,
   "phone": covidObject.phone,
   "email": covidObject.email,
-  "caseType-if-else": if(covidObject.caseType == "positive") "POS" else if(covidObject.caseType == "Recovered")"
-  REC" else "",
+  "caseType-if-else": if(covidObject.caseType == "positive") "POS" else if(covidObject.caseType == "Recovered")
+  "REC" else "",
   "caseType-match": covidObject.caseType match {
   	case "positive" -> "POS"
   	case "Recovered" -> "REC"

@@ -6,7 +6,7 @@ through mule application..
 Datawave (dw) format is canonical format (generical format i.e. predefined structure), for all transformation.. 
 
 //What is the latest version for dataweave..?
--> 2.10.0
+-> 3.2
 we can't write it in header because DataWeave does not support patch/minor version numbers in the header.
 ---------------------------------------------------------------------------------------------
 //List out frequently used dataweave inbuilt functions..?
@@ -14,10 +14,7 @@ we can't write it in header because DataWeave does not support patch/minor versi
 We can list out few dataweave functions that we have worked in realtime projects..
 map , mapObject , filter, filterObject , flatten , pluck etc..
 
-//How can we invoke or call flows from dataweave..?
---> 
-Mule::lookup('privateFlow_Name') 
-We can use lookup functions but , we can call private flow but not subflow..  
+
 
 //How to access property in dataweave..?
 --> 
@@ -27,16 +24,16 @@ by using P function...  p('http.port')
 -->
 using orderBy function we can sort array:
 To sort in  ascending order: payload orderBy ((item , index)-> item)
-To sort in descending order: payload orderBy ((item , index)-> item))[0 to -1] 
-
 //payload orderBy $ give ascending order value..
+To sort in descending order: payload orderBy ((item, index) -> - item)
 //payload orderBy -$ give descending order value..
-//(payload orderBy -$)[0] to get the highest value from descending order..
 ---------------------------------------------------------------------------------
 //Find smallest and greatest number in an array..?
 -->
 (payload orderBy((item , index)-> item))[0] <--- for greatest number
+(payload orderBy -$)[0] | (payload orderBy $)[-1] to get the highest value..
 (payload orderBy((item , index)-> item))[-1] <--- for smallest number
+(payload orderBy -$)[-1] | (payload orderBy $)[0] to get the lowest value..
 
 //Filter out even and odd numbers..?
 -->
@@ -68,7 +65,7 @@ var result =
             "Some other error"
 ---
 result
----------------------------------------
+---------------------------------------------------------------------------------------------------
 %dw 2.0
 output application/json
 fun divide(a, b) =
@@ -84,8 +81,7 @@ fun divide(a, b) =
 divide(10, 0)
 
 --------------------------------------------------------------------------------------
-//Does the desendent(..) selector select all the keys or just first one in nested
- object..?? 
+//Does the desendent(..) selector select all the keys or just first one in nested object..?? 
 --> 
 The descendant selector (..) selects all matching keys at any nested level, not just the first one.
 paylod..name  Use payload..name[0] to access only the first match..
@@ -108,9 +104,17 @@ Immediate child = a key/value directly inside the object Not inside another obje
 ------------------------------------------------------------------------------
 //How to update value of key..?
 -->
+%dw 2.0
 import * from dw::util::Values
+output application/json
+var payload = [
+  { key: "old1", other: "x" },
+  { key: "old2", other: "y" }
+]
 ---
-payload map((item , index)-> item update "key" with "value")
+payload map ((item, index) -> 
+    item update "key" with "value"
+)
 -----------------------------------------------------------------------------
 //How to convert all keys in object to uppercase..? 
 -->
@@ -131,9 +135,10 @@ Doesn't delete nested keys (must use other methods for that)...
 -->
 %dw 2.0
 output application/json
-var payload = "a1b2c3d4"
+var kela = "a1b2c3d4"
 ---
-flatten(payload scan /\d/) joinBy "" as Number
+(flatten(kela scan /\d/) joinBy "") as Number
+(flatten(kela scan /[a-zA-Z]/)) joinBy ""
 
 //How to use splitBy function to "192,88.99.0/24"..?
 -->
@@ -179,12 +184,17 @@ flatten(valuesOf(duplicates)) distinctBy $
 ------------------------------------------------------------------------------------------------
 //How to swap the key:value pairs..?
 -->
-payload map (item ->
+%dw 2.0
+output application/json
+var payload = [
+  { id: 1, name: "apple", color: "red" },
+  { id: 2, name: "banana", color: "yellow" }
+]
+---
+payload map (item) ->
     item mapObject ((value, key) -> {
         (value as String): key
-    })
-)
-
+})
 map → loops through each object in the array..
 mapObject → loops through the key/value pairs inside each object..
 (value as String): key → creates a new key using the original value..
@@ -192,7 +202,8 @@ mapObject → loops through the key/value pairs inside each object..
 //What's difference between mapObject & pluck..?
 -->
 mapObject: The input & output for mapObject function is an object{}..
-pluck: The input of pluck is object{} & output is an Array[]..
+pluck: Is designed to transform an object into an array by iterating over its key-value pairs
+The input of pluck is object{} & output is an Array[]..
 ----------------------------------------------------------------------
 //What is dataweave script to check if input is prime number..?
 --> 
@@ -267,6 +278,7 @@ output application/json
 var price = 99
 ---
 "\$${price}"
+"\$$(price)"
 
 %dw 2.0
 output application/json
@@ -308,15 +320,7 @@ else
 //What's differene between == and ~= ?
 == will check data & data_types too ---->  5 == 5 , 5 =❌= "5"
 ~= will only check the data  ---->  5 ~= "5" same as 5 ~= 5
-----------------------------------------------------------------------------------------
-Difference between flatMap and flatten..?
---> 
-flatMap: Iterates over each item in an array and flattens the results, can act on 
-values and indices of items in the array.. 
-It is iterative + transforming + flattening
 
-Flatten: Turns a nested array into a simple array... only acts on the values of the 
-arrays..Turns a set of subarrays[[]] into a single array as output..
 ------------------------------------------------------------------------------------
 //DataWeave is the primary data trasformation language for use in Mule flows...
 //DataWeave 2.0 is for Mule 4 apps and dataweave 1.0 is for Mule 3 app..
@@ -331,7 +335,10 @@ output: Commonly used directive that specifies the mime...
 If there is no output then default output is application/java ...
 If mime types of the inputs differ , and no output is specified , the script throws an exception so that
 we know to specify an output mime type..
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+
+
+
 
 
 
