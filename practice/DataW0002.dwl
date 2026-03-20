@@ -11,9 +11,8 @@
 
 */
 
-
-  %dw 2.0
- output application/json
+%dw 2.0
+output application/json
 // skipNullOn = "everywhere"
  ---
  {
@@ -29,7 +28,7 @@
 // ---
 // demo:
 // {
-//     "Technology" : payload.Technology ,
+//    "Technology" : payload.Technology ,
 //    "City" : payload.City ,
 //    "Coutry" : payload.City ,
 //    "EmpID" : payload.EmpID
@@ -56,10 +55,12 @@
 
 //  ---
 // {
-//      "string": typeOf("hello") ,
-//      "number": typeOf(1254) ,
-//     "boolean": typeOf(true) 
-
+//      "String": typeOf("hello") , 
+//      "Number": typeOf(1254) , 
+//     "Boolean": typeOf(true), 
+//     "Array": typeOf([]),
+//     "Object": typeOf({}),
+//     "null": typeOf(null) 
 // }
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //Selectors:-
@@ -81,82 +82,21 @@
     }
 }
 */
- 
-// %dw 2.0
-// output application/json
-// var student = 
-// {
-// "name" : "Emilia",
-// "name" : "Isobel",
-// "name" : "Euphemia",
-// "name" : "Rose",
-// "SurName" : "Clarke"
-// }
-// ---
-// student.*name
-
-// %dw 2.0 
-// output application/json
-// var market = 
-// [
-// {
-//     "price" : 1 ,
-//     "price" : 2
-// },
-// {
-//     "price" : 3 ,
-//     "price" : 4
-// },
-// {
-//     "price" : 5 ,
-//     "price" : 6
-// },
-// {
-//     "name" : "Starbrust" ,
-//     "category" : "Candy"
-// }
-// ]
-// ---
-// // market.*name
-// // market.*price
-
-
-// %dw 2.0 
-// output application/json
-// var empId =
-// {
-//     "id": 1 ,
-//     "id":11 ,
-//     "SecondLevel" : 
-//     {
-//      "id": 2 ,
-//     "id": 22 ,
-//     "thirdLevel" : 
-//     {
-//         "id" : 3 ,
-//         "id" : 33
-//     }   
-//     }
-
-// }
-// ---
-// // empId..id
-// // empId.*id
-// // empId..*id
-
-//  %dw 2.0
-//  output application/json
-//  ---
-// {
-// "decendent"  : payload..id ,
-// "multivalue" : payload.*id ,
-// "multiValueSecondLevel": payload.secondLevel.*id ,
-// "multiValueThirdLevel" : payload.secondLevel.thirdLevel.*id ,
-// "allTheId" : payload..*id
-
-// }
+ %dw 2.0
+ output application/json
+ ---
+// payload.id //1 (single value selector)
+// payload..id //[1 , 2 , 3] (decendent selector select first value in object/nested-object)
+// payload.*id //[1 , 11] (multivalue selector select all value but , not work in nested object)
+// payload..*id //[1 , 11 , 2 , 22 , 3 ,33](combination of multi-value and decendent selector select all values)
+{
+"decendent"  : payload..id ,
+"multivalue" : payload.*id ,
+"multiValueSecondLevel": payload.secondLevel.*id ,
+"multiValueThirdLevel" : payload.secondLevel.thirdLevel.*id ,
+"allTheId" : payload..*id
+}
 //////////////////////////////////////////////////////////////////////////////////////////
-
 // Functions:-
 
 // %dw 2.0
@@ -232,7 +172,7 @@
 
 // numbers 
 // filter ((n , idx) -> (n mod 2) == 1)
-// filter ((n, idx) ->  (n > 3) )
+
 
 // $ , $$ , $$$ :-
 //  %dw 2.0
@@ -240,36 +180,35 @@
 //  var numbers = (1 to 5)
 //  ---
 // numbers filter (($ mod 2) == 1) // here $ is n represent name , number
-
+//////////////////////////////////////////////////////////////////////////////////////////////
+payload:
+[
+ {
+"id" : 1 ,
+ "item": "cheese" ,
+ "price": 4.00  
+},
+{
+ "id" : 2 ,
+ "item": "snack",
+ "price": 15.00 
+},
+ {
+"id" : 3  ,
+"item": "cereal",
+"price": 5.00 
+ },
+ {
+"id" : 4 ,
+"item": "apples",
+ "price": 2.00 
+}
+]
 // %dw 2.0 
 // output application/json
-// var list = 
-// [
-// {
-// "id" : 1 ,
-// "item": "cheese" ,
-// "price": 4.00  
-// },
-// {
-// "id" : 2 ,
-// "item": "snack",
-// "price": 15.00 
-// },
-// {
-// "id" : 3  ,
-// "item": "cereal",
-// "price": 5.00 
-// },
-// {
-// "id" : 4 ,
-// "item": "apples",
-// "price": 2.00 
-// },
-
-// ]
 // ---
-// list filter $.price > 5
-
+// payload filter $.price > 5
+// payload filter $.price >= 15
 
 // DO statement :- 
 

@@ -12,16 +12,6 @@
 // }
 // ]
 
-//payload-02:- Interchange keys and values in Dataweave.
-// [
-// {
-//     "message-01" : "Hello World"
-// },    
-// {
-//     "message-02" : "Hello Mule"
-// }
-// ]
-
 // %dw 2.0
 // output application/csv  separator= "|"
 // ---
@@ -31,7 +21,15 @@
 //     "status" : item.status
 // })
 
-
+//payload-02:- Interchange keys and values in Dataweave.
+// [
+// {
+//     "message-01" : "Hello World"
+// },    
+// {
+//     "message-02" : "Hello Mule"
+// }
+// ]
 
 // %dw 2.0
 // output application/json
@@ -61,10 +59,12 @@
 // %dw 2.0
 // output application/json
 // ---
-// // payload filter ((item, index) -> item.age >= 20 )
-// // payload filter ((item, index) -> item.name == "Virat" )
-// // payload orderBy ((item, index) -> item.age )
-// // payload orderBy ($.age)
+// payload filter ((item, index) -> item.age >= 20 )
+// payload filter $.age >= 20
+// payload filter ((item, index) -> item.name == "Virat")
+
+// payload orderBy ((item, index) -> - item.age )
+// payload orderBy  ($.age)
 
 
 //Even Odd in DataWeave
@@ -89,27 +89,9 @@
 // ---
 // [11 , 22 , 33 , 44] filter ((item, index) -> item > 22 )
 
-// [
-// {
-//     name : "Marino" ,
-//     age  : 37
-// },
-// {
-//     name : "Shoki" ,
-//     age  : 30
-// },
-// {
-//     name : "Tomo" ,
-//     age  :  25
-// },
-// {
-//     name : "Ana" ,
-//     age  : 29
-// }
-
-// ] filter ((item, index) -> item.age >= 30 )
-
-// [80 , 11 , 20 , 60 , 5 , 66 , 77] filter (( $$ > 1 and $ >= 30 ))
+// [80 , 11 , 20 , 60 , 5 , 66 , 77] filter (($$ > 1) and
+// ($ >= 50)
+//  )
 
 
 //pluck function
@@ -137,7 +119,7 @@
 //     "keys"  : $$ ,
 //     "value" : $ 
 // }
-
+//////////////////////////////////////////////////////////////////////////////////////////
 
 //Map function
 //payload-03:-
@@ -169,12 +151,16 @@
 // %dw 2.0
 // output application/json
 // ---
-
 // payload map 
 // {
-//     "name" : $.firstName ++ " " ++ $.lastName ,
+//     "name" : $.firstName as String ++  " "  ++ $.lastName as String ,
 //     "age"  : $.age   
 // }
+
+// payload map ((item, index) ->{
+//     "name" : item.firstName as String ++  " "  ++ item.lastName as String ,
+//     "age"  : item.age  
+// } )
 
 //payload-04:-
 
@@ -199,29 +185,32 @@
 // %dw 2.0
 //  output application/json
 //  ---
-//  payload map ((item, index) ->
-//  {
-//     "Tech" : item.Tech ,
-//     "Empid": item.Empid ,
-//     "City" : item.City
-//  } )
+// payload map ((item, index) ->{
+//     "tech" : item.Tech ,
+//     "empId": item.Empid ,
+//     "city" : item.City
+// } )
 
-// payload map 
-// {
-//        "Index": $$ ,
-//        "Tech" : $.Tech ,
-//        "Empid": $.Empid ,
-//        "City" : $.City
+// payload map{
+//        "index": $$ ,
+//        "tech" : $.Tech ,
+//        "empid": $.Empid ,
+//        "city" :  $.City
+// }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// %dw 2.0
+//  output application/json
+//  ---
+// [10 , 20 , 30 , 40 , 50] map ((item , index) -> {
+//     (index): item + 50
+// })
+
+// [10 , 20 , 30 , 40 , 50] map {
+//     ($$): $ + 50
 // }
 
 // [11 , 22 , 33] map ($ + 100)
-
-// %dw 2.0
-// output application/json
-// ---
-// [10 , 20 , 30 , 40 , 50] map ((item, index) -> 
-// {(index ): item + 50} )
-
 
 //map object
 //payload-05:-
@@ -231,17 +220,6 @@
 //     "physics_marks" : 87
 // }
 
-// %dw 2.0
-//  output application/json
-//  ---
-
-//    payload mapObject ((value , key , index)->
-//    (index):
-//    {
-//     key : value + 10
-//    })
-
-
 
 //payload-06:-
 // {
@@ -250,21 +228,23 @@
 //     "Design": "Developer"
 // }
 
-//  %dw 2.0
-//  output application/json
+// %dw 2.0
+// output application/json
 //  ---
-// [ payload mapObject ((value , key , index)->
-//  {
-//  (key) : value ,
-//  index : index
-//  }),
-//  payload mapObject ((value , key) ->
-//  {
-
-//  }),
-//  payload mapObject {($$) : $} ,
- 
-//  payload mapObject ($$$) : {value: $ , key: $$ , index : $$$}
- 
-//  ]
-
+// [ 
+// payload mapObject ((value , key , index)->{
+//  index : index,
+//  (key) : value 
+//  })
+// ,
+// payload mapObject ((value , key , index)->
+//    (index):
+//    {
+//     (key) : value + 10
+//    })  ,
+//    payload mapObject ($$$):{
+//     ($$): $
+// },
+// payload mapObject ($$$):{subject: $$ , marks: $}
+// ]
+///////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,1617 @@
+{
+    "success": true,
+    "data": {
+        "metaData": {
+            "totalCount": 67,
+            "sections": [
+                {
+                    "sectionId": 0,
+                    "totalCount": 31,
+                    "privateCount": 31,
+                    "sectionInvCount": 31
+                },
+                {
+                    "sourceName": "Pune",
+                    "destinationName": "Goa",
+                    "groups": [
+                        {
+                            "count": 3,
+                            "operatorId": 7115,
+                            "displayName": "KTCL Buses",
+                            "minFare": 600,
+                            "subHeader": "कदंब येरादारी म्हामंडळ",
+                            "concessionTags": [],
+                            "persuasionTags": [
+                                4358
+                            ],
+                            "groupExpandType": 0
+                        }
+                    ],
+                    "sectionId": 1,
+                    "totalCount": 36,
+                    "privateCount": 33,
+                    "sectionInvCount": 33
+                }
+            ],
+            "busLogoBaseUrl": "https://origin-st.redbus.in/buslogos/country/",
+            "busImageBaseUrl": "https://s3-ap-southeast-1.amazonaws.com/rbplus/BusImage/Domestic",
+            "primoCount": 11,
+            "socialProofData": {
+                "txnCount": 12000
+            },
+            "rdBoostedInv": [
+                {
+                    "operatorId": 35924,
+                    "travelsName": "Anand Ashray Travels",
+                    "routeId": 46884068,
+                    "busType": "Volvo Multi-Axle A/C Sleeper (2+1) ",
+                    "busTypeId": 1575,
+                    "serviceName": "Anand Ashray ",
+                    "serviceId": "1",
+                    "cancellationPolicy": "0:3:100:0;3:12:100:0;12:24:50:0;24:-1:20:0",
+                    "isPartialCancellationAllowed": true,
+                    "operatorLogoPath": "ind/logo/35924.png",
+                    "totalRatings": 4.3,
+                    "numberOfReviews": "513",
+                    "departureTime": "2026-03-20 20:30:00",
+                    "arrivalTime": "2026-03-21 09:00:00",
+                    "journeyDurationMin": 750,
+                    "firstBpTime": "2026-03-20 22:30:00",
+                    "standardBpName": "Nigdi",
+                    "standardBpIdentifier": 68010,
+                    "standardDpName": "Mapusa",
+                    "standardDpIdentifier": 73799,
+                    "doj": "2026-03-20",
+                    "isSeatLayoutAvailable": true,
+                    "fareList": [
+                        1412.99,
+                        1513.99,
+                        1614.99,
+                        1715.99,
+                        1816.99
+                    ],
+                    "busScore": 3.12,
+                    "perzScore": 3.12,
+                    "isLiveTrackingAvailable": true,
+                    "isMticketEnabled": true,
+                    "isAc": true,
+                    "isSleeper": true,
+                    "maxSeatsPerTransaction": 6,
+                    "availableWindowSeats": 18,
+                    "availableSingleSeats": 9,
+                    "availableSeats": 31,
+                    "totalSeats": 36,
+                    "amenities": [
+                        4,
+                        5,
+                        9,
+                        10,
+                        7,
+                        19
+                    ],
+                    "operatorOfferCampaign": {
+                        "Vld": true,
+                        "CmpgList": [
+                            {
+                                "RouteId": 46884068,
+                                "CampaignCode": "MULC_53036f8d",
+                                "CampaignDesc": "Get 11 % Extra OFF",
+                                "CampaignNote": "[\"Minimum ticket fare : INR 1113\",\"Maximum discount limit : INR 99999\"]",
+                                "CampaignType": "PERCENT",
+                                "DiscountUnit": 10,
+                                "DiscountType": 2,
+                                "Discount": 140.99,
+                                "maxDiscount": 10.02,
+                                "DiscountedPrices": [
+                                    1272,
+                                    1363,
+                                    1454,
+                                    1544,
+                                    1635
+                                ],
+                                "OriginalPrices": [
+                                    1412.99,
+                                    1513.99,
+                                    1614.99,
+                                    1715.99,
+                                    1816.99
+                                ],
+                                "SeatCount": 31,
+                                "icon": "REDDEAL",
+                                "displayText": "Exclusive",
+                                "dealType": "REDDEAL",
+                                "discountedFareBySeatType": {
+                                    "SLEEPER": [
+                                        {
+                                            "originalPrice": 1412.99,
+                                            "discountedPrice": 1272,
+                                            "count": 31
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    "isRescheduled": true,
+                    "rescheduleTime": 12,
+                    "campaignType": [
+                        86,
+                        15
+                    ],
+                    "vendorCurrency": "INR",
+                    "availableAisleSeats": 11,
+                    "availableUpperSeats": 14,
+                    "availableLowerSeats": 17,
+                    "bpCount": 18,
+                    "dpCount": 19,
+                    "manualReschedulePolicy": "12:-1:0:0",
+                    "boReqParams": [
+                        {
+                            "isAvailReschedule": true,
+                            "reschedulePolicy": "12:-1:0:0",
+                            "serviceStartTime": "2026-03-20 22:30:00"
+                        }
+                    ],
+                    "busImageCount": -1,
+                    "locationSearchParams": {
+                        "isExactMatch": true,
+                        "sourceBp": "Nigdi",
+                        "destinationDp": "Madgaon",
+                        "bpId": 28222341,
+                        "dpId": 28222050
+                    },
+                    "serviceNotes": {
+                        "PETS": "1",
+                        "CHILD": "1",
+                        "LUG": "2,1"
+                    },
+                    "rdBoostInfo": {
+                        "preBoostPos": 6,
+                        "isBoosted": true,
+                        "wtPrice": 1686.66,
+                        "seatPrices": "1412.99:4,1513.99:4,1614.99:3,1715.99:6,1816.99:14",
+                        "compRids": "",
+                        "compSids": "",
+                        "boostDiscPer": 10,
+                        "campaignId": "MULC_53036f8d",
+                        "dealType": "REDDEAL"
+                    },
+                    "isPremium": true
+                },
+                {
+                    "operatorId": 4153,
+                    "travelsName": "Gogte  Travels",
+                    "routeId": 21812944,
+                    "busType": "A/C Sleeper (2+1)",
+                    "busTypeId": 7,
+                    "serviceName": "Pune to Goa 2X1 (30) A/C Sleeper Gogte Travels",
+                    "serviceId": "88755",
+                    "cancellationPolicy": "0:12:100:0;12:24:50:0;24:168:20:0;168:-1:15:0",
+                    "isPartialCancellationAllowed": true,
+                    "operatorLogoPath": "ind/logo/4153.png",
+                    "totalRatings": 4.1,
+                    "numberOfReviews": "529",
+                    "departureTime": "2026-03-20 18:15:00",
+                    "arrivalTime": "2026-03-21 07:00:00",
+                    "journeyDurationMin": 765,
+                    "firstBpTime": "2026-03-20 18:15:00",
+                    "standardBpName": "Nigdi",
+                    "standardBpIdentifier": 68010,
+                    "standardDpName": "Mapusa",
+                    "standardDpIdentifier": 73799,
+                    "doj": "2026-03-20",
+                    "isSeatLayoutAvailable": true,
+                    "fareList": [
+                        1399
+                    ],
+                    "busScore": 2.8,
+                    "perzScore": 2.8,
+                    "isLiveTrackingAvailable": true,
+                    "isMticketEnabled": true,
+                    "isAc": true,
+                    "isSleeper": true,
+                    "maxSeatsPerTransaction": 6,
+                    "availableWindowSeats": 5,
+                    "availableSingleSeats": 2,
+                    "availableSeats": 8,
+                    "totalSeats": 30,
+                    "amenities": [
+                        10,
+                        5,
+                        7,
+                        86,
+                        9,
+                        19
+                    ],
+                    "operatorOfferCampaign": {
+                        "Vld": true,
+                        "CmpgList": [
+                            {
+                                "RouteId": 21812944,
+                                "CampaignCode": "MULF_e5409e9d",
+                                "CampaignDesc": "Get 11 % Extra OFF",
+                                "CampaignNote": "[\"Minimum ticket fare : INR 300\",\"Maximum discount limit : INR 99999\"]",
+                                "CampaignType": "PERCENT",
+                                "DiscountUnit": 10,
+                                "DiscountType": 2,
+                                "Discount": 140,
+                                "maxDiscount": 10.01,
+                                "DiscountedPrices": [
+                                    1259
+                                ],
+                                "OriginalPrices": [
+                                    1399
+                                ],
+                                "SeatCount": 8,
+                                "isLoggedIn": true,
+                                "icon": "DISCOVERY",
+                                "IsFemaleOffer": true,
+                                "oType": 3,
+                                "displayText": "Try new",
+                                "dealType": "DISCOVERY",
+                                "discountedFareBySeatType": {
+                                    "SLEEPER": [
+                                        {
+                                            "originalPrice": 1399,
+                                            "discountedPrice": 1259,
+                                            "count": 8
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    "isRescheduled": true,
+                    "rescheduleTime": 12,
+                    "campaignType": [
+                        4,
+                        86,
+                        7,
+                        555,
+                        15
+                    ],
+                    "vendorCurrency": "INR",
+                    "programList": [
+                        3
+                    ],
+                    "availableAisleSeats": 3,
+                    "availableUpperSeats": 8,
+                    "bpCount": 14,
+                    "dpCount": 21,
+                    "boReqParams": [
+                        {
+                            "isAvailReschedule": true,
+                            "reschedulePolicy": "12:-1:0:0",
+                            "serviceStartTime": ""
+                        }
+                    ],
+                    "busImageCount": -1,
+                    "rs555": true,
+                    "locationSearchParams": {
+                        "isExactMatch": true,
+                        "sourceBp": "Nigdi",
+                        "destinationDp": "Madgaon",
+                        "bpId": 22421412,
+                        "dpId": 23070529
+                    },
+                    "serviceNotes": {
+                        "PETS": "1",
+                        "CHILD": "1",
+                        "LUG": "2,1"
+                    },
+                    "rdBoostInfo": {
+                        "preBoostPos": 13,
+                        "isBoosted": true,
+                        "wtPrice": 1399,
+                        "seatPrices": "1399.0:8",
+                        "compRids": "",
+                        "compSids": "",
+                        "boostDiscPer": 10,
+                        "campaignId": "MULF_e5409e9d",
+                        "dealType": "DISCOVERY"
+                    }
+                },
+                {
+                    "operatorId": 20218,
+                    "travelsName": "zingbus plus",
+                    "routeId": 38036860,
+                    "busType": "Bharat Benz A/C Sleeper (2+1)",
+                    "busTypeId": 1097,
+                    "serviceName": "67fb72aaee058634a15f78be",
+                    "serviceId": "67fb72aaee058634a15f78be",
+                    "cancellationPolicy": "0:12:100:0;12:24:80:0;24:48:50:0;48:72:30:0;72:-1:15:0",
+                    "operatorLogoPath": "ind/logo/20218.png",
+                    "totalRatings": 4.4,
+                    "numberOfReviews": "604",
+                    "departureTime": "2026-03-20 20:30:00",
+                    "arrivalTime": "2026-03-21 08:45:00",
+                    "journeyDurationMin": 735,
+                    "firstBpTime": "2026-03-20 22:05:00",
+                    "standardBpName": "Nigdi",
+                    "standardBpIdentifier": 68010,
+                    "standardDpName": "Mapusa",
+                    "standardDpIdentifier": 73799,
+                    "doj": "2026-03-20",
+                    "isSeatLayoutAvailable": true,
+                    "fareList": [
+                        1255,
+                        1375,
+                        1516,
+                        1830
+                    ],
+                    "busScore": 2.8,
+                    "perzScore": 2.8,
+                    "isLiveTrackingAvailable": true,
+                    "isMticketEnabled": true,
+                    "isAc": true,
+                    "isSleeper": true,
+                    "maxSeatsPerTransaction": 6,
+                    "availableWindowSeats": 15,
+                    "availableSingleSeats": 10,
+                    "availableSeats": 23,
+                    "totalSeats": 34,
+                    "amenities": [
+                        35,
+                        4,
+                        5,
+                        7,
+                        9,
+                        19
+                    ],
+                    "operatorOfferCampaign": {
+                        "Vld": true,
+                        "CmpgList": [
+                            {
+                                "RouteId": 38036860,
+                                "CampaignCode": "ALLC_ab927732",
+                                "CampaignDesc": "Get 13 % Extra OFF",
+                                "CampaignNote": "[\"Minimum ticket fare : INR 300\",\"Maximum discount limit : INR 99999\"]",
+                                "CampaignType": "PERCENT",
+                                "DiscountUnit": 12.5,
+                                "DiscountType": 2,
+                                "Discount": 157,
+                                "maxDiscount": 12.51,
+                                "DiscountedPrices": [
+                                    1098,
+                                    1203,
+                                    1327,
+                                    1601
+                                ],
+                                "OriginalPrices": [
+                                    1255,
+                                    1375,
+                                    1516,
+                                    1830
+                                ],
+                                "SeatCount": 23,
+                                "icon": "REDDEAL",
+                                "IsFemaleOffer": true,
+                                "oType": 3,
+                                "displayText": "Exclusive",
+                                "dealType": "REDDEAL",
+                                "discountedFareBySeatType": {
+                                    "SLEEPER": [
+                                        {
+                                            "originalPrice": 1255,
+                                            "discountedPrice": 1098,
+                                            "count": 23
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    "isRescheduled": true,
+                    "rescheduleTime": 8,
+                    "campaignType": [
+                        7,
+                        15
+                    ],
+                    "vendorCurrency": "INR",
+                    "availableAisleSeats": 6,
+                    "availableUpperSeats": 12,
+                    "availableLowerSeats": 11,
+                    "bpCount": 11,
+                    "dpCount": 5,
+                    "boReqParams": [
+                        {
+                            "isAvailReschedule": true,
+                            "reschedulePolicy": "8:-1:0:0",
+                            "serviceStartTime": "2026-03-20 22:05:00"
+                        }
+                    ],
+                    "busImageCount": -1,
+                    "persuasion": {
+                        "142": {
+                            "priority": 999,
+                            "tagCategory": 999,
+                            "id": 142,
+                            "percentile": 82,
+                            "score": 82
+                        },
+                        "537": {
+                            "priority": 999,
+                            "tagCategory": 999,
+                            "id": 537
+                        }
+                    },
+                    "locationSearchParams": {
+                        "isExactMatch": true,
+                        "sourceBp": "Nigdi",
+                        "destinationDp": "Panjim",
+                        "bpId": 23328301,
+                        "dpId": 23052106
+                    },
+                    "serviceNotes": {
+                        "PETS": "1",
+                        "CHILD": "1",
+                        "LUG": "2,1"
+                    },
+                    "rdBoostInfo": {
+                        "preBoostPos": 14,
+                        "isBoosted": true,
+                        "wtPrice": 1660.82,
+                        "seatPrices": "1255.0:3,1375.0:2,1516.0:4,1830.0:14",
+                        "compRids": "",
+                        "compSids": "",
+                        "boostDiscPer": 12.5,
+                        "campaignId": "ALLC_ab927732",
+                        "dealType": "REDDEAL"
+                    }
+                }
+            ]
+        },
+        "inventories": [
+            {
+                "operatorId": 7251,
+                "travelsName": "Ashray Travels",
+                "routeId": 13536692,
+                "busType": "Volvo 9600 SLX Multi-Axle AC Sleeper (2+1)",
+                "busTypeId": 1757,
+                "serviceName": "Pune To Goa 2x1 (42) Volvo 9600  Multiaxel A/C Sleeper ",
+                "serviceId": "60892",
+                "cancellationPolicy": "0:4:100:0;4:6:90:0;6:12:75:0;12:24:50:0;24:48:30:0;48:-1:20:0",
+                "operatorLogoPath": "ind/logo/7251.png",
+                "totalRatings": 4.7,
+                "numberOfReviews": "480",
+                "departureTime": "2026-03-20 21:30:00",
+                "arrivalTime": "2026-03-21 10:00:00",
+                "journeyDurationMin": 750,
+                "firstBpTime": "2026-03-20 21:30:00",
+                "standardBpName": "Nigdi",
+                "standardBpIdentifier": 68010,
+                "standardDpName": "Mapusa",
+                "standardDpIdentifier": 73799,
+                "doj": "2026-03-20",
+                "isSeatLayoutAvailable": true,
+                "fareList": [
+                    1680,
+                    1880,
+                    1910,
+                    2060,
+                    2210
+                ],
+                "busScore": 3.97,
+                "perzScore": 3.97,
+                "isLiveTrackingAvailable": true,
+                "isMticketEnabled": true,
+                "isAc": true,
+                "isSleeper": true,
+                "maxSeatsPerTransaction": 6,
+                "availableWindowSeats": 17,
+                "availableSingleSeats": 8,
+                "availableSeats": 30,
+                "totalSeats": 42,
+                "amenities": [
+                    10,
+                    26,
+                    5,
+                    7,
+                    86,
+                    9,
+                    19
+                ],
+                "campaignType": [
+                    7251,
+                    86,
+                    555
+                ],
+                "vendorCurrency": "INR",
+                "programList": [
+                    3
+                ],
+                "availableAisleSeats": 11,
+                "availableUpperSeats": 13,
+                "availableLowerSeats": 17,
+                "bpCount": 21,
+                "dpCount": 18,
+                "boReqParams": [
+                    {
+                        "reschedulePolicy": "",
+                        "serviceStartTime": ""
+                    }
+                ],
+                "busImageCount": -1,
+                "viaRt": "Direct Bus",
+                "persuasion": {
+                    "68": {
+                        "priority": 999,
+                        "tagCategory": 999,
+                        "id": 68
+                    },
+                    "142": {
+                        "priority": 999,
+                        "tagCategory": 999,
+                        "id": 142,
+                        "percentile": 82,
+                        "score": 82
+                    }
+                },
+                "rs555": true,
+                "isDirectBus": true,
+                "locationSearchParams": {
+                    "isExactMatch": true,
+                    "sourceBp": "Nigdi",
+                    "destinationDp": "Madgaon",
+                    "bpId": 25402964,
+                    "dpId": 25488071
+                },
+                "serviceNotes": {
+                    "PETS": "1",
+                    "CHILD": "1",
+                    "LUG": "2,1"
+                },
+                "rdBoostInfo": {
+                    "preBoostPos": 1,
+                    "wtPrice": 1993.33,
+                    "seatPrices": "1680.0:4,1880.0:6,1910.0:5,2060.0:6,2210.0:9",
+                    "compRids": "",
+                    "compSids": "",
+                    "dealType": ""
+                },
+                "isPremium": true
+            },
+            {
+                "operatorId": 9748,
+                "travelsName": "Prasanna Purple Mobility Solutions Pvt Ltd",
+                "routeId": 8194289,
+                "busType": "VE A/C Sleeper (2+1)",
+                "busTypeId": 1681,
+                "serviceName": "Pune To Goa 2 X 1 (36) SLP A/C, Purple Bus",
+                "serviceId": "13308",
+                "cancellationPolicy": "0:4:100:0;4:12:40:0;12:-1:20:0",
+                "isPartialCancellationAllowed": true,
+                "operatorLogoPath": "ind/logo/9748.png",
+                "totalRatings": 4.6,
+                "numberOfReviews": "362",
+                "departureTime": "2026-03-20 20:00:00",
+                "arrivalTime": "2026-03-21 09:00:00",
+                "journeyDurationMin": 780,
+                "firstBpTime": "2026-03-20 20:00:00",
+                "standardBpName": "Nigdi",
+                "standardBpIdentifier": 68010,
+                "standardDpName": "Mapusa",
+                "standardDpIdentifier": 73799,
+                "doj": "2026-03-20",
+                "isSeatLayoutAvailable": true,
+                "fareList": [
+                    1320,
+                    1420,
+                    1520,
+                    1620,
+                    1720,
+                    1820
+                ],
+                "busScore": 3.61,
+                "perzScore": 3.61,
+                "isLiveTrackingAvailable": true,
+                "isMticketEnabled": true,
+                "isAc": true,
+                "isSleeper": true,
+                "maxSeatsPerTransaction": 6,
+                "availableWindowSeats": 22,
+                "availableSingleSeats": 12,
+                "availableSeats": 36,
+                "totalSeats": 36,
+                "amenities": [
+                    10,
+                    5,
+                    7,
+                    86,
+                    9,
+                    19
+                ],
+                "campaignType": [
+                    86
+                ],
+                "vendorCurrency": "INR",
+                "availableAisleSeats": 12,
+                "availableUpperSeats": 18,
+                "availableLowerSeats": 18,
+                "bpCount": 8,
+                "dpCount": 3,
+                "boReqParams": [
+                    {
+                        "reschedulePolicy": "",
+                        "serviceStartTime": ""
+                    }
+                ],
+                "busImageCount": -1,
+                "persuasion": {
+                    "142": {
+                        "priority": 999,
+                        "tagCategory": 999,
+                        "id": 142,
+                        "percentile": 86,
+                        "score": 86
+                    }
+                },
+                "locationSearchParams": {
+                    "isExactMatch": true,
+                    "sourceBp": "Nigdi",
+                    "destinationDp": "Madgaon",
+                    "bpId": 17937736,
+                    "dpId": 17946365
+                },
+                "serviceNotes": {
+                    "PETS": "1",
+                    "CHILD": "1",
+                    "LUG": "2,1"
+                },
+                "rdBoostInfo": {
+                    "preBoostPos": 2,
+                    "wtPrice": 1614.44,
+                    "seatPrices": "1320.0:2,1420.0:2,1520.0:10,1620.0:10,1720.0:6,1820.0:6",
+                    "compRids": "",
+                    "compSids": "",
+                    "dealType": ""
+                }
+            },
+            {
+                "operatorId": 7251,
+                "travelsName": "Ashray Travels Benz",
+                "routeId": 29484282,
+                "busType": "Bharat Benz A/C Sleeper (2+1)",
+                "busTypeId": 1097,
+                "serviceName": "Pune To Goa 2x1 (36)  A/C Sleeper,Ashray Travels Benz",
+                "serviceId": "106220",
+                "cancellationPolicy": "0:4:100:0;4:6:90:0;6:12:75:0;12:24:50:0;24:48:30:0;48:-1:20:0",
+                "operatorLogoPath": "ind/logo/7251.png",
+                "totalRatings": 4.5,
+                "numberOfReviews": "491",
+                "departureTime": "2026-03-20 19:35:00",
+                "arrivalTime": "2026-03-21 08:45:00",
+                "journeyDurationMin": 790,
+                "firstBpTime": "2026-03-20 19:15:00",
+                "standardBpName": "Nigdi",
+                "standardBpIdentifier": 68010,
+                "standardDpName": "Mapusa",
+                "standardDpIdentifier": 73799,
+                "doj": "2026-03-20",
+                "isSeatLayoutAvailable": true,
+                "fareList": [
+                    1100,
+                    1280,
+                    1600,
+                    1720,
+                    1850
+                ],
+                "busScore": 3.5,
+                "perzScore": 3.5,
+                "isLiveTrackingAvailable": true,
+                "isMticketEnabled": true,
+                "isAc": true,
+                "isSleeper": true,
+                "maxSeatsPerTransaction": 6,
+                "availableWindowSeats": 10,
+                "availableSingleSeats": 9,
+                "availableSeats": 15,
+                "totalSeats": 36,
+                "amenities": [
+                    10,
+                    5,
+                    7,
+                    86,
+                    9,
+                    91,
+                    19
+                ],
+                "campaignType": [
+                    7251,
+                    86,
+                    555
+                ],
+                "vendorCurrency": "INR",
+                "programList": [
+                    3
+                ],
+                "availableAisleSeats": 3,
+                "availableUpperSeats": 8,
+                "availableLowerSeats": 7,
+                "bpCount": 21,
+                "dpCount": 17,
+                "boReqParams": [
+                    {
+                        "reschedulePolicy": "",
+                        "serviceStartTime": ""
+                    }
+                ],
+                "busImageCount": -1,
+                "viaRt": "Direct Bus",
+                "persuasion": {
+                    "142": {
+                        "priority": 999,
+                        "tagCategory": 999,
+                        "id": 142,
+                        "percentile": 82,
+                        "score": 82
+                    }
+                },
+                "rs555": true,
+                "isDirectBus": true,
+                "locationSearchParams": {
+                    "isExactMatch": true,
+                    "sourceBp": "Nigdi",
+                    "destinationDp": "Madgaon",
+                    "bpId": 25402964,
+                    "dpId": 25488071
+                },
+                "serviceNotes": {
+                    "PETS": "1",
+                    "CHILD": "1",
+                    "LUG": "2,1"
+                },
+                "rdBoostInfo": {
+                    "preBoostPos": 3,
+                    "wtPrice": 1572,
+                    "seatPrices": "1100.0:2,1280.0:2,1600.0:3,1720.0:6,1850.0:2",
+                    "compRids": "",
+                    "compSids": "",
+                    "dealType": ""
+                }
+            },
+            {
+                "operatorId": 31285,
+                "travelsName": "Limousine Tours & Travels",
+                "routeId": 46239817,
+                "busType": "A/C Sleeper (2+1)",
+                "busTypeId": 54,
+                "serviceName": "Pune To Karwar",
+                "serviceId": "125775",
+                "cancellationPolicy": "0:24:100:0;24:48:50:0;48:120:30:0;120:720:20:0;720:-1:0:0",
+                "isPartialCancellationAllowed": true,
+                "operatorLogoPath": "ind/logo/31285.png",
+                "totalRatings": 4.1,
+                "numberOfReviews": "64",
+                "departureTime": "2026-03-20 18:00:00",
+                "arrivalTime": "2026-03-21 07:00:00",
+                "journeyDurationMin": 780,
+                "firstBpTime": "2026-03-20 17:30:00",
+                "standardBpName": "Nigdi",
+                "standardBpIdentifier": 68010,
+                "standardDpName": "Mapusa",
+                "standardDpIdentifier": 73799,
+                "doj": "2026-03-20",
+                "isSeatLayoutAvailable": true,
+                "fareList": [
+                    1200,
+                    1400
+                ],
+                "busScore": 1.99,
+                "perzScore": 1.99,
+                "isLiveTrackingAvailable": true,
+                "isMticketEnabled": true,
+                "isAc": true,
+                "isSleeper": true,
+                "maxSeatsPerTransaction": 6,
+                "availableWindowSeats": 3,
+                "availableSingleSeats": 3,
+                "availableSeats": 5,
+                "totalSeats": 36,
+                "amenities": [
+                    4,
+                    5,
+                    9,
+                    10,
+                    26,
+                    47,
+                    86,
+                    1,
+                    7,
+                    19
+                ],
+                "operatorOfferCampaign": {
+                    "RTVld": true,
+                    "CmpgList": [
+                        {
+                            "RTODiscountType": 1,
+                            "RTOOffer": "10",
+                            "RTOType": 1,
+                            "RTODays": 15,
+                            "oType": 1,
+                            "redDealInfo": {
+                                "1": {
+                                    "DiscountUnit": 10,
+                                    "DiscountType": 2
+                                }
+                            }
+                        }
+                    ]
+                },
+                "campaignType": [
+                    555
+                ],
+                "vendorCurrency": "INR",
+                "programList": [
+                    3
+                ],
+                "availableAisleSeats": 1,
+                "availableLowerSeats": 5,
+                "bpCount": 12,
+                "dpCount": 9,
+                "sponsoredAttribute": {
+                    "trackingId": "PYQ31GKLW68_dHJhY2tlcixTTCxsaW5lSXRlbUlkOzEwMDQ0NixhZEl0ZW1JZDsyMTYxNDAsMzc0OTk2MjQ5",
+                    "clickUrl": "https://adengine.redbus.com/ext/user/track?type=CLICK&trackingId=PYQ31GKLW68_dHJhY2tlcixTTCxsaW5lSXRlbUlkOzEwMDQ0NixhZEl0ZW1JZDsyMTYxNDAsMzc0OTk2MjQ5",
+                    "viewUrl": "https://adengine.redbus.com/ext/user/track?type=VIEW&trackingId=PYQ31GKLW68_dHJhY2tlcixTTCxsaW5lSXRlbUlkOzEwMDQ0NixhZEl0ZW1JZDsyMTYxNDAsMzc0OTk2MjQ5"
+                },
+                "boReqParams": [
+                    {
+                        "reschedulePolicy": "",
+                        "serviceStartTime": ""
+                    }
+                ],
+                "busImageCount": -1,
+                "rs555": true,
+                "locationSearchParams": {
+                    "isExactMatch": true,
+                    "sourceBp": "Nigdi",
+                    "destinationDp": "Canaconaa-Bypass Entrance near to Palolem Beach",
+                    "bpId": 28113601,
+                    "dpId": 27944832
+                },
+                "serviceNotes": {
+                    "PETS": "1",
+                    "CHILD": "1",
+                    "LUG": "3,2,1"
+                },
+                "rdBoostInfo": {
+                    "preBoostPos": 25,
+                    "wtPrice": 1320,
+                    "seatPrices": "1200.0:2,1400.0:3",
+                    "compRids": "",
+                    "compSids": "",
+                    "dealType": ""
+                }
+            },
+            {
+                "operatorId": 7251,
+                "travelsName": "Ashray Vip Yellows",
+                "routeId": 9199343,
+                "busType": "A/C Sleeper (2+1)",
+                "busTypeId": 54,
+                "serviceName": "Pune To Goa 2x1 (30) A/C Sleeper, Ashray Vip Yellows ",
+                "serviceId": "26382",
+                "cancellationPolicy": "0:4:100:0;4:6:90:0;6:12:75:0;12:24:50:0;24:48:30:0;48:-1:20:0",
+                "operatorLogoPath": "ind/logo/7251.png",
+                "totalRatings": 4.5,
+                "numberOfReviews": "334",
+                "departureTime": "2026-03-20 19:00:00",
+                "arrivalTime": "2026-03-21 08:00:00",
+                "journeyDurationMin": 780,
+                "firstBpTime": "2026-03-20 19:00:00",
+                "standardBpName": "Nigdi",
+                "standardBpIdentifier": 68010,
+                "standardDpName": "Mapusa",
+                "standardDpIdentifier": 73799,
+                "doj": "2026-03-20",
+                "isSeatLayoutAvailable": true,
+                "fareList": [
+                    1100,
+                    1180,
+                    1280,
+                    1430,
+                    1580
+                ],
+                "busScore": 3.36,
+                "perzScore": 3.36,
+                "isLiveTrackingAvailable": true,
+                "isMticketEnabled": true,
+                "isAc": true,
+                "isSleeper": true,
+                "maxSeatsPerTransaction": 6,
+                "availableWindowSeats": 6,
+                "availableSingleSeats": 6,
+                "availableSeats": 11,
+                "totalSeats": 30,
+                "amenities": [
+                    10,
+                    5,
+                    7,
+                    86,
+                    9,
+                    91,
+                    19
+                ],
+                "campaignType": [
+                    7251,
+                    86,
+                    555
+                ],
+                "vendorCurrency": "INR",
+                "programList": [
+                    3
+                ],
+                "availableAisleSeats": 3,
+                "availableUpperSeats": 7,
+                "availableLowerSeats": 4,
+                "bpCount": 19,
+                "dpCount": 17,
+                "boReqParams": [
+                    {
+                        "reschedulePolicy": "",
+                        "serviceStartTime": ""
+                    }
+                ],
+                "busImageCount": -1,
+                "viaRt": "Direct Bus",
+                "persuasion": {
+                    "142": {
+                        "priority": 999,
+                        "tagCategory": 999,
+                        "id": 142,
+                        "percentile": 85,
+                        "score": 85
+                    }
+                },
+                "rs555": true,
+                "isDirectBus": true,
+                "locationSearchParams": {
+                    "isExactMatch": true,
+                    "sourceBp": "Nigdi",
+                    "destinationDp": "Madgaon",
+                    "bpId": 25402964,
+                    "dpId": 25488071
+                },
+                "serviceNotes": {
+                    "PETS": "1",
+                    "CHILD": "1",
+                    "LUG": "2,1"
+                },
+                "rdBoostInfo": {
+                    "preBoostPos": 4,
+                    "wtPrice": 1287.27,
+                    "seatPrices": "1100.0:4,1180.0:1,1280.0:1,1430.0:4,1580.0:1",
+                    "compRids": "",
+                    "compSids": "",
+                    "dealType": ""
+                }
+            },
+            {
+                "operatorId": 4153,
+                "travelsName": "Gogte WorldBus",
+                "routeId": 20396753,
+                "busType": "VE Non A/C Sleeper (2+1)",
+                "busTypeId": 2025,
+                "serviceName": "Pune To Goa 2 x 1 (36) NON A/C Sleeper, Gogte WorldBus ",
+                "serviceId": "84350",
+                "cancellationPolicy": "0:12:100:0;12:24:50:0;24:168:20:0;168:-1:15:0",
+                "isPartialCancellationAllowed": true,
+                "operatorLogoPath": "ind/logo/4153.png",
+                "totalRatings": 4.4,
+                "numberOfReviews": "461",
+                "departureTime": "2026-03-20 17:30:00",
+                "arrivalTime": "2026-03-21 08:30:00",
+                "journeyDurationMin": 900,
+                "firstBpTime": "2026-03-20 17:30:00",
+                "standardBpName": "Nigdi",
+                "standardBpIdentifier": 68010,
+                "standardDpName": "Madgaon",
+                "standardDpIdentifier": 67123,
+                "doj": "2026-03-20",
+                "isSeatLayoutAvailable": true,
+                "fareList": [
+                    1199,
+                    1332,
+                    1555
+                ],
+                "busScore": 3.27,
+                "perzScore": 3.27,
+                "isLiveTrackingAvailable": true,
+                "isMticketEnabled": true,
+                "isNonAc": true,
+                "isSleeper": true,
+                "maxSeatsPerTransaction": 6,
+                "availableWindowSeats": 8,
+                "availableSingleSeats": 5,
+                "availableSeats": 11,
+                "totalSeats": 36,
+                "amenities": [
+                    10,
+                    5,
+                    7,
+                    86,
+                    9,
+                    19
+                ],
+                "operatorOfferCampaign": {
+                    "Vld": true,
+                    "CmpgList": [
+                        {
+                            "RouteId": 20396753,
+                            "CampaignCode": "MULF_e5409e9d",
+                            "CampaignDesc": "Get 11 % Extra OFF",
+                            "CampaignNote": "[\"Minimum ticket fare : INR 300\",\"Maximum discount limit : INR 99999\"]",
+                            "CampaignType": "PERCENT",
+                            "DiscountUnit": 10,
+                            "DiscountType": 2,
+                            "Discount": 120,
+                            "maxDiscount": 10.01,
+                            "DiscountedPrices": [
+                                1079,
+                                1199,
+                                1400
+                            ],
+                            "OriginalPrices": [
+                                1199,
+                                1332,
+                                1555
+                            ],
+                            "SeatCount": 11,
+                            "isLoggedIn": true,
+                            "icon": "DISCOVERY",
+                            "IsFemaleOffer": true,
+                            "oType": 3,
+                            "displayText": "Try new",
+                            "dealType": "DISCOVERY",
+                            "discountedFareBySeatType": {
+                                "SLEEPER": [
+                                    {
+                                        "originalPrice": 1199,
+                                        "discountedPrice": 1079,
+                                        "count": 9
+                                    }
+                                ],
+                                "SINGLE_SLEEPER": [
+                                    {
+                                        "originalPrice": 1332,
+                                        "discountedPrice": 1199,
+                                        "count": 2
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "isRescheduled": true,
+                "rescheduleTime": 12,
+                "campaignType": [
+                    4,
+                    86,
+                    7,
+                    555,
+                    15
+                ],
+                "vendorCurrency": "INR",
+                "programList": [
+                    3
+                ],
+                "availableAisleSeats": 3,
+                "availableUpperSeats": 8,
+                "availableLowerSeats": 3,
+                "bpCount": 13,
+                "dpCount": 15,
+                "boReqParams": [
+                    {
+                        "isAvailReschedule": true,
+                        "reschedulePolicy": "12:-1:0:0",
+                        "serviceStartTime": ""
+                    }
+                ],
+                "busImageCount": -1,
+                "viaRt": "Direct Bus",
+                "persuasion": {
+                    "142": {
+                        "priority": 999,
+                        "tagCategory": 999,
+                        "id": 142,
+                        "percentile": 95,
+                        "score": 95
+                    }
+                },
+                "rs555": true,
+                "isDirectBus": true,
+                "locationSearchParams": {
+                    "isExactMatch": true,
+                    "sourceBp": "Nigdi",
+                    "destinationDp": "Madgaon",
+                    "bpId": 593919,
+                    "dpId": 23070529
+                },
+                "serviceNotes": {
+                    "PETS": "1",
+                    "CHILD": "1",
+                    "LUG": "2,1"
+                },
+                "rdBoostInfo": {
+                    "preBoostPos": 5,
+                    "wtPrice": 1243.45,
+                    "seatPrices": "1199.0:9,1332.0:1,1555.0:1",
+                    "compRids": "",
+                    "compSids": "",
+                    "boostDiscPer": 10,
+                    "campaignId": "MULF_e5409e9d",
+                    "dealType": "DISCOVERY"
+                }
+            },
+            {
+                "operatorId": 35924,
+                "travelsName": "Anand Ashray Travels",
+                "routeId": 46884068,
+                "busType": "Volvo Multi-Axle A/C Sleeper (2+1) ",
+                "busTypeId": 1575,
+                "serviceName": "Anand Ashray ",
+                "serviceId": "1",
+                "cancellationPolicy": "0:3:100:0;3:12:100:0;12:24:50:0;24:-1:20:0",
+                "isPartialCancellationAllowed": true,
+                "operatorLogoPath": "ind/logo/35924.png",
+                "totalRatings": 4.3,
+                "numberOfReviews": "513",
+                "departureTime": "2026-03-20 20:30:00",
+                "arrivalTime": "2026-03-21 09:00:00",
+                "journeyDurationMin": 750,
+                "firstBpTime": "2026-03-20 22:30:00",
+                "standardBpName": "Nigdi",
+                "standardBpIdentifier": 68010,
+                "standardDpName": "Mapusa",
+                "standardDpIdentifier": 73799,
+                "doj": "2026-03-20",
+                "isSeatLayoutAvailable": true,
+                "fareList": [
+                    1412.99,
+                    1513.99,
+                    1614.99,
+                    1715.99,
+                    1816.99
+                ],
+                "busScore": 3.12,
+                "perzScore": 3.12,
+                "isLiveTrackingAvailable": true,
+                "isMticketEnabled": true,
+                "isAc": true,
+                "isSleeper": true,
+                "maxSeatsPerTransaction": 6,
+                "availableWindowSeats": 18,
+                "availableSingleSeats": 9,
+                "availableSeats": 31,
+                "totalSeats": 36,
+                "amenities": [
+                    4,
+                    5,
+                    9,
+                    10,
+                    7,
+                    19
+                ],
+                "operatorOfferCampaign": {
+                    "Vld": true,
+                    "CmpgList": [
+                        {
+                            "RouteId": 46884068,
+                            "CampaignCode": "MULC_53036f8d",
+                            "CampaignDesc": "Get 11 % Extra OFF",
+                            "CampaignNote": "[\"Minimum ticket fare : INR 1113\",\"Maximum discount limit : INR 99999\"]",
+                            "CampaignType": "PERCENT",
+                            "DiscountUnit": 10,
+                            "DiscountType": 2,
+                            "Discount": 140.99,
+                            "maxDiscount": 10.02,
+                            "DiscountedPrices": [
+                                1272,
+                                1363,
+                                1454,
+                                1544,
+                                1635
+                            ],
+                            "OriginalPrices": [
+                                1412.99,
+                                1513.99,
+                                1614.99,
+                                1715.99,
+                                1816.99
+                            ],
+                            "SeatCount": 31,
+                            "icon": "REDDEAL",
+                            "displayText": "Exclusive",
+                            "dealType": "REDDEAL",
+                            "discountedFareBySeatType": {
+                                "SLEEPER": [
+                                    {
+                                        "originalPrice": 1412.99,
+                                        "discountedPrice": 1272,
+                                        "count": 31
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "isRescheduled": true,
+                "rescheduleTime": 12,
+                "campaignType": [
+                    86,
+                    15
+                ],
+                "vendorCurrency": "INR",
+                "availableAisleSeats": 11,
+                "availableUpperSeats": 14,
+                "availableLowerSeats": 17,
+                "bpCount": 18,
+                "dpCount": 19,
+                "manualReschedulePolicy": "12:-1:0:0",
+                "boReqParams": [
+                    {
+                        "isAvailReschedule": true,
+                        "reschedulePolicy": "12:-1:0:0",
+                        "serviceStartTime": "2026-03-20 22:30:00"
+                    }
+                ],
+                "busImageCount": -1,
+                "locationSearchParams": {
+                    "isExactMatch": true,
+                    "sourceBp": "Nigdi",
+                    "destinationDp": "Madgaon",
+                    "bpId": 28222341,
+                    "dpId": 28222050
+                },
+                "serviceNotes": {
+                    "PETS": "1",
+                    "CHILD": "1",
+                    "LUG": "2,1"
+                },
+                "rdBoostInfo": {
+                    "preBoostPos": 6,
+                    "isBoosted": true,
+                    "wtPrice": 1686.66,
+                    "seatPrices": "1412.99:4,1513.99:4,1614.99:3,1715.99:6,1816.99:14",
+                    "compRids": "",
+                    "compSids": "",
+                    "boostDiscPer": 10,
+                    "campaignId": "MULC_53036f8d",
+                    "dealType": "REDDEAL"
+                },
+                "isPremium": true
+            },
+            {
+                "operatorId": 20437,
+                "travelsName": "IntrCity SmartBus",
+                "routeId": 19924889,
+                "busType": "VE A/C Sleeper (2+1)",
+                "busTypeId": 1681,
+                "serviceName": "Pune-Goa | 08:00PM",
+                "serviceId": "417",
+                "cancellationPolicy": "0:24:95:0;24:48:75:0;48:96:30:0;96:720:15:0",
+                "isPartialCancellationAllowed": true,
+                "operatorLogoPath": "ind/logo/20437.png",
+                "totalRatings": 4.3,
+                "numberOfReviews": "437",
+                "departureTime": "2026-03-20 18:15:00",
+                "arrivalTime": "2026-03-21 06:30:00",
+                "journeyDurationMin": 735,
+                "firstBpTime": "2026-03-20 20:00:00",
+                "standardBpName": "Nigdi",
+                "standardBpIdentifier": 68010,
+                "standardDpName": "Mapusa",
+                "standardDpIdentifier": 73799,
+                "doj": "2026-03-20",
+                "isSeatLayoutAvailable": true,
+                "fareList": [
+                    1020,
+                    1020,
+                    1088,
+                    1218,
+                    1294,
+                    1360,
+                    1428,
+                    1523,
+                    1599
+                ],
+                "busScore": 3.07,
+                "perzScore": 3.07,
+                "isLiveTrackingAvailable": true,
+                "isMticketEnabled": true,
+                "isAc": true,
+                "isSleeper": true,
+                "maxSeatsPerTransaction": 6,
+                "availableWindowSeats": 14,
+                "availableSingleSeats": 8,
+                "availableSeats": 24,
+                "totalSeats": 34,
+                "amenities": [
+                    4,
+                    5,
+                    7,
+                    35,
+                    9,
+                    26,
+                    19
+                ],
+                "isRescheduled": true,
+                "rescheduleTime": 2,
+                "vendorCurrency": "INR",
+                "availableAisleSeats": 8,
+                "availableUpperSeats": 12,
+                "availableLowerSeats": 12,
+                "bpCount": 11,
+                "dpCount": 5,
+                "boReqParams": [
+                    {
+                        "isAvailReschedule": true,
+                        "reschedulePolicy": "2:-1:0:0",
+                        "serviceStartTime": "2026-03-20 20:00:00"
+                    }
+                ],
+                "busImageCount": -1,
+                "persuasion": {
+                    "68": {
+                        "priority": 999,
+                        "tagCategory": 999,
+                        "id": 68
+                    },
+                    "537": {
+                        "priority": 999,
+                        "tagCategory": 999,
+                        "id": 537
+                    }
+                },
+                "locationSearchParams": {
+                    "isExactMatch": true,
+                    "sourceBp": "Nigdi",
+                    "destinationDp": "Madgaon",
+                    "bpId": 26947568,
+                    "dpId": 23037077
+                },
+                "serviceNotes": {
+                    "PETS": "1",
+                    "CHILD": "1",
+                    "LUG": "2,1"
+                },
+                "rdBoostInfo": {
+                    "preBoostPos": 7,
+                    "wtPrice": 1344.91,
+                    "seatPrices": "1020.0:2,1020.0:2,1088.0:2,1218.0:1,1294.0:1,1360.0:2,1428.0:8,1523.0:3,1599.0:3",
+                    "compRids": "",
+                    "compSids": "",
+                    "dealType": ""
+                }
+            },
+            {
+                "operatorId": 30426,
+                "travelsName": "FlixBus",
+                "routeId": 38657393,
+                "busType": "Bharat Benz A/C Sleeper (2+1)",
+                "busTypeId": 1086,
+                "serviceName": "FlixBus India Private Limited",
+                "serviceId": "85d0ee98-c9af-42c9-8959-c81a9a3e5080_01",
+                "cancellationPolicy": "0:48:75:0;48:168:50:0;168:336:25:0;336:-1:0:0",
+                "operatorLogoPath": "ind/logo/30426.png",
+                "totalRatings": 4.3,
+                "numberOfReviews": "383",
+                "departureTime": "2026-03-20 20:00:00",
+                "arrivalTime": "2026-03-21 08:45:00",
+                "journeyDurationMin": 765,
+                "firstBpTime": "2026-03-20 20:00:00",
+                "standardBpName": "Nigdi",
+                "standardBpIdentifier": 68010,
+                "standardDpName": "Mapusa",
+                "standardDpIdentifier": 73799,
+                "doj": "2026-03-20",
+                "isSeatLayoutAvailable": true,
+                "fareList": [
+                    1117.8,
+                    1143.22,
+                    1168.64,
+                    1270.34,
+                    1321.19
+                ],
+                "busScore": 3.03,
+                "perzScore": 3.03,
+                "isLiveTrackingAvailable": true,
+                "isMticketEnabled": true,
+                "isAc": true,
+                "isSleeper": true,
+                "maxSeatsPerTransaction": 6,
+                "availableWindowSeats": 15,
+                "availableSingleSeats": 10,
+                "availableSeats": 23,
+                "totalSeats": 36,
+                "amenities": [
+                    4,
+                    5,
+                    7,
+                    9,
+                    91,
+                    10,
+                    19
+                ],
+                "vendorCurrency": "INR",
+                "availableAisleSeats": 6,
+                "availableUpperSeats": 9,
+                "availableLowerSeats": 14,
+                "bpCount": 10,
+                "dpCount": 6,
+                "boReqParams": [
+                    {
+                        "reschedulePolicy": "",
+                        "serviceStartTime": ""
+                    }
+                ],
+                "busImageCount": -1,
+                "persuasion": {
+                    "68": {
+                        "priority": 999,
+                        "tagCategory": 999,
+                        "id": 68
+                    }
+                },
+                "locationSearchParams": {
+                    "isExactMatch": true,
+                    "sourceBp": "Nigdi",
+                    "destinationDp": "Madgaon",
+                    "bpId": 26395823,
+                    "dpId": 26006471
+                },
+                "serviceNotes": {
+                    "PETS": "1",
+                    "CHILD": "1",
+                    "LUG": "2,1"
+                },
+                "rdBoostInfo": {
+                    "preBoostPos": 8,
+                    "wtPrice": 1212.85,
+                    "seatPrices": "1117.8:3,1143.22:6,1168.64:3,1270.34:7,1321.19:4",
+                    "compRids": "",
+                    "compSids": "",
+                    "dealType": ""
+                }
+            },
+            {
+                "operatorId": 20437,
+                "travelsName": "IntrCity SmartBus",
+                "routeId": 27613932,
+                "busType": "VE A/C Sleeper (2+1)",
+                "busTypeId": 1681,
+                "serviceName": "Pune-Goa | 10:00PM",
+                "serviceId": "744",
+                "cancellationPolicy": "0:24:95:0;24:48:75:0;48:96:30:0;96:720:15:0",
+                "isPartialCancellationAllowed": true,
+                "operatorLogoPath": "ind/logo/20437.png",
+                "totalRatings": 4.3,
+                "numberOfReviews": "359",
+                "departureTime": "2026-03-20 20:35:00",
+                "arrivalTime": "2026-03-21 08:25:00",
+                "journeyDurationMin": 710,
+                "firstBpTime": "2026-03-20 22:00:00",
+                "standardBpName": "Nigdi",
+                "standardBpIdentifier": 68010,
+                "standardDpName": "Mapusa",
+                "standardDpIdentifier": 73799,
+                "doj": "2026-03-20",
+                "isSeatLayoutAvailable": true,
+                "fareList": [
+                    1008,
+                    1176,
+                    1344,
+                    1411,
+                    1470,
+                    1478,
+                    1543,
+                    1617
+                ],
+                "busScore": 3.01,
+                "perzScore": 3.01,
+                "isLiveTrackingAvailable": true,
+                "isMticketEnabled": true,
+                "isAc": true,
+                "isSleeper": true,
+                "maxSeatsPerTransaction": 6,
+                "availableWindowSeats": 15,
+                "availableSingleSeats": 8,
+                "availableSeats": 24,
+                "totalSeats": 34,
+                "amenities": [
+                    4,
+                    5,
+                    7,
+                    35,
+                    9,
+                    26,
+                    19
+                ],
+                "isRescheduled": true,
+                "rescheduleTime": 2,
+                "vendorCurrency": "INR",
+                "availableAisleSeats": 8,
+                "availableUpperSeats": 17,
+                "availableLowerSeats": 7,
+                "bpCount": 10,
+                "dpCount": 5,
+                "boReqParams": [
+                    {
+                        "isAvailReschedule": true,
+                        "reschedulePolicy": "2:-1:0:0",
+                        "serviceStartTime": "2026-03-20 22:00:00"
+                    }
+                ],
+                "busImageCount": -1,
+                "persuasion": {
+                    "537": {
+                        "priority": 999,
+                        "tagCategory": 999,
+                        "id": 537
+                    }
+                },
+                "locationSearchParams": {
+                    "isExactMatch": true,
+                    "sourceBp": "Nigdi",
+                    "destinationDp": "Madgaon",
+                    "bpId": 26947568,
+                    "dpId": 23037077
+                },
+                "serviceNotes": {
+                    "PETS": "1",
+                    "CHILD": "1",
+                    "LUG": "2,1"
+                },
+                "rdBoostInfo": {
+                    "preBoostPos": 9,
+                    "wtPrice": 1412.91,
+                    "seatPrices": "1008.0:2,1176.0:1,1344.0:4,1411.0:8,1470.0:1,1478.0:2,1543.0:1,1617.0:5",
+                    "compRids": "",
+                    "compSids": "",
+                    "dealType": ""
+                }
+            }
+        ],
+        "parentSrcCityName": "Pune",
+        "parentDstCityName": "Goa",
+        "parentSrcCityId": 130,
+        "parentDstCityId": 210,
+        "srcCountry": "INDIA",
+        "dstCountry": "INDIA",
+        "sortLabel": "BUSSCORE",
+        "uuidAtSRP": "8e78338a30dc4efd8658d921a33b0b53",
+        "busCounts": {
+            "total": 67,
+            "privateCount": 64
+        },
+        "operatorValidations": {
+            "7115": {
+                "offer": " Use Code <b>FIRST</b> to Get Upto <b>₹250</b> off on <b>KTCL!</b>",
+                "iconUrl": "https://st.redbus.in/Images/logos/ktcl.png",
+                "priceShockAlert": "+KTCL fees and taxes"
+            }
+        },
+        "trainData": {
+            "sourceStationCode": null,
+            "avlTrnCount": 0,
+            "dstStationName": null,
+            "errorMessage": "Route is not whitelisted",
+            "dstStationCode": null,
+            "sourceStationName": null
+        },
+        "srcRegion": "Maharashtra and Goa",
+        "desRegion": "Maharashtra and Goa"
+    },
+    "statusCode": 200,
+    "headers": {
+        "date": "Thu, 19 Mar 2026 05:52:26 GMT",
+        "content-type": "application/json",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "server": "nginx",
+        "access-control-allow-origin": "https://www.redbus.in",
+        "access-control-allow-methods": "GET, POST, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Authorization",
+        "access-control-allow-credentials": "true"
+    }
+}

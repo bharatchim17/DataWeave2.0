@@ -101,6 +101,14 @@ Immediate child = a key/value directly inside the object Not inside another obje
 
 //output of multi-value selector is an array(The result of .* is always an array) , it works for both
  array and objects..
+
+ %dw 2.0
+ output application/json
+ ---
+// payload.id //1 (single value selector)
+// payload..id //[1 , 2 , 3] (decendent selector select first value in nested object)
+// payload.*id //[1 , 11] (multivalue selector select all value but , not work in nested object)
+payload..*id //[1 , 11 , 2 , 22 , 3 ,33](combination of multi-value and decendent selector select all values)
 ------------------------------------------------------------------------------
 //How to update value of key..?
 -->

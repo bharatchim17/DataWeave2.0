@@ -159,6 +159,12 @@ output form as array[]..
 {   
   
 } pluck $ | $$ | $$$ <--- $ value , $$ key , $$$ index
+// obj pluck 
+// {
+//     "index" : $$$ ,
+//     "keys"  : $$ ,
+//     "value" : $ 
+// }
 
 to: returns a range with the specified boundaries..
 
