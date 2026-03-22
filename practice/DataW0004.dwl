@@ -47,16 +47,13 @@ output application/json
 // },
 
 // "combineNot!" :
-// {
-//     "k1" : not true or true , // not (true or true)
-//     "k2" : ! true or true   ,  // (!true) or true
-//     "k3" : !true or !true ,
-//     "k4" : !(true or true)
-// }  
-
-// }
-
-
+{
+    "k1" : (not true) or (true) , 
+    "k2" : ! true or true   , 
+    "k3" : !true or !true ,
+    "k4" : !(true or true)
+}
+///////////////////////////////////////////////////////////////
 // %dw 2.0
 // output application/json
 // ---
@@ -90,27 +87,9 @@ output application/json
 //       ]
         
 //     }
-
 // }
 
-
-// %dw 2.0 
-// output application/json
-// ---
-//  typeOf("india")  
-//  ,
-// typeOf(100)
-//,
-// typeOf(true)
-//,
-// typeOf({}) 
-//,
-// typeOf([])
-//,
-// typeOf(null) 
-// ,
-// typeOf('')
-
+///////////////////////////////////////////////////////////////
 
 // %dw 2.0 
 // output application/json
@@ -124,12 +103,14 @@ output application/json
 
 // }
 // ---
-// // info.firstName
-// // typeOf(info.firstName)
-// // info.age 
-// // typeOf(info.age)
-// // upper(info.firstName)
-// // info
+// info.firstName
+// typeOf(info.firstName)
+// info.age 
+// typeOf(info.age)
+// upper(info.firstName)
+// info
+
+/////////////////////////////////////////////////////////////////////////////
 
 
 //payload01:- index and range selector.
@@ -145,29 +126,13 @@ output application/json
 //  %dw 2.0
 //  output application/json
 //  ---
-// // payload
-// // payload[-1]
-// // payload[0]            //index value selector 
-
-// // payload[0 to 2]          //Range value selector 
-
+// payload
+// payload[-1]
+// payload[0]    //index value selector 
+// payload[0 to 2] //Range value selector 
 
 
-// // payload02:- multivalue selector
-// // {
-// //     "k1": "india" ,
-// //     "k2": "japan" ,
-// //     "k1": "usa" ,
-// //     "k1": "maharashrtra"
-// // }
-
-// %dw 2.0
-// output application/json
-// ---
-// payload.*k1
-
-
-//payload03:-  Descendent + multivalue Selector
+//payload02:-  Descendent + multivalue Selector
 
 
 // {
@@ -233,9 +198,6 @@ output application/json
 // }
 
 
-
-// //s and if else construct 
-
 // %dw 2.0
 // output application/json
 // // global variable
@@ -255,9 +217,9 @@ output application/json
 // key2 : firstArray >> [7] ,
 // key3 : firstArray << 7 ,
 // key4 : createObject.object3
-
 // }
 
+/////////////////////////////////////////////////////////////////////////////
 
 // %dw 2.0
 // output application/json
@@ -288,7 +250,7 @@ output application/json
 //     key2 : x
 // }
 
-
+///////////////////////////////////////////////
 
 // %dw 2.0
 //  output application/json
@@ -301,17 +263,8 @@ output application/json
 //  k1 :if(myObject.myCountry == "India") myObject.myCountry
 //  else "invalid"
 //  }
-
-//payload03:- if else statement
-
-// {
-//     "name" : "bharat chim" ,
-//     "location" : "india" ,
-//     "id" : 1 ,
-//     "age": 65 ,
-//     "salery" : 10000 
-// }
-
+/////////////////////////////////////////////////////
+//if else statement
 // %dw 2.0
 //  output application/json
 
@@ -348,6 +301,7 @@ output application/json
 // k4 : emptyFunction()
 //  }
 
+///////////////////////////////////////////////////////////////////////
 
 // %dw 2.0
 //  output application/json
@@ -359,6 +313,8 @@ output application/json
 // k1 : twoParams("hello" , "mule" ) ,
 
 // }
+
+//////////////////////////////////////////////////////////////////////
 
 // %dw 2.0
 //  output application/json
