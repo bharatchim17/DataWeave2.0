@@ -6,12 +6,9 @@
  ---
  {
 // "countBy1" :  [ 1 , 2 , 3 , 4 , 5 , 6 ] countBy (($ mod 2) == 0) ,
-// "countBy2" :  [ 1 , 2 , 3 , 4 , 5 , 6 ] countBy (($ / 2) == 0) ,
 // "countBy3" :  [ 1 , 2 , 3 , 4 , 5 , 6 ] countBy (($ / 2) == 2) , 
     
-//     "divideBy2" :  [ 1 , 2 , 3 , 4 , 5 , 6 ] divideBy 2 ,
 //     "divideBy4" :  [ 1 , 2 , 3 , 4 , 5 , 6 ] divideBy 4 ,
-//     "divideBy5" :  [ 1 , 2 , 3 , 4 , 5 , 6 ] divideBy 5 
  }
 
 
@@ -30,37 +27,23 @@
 // ---
 // slice(sliceHead , 2 , 5)
 
-// %dw 2.0
-// import * from dw::core::Arrays
-// output application/json
-// ---
-// // {
-// //     "sumBy" : 
-// //     [
-// //         {
-// //       "k1" : 10
-// //         },
-
-// //         {
-// //      "k1" : 20
-
-// //         },
-
-// //         {
-// //     "k1" : 30
-
-// //         }
-// //     ] sumBy ($.k1 )
-// // }
+%dw 2.0
+import * from dw::core::Arrays
+output application/json
+var add = [2 , 3  ,12]
+---
+{
+    "sum1": add sumBy ((item) -> item ),
+    "sum2": add sumBy $
+}
 
 
-// // {
-// //   "sumBy" : [
-// //     [ { a: 1 }, { a: 2 }, { a: 3 } ] sumBy $.a,
-// //     sumBy([ { a: 1 }, { a: 2 }, { a: 3 } ], (item) -> item.a)
-// //   ]
-// // }
-
+{
+  "sumBy" : [
+    [ { a: 1 }, { a: 2 }, { a: 3 } ] sumBy $.a,
+    sumBy([ { a: 1 }, { a: 2 }, { a: 3 } ], (item) -> item.a)
+  ]
+}
 
 // {
 //     "itemDetails" : 
@@ -111,13 +94,16 @@
 // }
 
 
-// %dw 2.0 
-// output application/json
-// ---
-// [1 , 0 , 0 , 5 , 4 , 5 ,  3 , 7 , 3 , 9 , 8 , 10 , 9] distinctBy ((item) -> 
-// {
-//     "removeDuplicateElement" : item
-// })
+%dw 2.0 
+output application/json
+var dup =[1 , 0 , 0 , 5 , 4 , 5 ,  3 , 7 , 3 , 9 , 8 , 10 , 9] 
+---
+
+//  dup distinctBy ((item, index) -> item)
+
+// dup distinctBy ((item, index) ->{
+// "removeDuplicateElement": item
+// } )
 
 // %dw 2.0 
 // output application/json
@@ -178,16 +164,14 @@
 // }
 
 
-// %dw 2.0 
-// output application/dw
-// ---
-
-// {
- // "maximum" : max([1000 , 100 , 1000.1 , 10]) ,
-// "minimum" : min([1000 , 100 , 1000.1 , 10]) 
-// }
-
-//  [(3 mod 2) , (4 mod 2) ,(1 mod 2) , (7 mod 2)]
+%dw 2.0 
+output application/json
+var bro = [1000 , 100 , 1000.1 , 10]
+---
+{
+ "maximum" : max(bro) ,
+"minimum" : min(bro) 
+}
 
 
 // %dw 2.0 

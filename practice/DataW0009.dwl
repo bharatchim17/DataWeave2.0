@@ -1,89 +1,333 @@
-//----------------------------------------------------------------------------
-// %dw 2.0 
-// import * from dw::Runtime
-// var result = []
-// output application/json
+// ----------------------------------------------------------------------------------
+//payload
+// {
+// "Tittle": "Mr" ,
+// "Name": "Bharat Chim" ,
+// "Mobile": 9075720192
+// }
+
+// %dw 2.0 output application/json
+// var countryCode = "+91-" 
 // ---
 // {
-//     "k1": "ggv"
-// }wait 8000
+//     "Name": payload.Tittle ++ " " ++ payload.Name ,
+//     "Mobile": countryCode ++ payload.Mobile
+// }
+// ------------------------------------------------------------------------------------
+// %dw 2.0 output application/json
+// var countryCode = "+91-" 
+// fun detail(pay) = 
+// {
+// "Name": pay.Tittle ++ " "++ pay.Name ,
+// "Mobile": countryCode ++ pay.Mobile
 
-// if(10 > 0) "Greater than zero" else fail("less than zero")
-
-// if(sizeOf(result) <= 0) fail('Data was empty') else result
-
-//----------------------------------------------------------------------------
+// }
+// ---
+// detail(payload)
+// ------------------------------------------------------------------------------------
+// %dw 2.0 output application/json
+// ---
+// ["a" , "b" , "c" , "d" , "e" , "f"] map (value, index) -> {
+//     (index): value
+// }
+// ----------------------------------------------------------------------------
+//dataweave-core-string-functions:
 
 // %dw 2.0
-// import * from dw::Runtime
-// var result = []
 // output application/json
+// var name = "Chinna"
 // ---
-// if(sizeOf(result) <= 0) fail('Data was empty') else result
+// {
+// 	"contains example": "mulesoft" contains("mule"),
+// 	"find example": "aabccdbceaa" find "a",
+// 	"isBlank example": isBlank("hello"),
+// 	"isEmpty example array": isEmpty([1, 2, 3]),
+// 	"isEmpty example string": isEmpty(null),
+// 	"empName": if(! isEmpty(name)) name else "Not provided",
+// 	"lower example": lower("MULESOFTesb"),
+// 	"upper example": upper("MULEesb"),
+// 	"matches example": "me@mulesoft.com" matches(/([a-z]*)@([a-z]*).com/),
+// 	"replace example": "admin123" replace "123" with("ID"),
+// 	"splitBy example": ("a-b-c" splitBy("-")),
+// 	"startsWith example": "Mariano" startsWith("Mar"),
+// 	"endsWith example": "Mariano" endsWith("no"),
+// 	"trim example": trim("   my really long  text     ")
+// }
+// --------------------------------------------------------------------------------
 
-//----------------------------------------------------------------------------
+// //dataweave-core-of-functionsFlow:
 // %dw 2.0
-// import * from dw::core::Arrays
-
 // output application/json
+// var name="Chinna"
+// var caseTypes=["positive", "recovered", "positive"]
+// var covidObject = {
+//   "firstName": "Mike",
+//   "lastName": "Tyson",
+//   "phone": "789-655-3878",
+//   "email": "mike@gmail.com"
+// }
+// var covidObjectArray = [
+// {
+//   "firstName": "John",
+//   "lastName": "Nix",
+//   "phone": "541-754-3010",
+//   "email": "john@gmail.com"
+// },
+// {
+//   "firstName": "Jake",
+//   "lastName": "Vend",
+//   "phone": "655-789-2345",
+//   "email": "jake@yahoo.com"
+// }
+// ]
 // ---
-// // [100 , 200 , 300 , 400 , 500] splitAt 2
-// [100 , 200 , 300 , 400 , 500] dropWhile ((item) -> item < 400)
+// {
+// 	"sizeOf-FieldLevel": sizeOf(name),
+// 	"sizeOf-ArrayLevel": sizeOf(caseTypes),
+// 	"sizeOf-ObjectLevel": sizeOf(covidObject),
+// 	"sizeOf-ArrayOfObjectLevel": sizeOf(covidObjectArray),
+// 	"typeOf-FieldLevel": typeOf(name),
+// 	"typeOf-ArrayLevel": typeOf(caseTypes),
+// 	"typeOf-ObjectLevel": typeOf(covidObject),
+// 	"typeOf-ArrayOfObjectLevel": typeOf(covidObjectArray),
+// 	"namesOfObject": namesOf(covidObject),
+// 	"keysOfObject": keysOf(covidObject),
+// 	"valuesOfObject": valuesOf(covidObject),
+// 	"indexOf-ArrayLevelSyntax1": indexOf(caseTypes, "positive"),
+// 	"indexOf-ArrayLevelSyntax2": caseTypes indexOf "recovered",
+// 	"lastIndexOf-ArrayLevel": lastIndexOf(caseTypes, "positive"),
+// 	"entriesOfObject": entriesOf(covidObject),
+// }
+// // -----------------------------------------------------------------------------------
+//map and mapObject function:
+
+// %dw 2.0
+// output application/json
+
+// var covidObject = {
+//   "firstName": "John",
+//   "lastName": "Nix",
+//   "phone": "541-754-3010",
+//   "email": "john@gmail.com",
+//   "caseType": "positive"
+// }
+
+// ---
+// {
+// 	"a": covidObject mapObject {
+// 		($$): $
+// 	},
+	
+// 	"b": covidObject mapObject(v, k, i) -> {
+// 		(i): v
+// 	}
+// }
+// ------------------
+// %dw 2.0
+// output application/json
+
+// var caseTypes=["positive", "recovered", "negative"]
+
+// var covidObjectArray = [
+// {
+//   "firstName": "John",
+//   "lastName": "Nix",
+//   "phone": "541-754-3010",
+//   "email": "john@gmail.com"
+// },
+// {
+//   "firstName": "Jake",
+//   "lastName": "Vend",
+//   "phone": "655-789-2345",
+//   "email": "jake@yahoo.com"
+// }
+// ]
+// ---
+// {
+// 	"a": caseTypes map {
+// 		($$): $
+// 	},
+// 	"b": caseTypes map(caseType, indexOfCaseType) -> {
+// 		(indexOfCaseType): caseType
+// 	},
+// 	"c": covidObjectArray map {
+// 		($$): $
+// 	},
+// 	"d": covidObjectArray map(covidPayload, indexOfCovidPayload) -> {
+// 		(indexOfCovidPayload): covidPayload
+// 	},
+// 	"e": covidObjectArray map(covidPayload, indexOfCovidPayload) -> {
+// 		"fullName": covidPayload.firstName ++ " " ++ covidPayload.lastName,
+// 		"phone": covidPayload.phone,
+// 		"email": covidPayload.email
+// 		}
+// }
+// // ---------------------------------------------------------------------------
+//Filter & filterObject function:
+
+// %dw 2.0
+// output application/json
+
+// var numberArray = [9,2,3,4,5]
+
+// var covidObjectArray = [
+// {
+//   "firstName": "John",
+//   "lastName": "Nix",
+//   "phone": "541-754-3010",
+//   "email": "john@gmail.com",
+//   "caseType": "positive"
+// },
+// {
+//   "firstName": "Jake",
+//   "lastName": "Vend",
+//   "phone": "655-789-2345",
+//   "email": "jake@yahoo.com",
+//   "caseType": "positive"
+// },
+// {
+//   "firstName": "Mike",
+//   "lastName": "Tyson",
+//   "phone": "789-655-3878",
+//   "email": "mike@gmail.com",
+//   "caseType": "Recovered"
+// } 
+// ]
+// ---
+// {
+// 	"a": numberArray filter($ > 3),
+	
+// 	"b": numberArray filter(v, i) -> v > 3,
+	
+// 	"c": covidObjectArray filter($.caseType == "positive"),
+	
+// 	"d": covidObjectArray filter(covidPayload, indexOfCovidPayload) -> covidPayload.caseType == "Recovered"	
+// }
 
 
+// %dw 2.0
+// output application/json
 
+// var covidObject = {
+//   "firstName": "John",
+//   "lastName": "Nix",
+//   "phone": "",
+//   "email": null,
+//   "caseType": "positive"
+// }
+
+// ---
+// {
+// 	"a": covidObject filterObject(! isEmpty($)),
+	
+// 	"b": covidObject filterObject(v, k, i) -> (! isEmpty(v))
+// }
+// --------------------------------------------------------------------------------------
+// %dw 2.0
+// output application/json
+
+// var covidObjectArray = [
+// {
+//   "firstName": "John",
+//   "lastName": "Nix",
+//   "phone": "541-754-3010",
+//   "email": "john@gmail.com",
+//   "caseType": "positive"
+// },
+// {
+//   "firstName": "Jake",
+//   "lastName": "Vend",
+//   "phone": "655-789-2345",
+//   "email": "jake@yahoo.com",
+//   "caseType": "positive"
+// },
+// {
+//   "firstName": "Mike",
+//   "lastName": "Tyson",
+//   "phone": "789-655-3878",
+//   "email": "mike@gmail.com",
+//   "caseType": "recovered"
+// } 
+// ]
+
+// ---
+
+// {
+// 	"covidCases": (covidObjectArray map(covidPayload , indexOfCovidPayload)->{
+// 		"fullName": covidPayload.firstName ++ " " ++ covidPayload.lastName ,
+// 		"phoneNumber": covidPayload.phone  ,
+// 		"emailId": covidPayload.email ,
+// 		"covidCaseType": covidPayload.caseType
+// 	})filter($.covidCaseType == "positive") 
+// }
+// // best practices:
+// {
+	
+// 	"covidCases": covidObjectArray filter($.caseType == "recovered")  map(covidPayload, indexOfCovidPayload) -> {
+// 		"fullName": covidPayload.firstName ++ " " ++ covidPayload.lastName,
+// 		"phoneNumber": covidPayload.phone,
+// 		"emailAddress": covidPayload.email,
+// 		"covidCaseType": covidPayload.caseType }
+// }
+// ------------------------------------------------------------------
+//Index "0", "1" depends on route order:
+{
+  "0": {
+    "payload": {
+      "name": "Bharat",
+      "id": 101
+    }
+  },
+  "1": {
+    "payload": {
+      "orderId": "ORD123",
+      "amount": 500
+    }
+  },
+  "2": {
+    "payload": {
+      "status": "PAID"
+    }
+  }
+}
+
+// DataWeave to Aggregate:
 %dw 2.0
 output application/json
-import * from dw::core::Arrays
-var join1 = 
-[{
-"studentId": 101 ,
-"studentName": "bharat chim"
-} ,
-{
-"studentId": 102 ,
-"studentName": "arvind chim"
-}]
-
-var join2 = 
-[{
-"studentId": 101 ,
-"studentName": "rutuja chim"
-} ,
-{
-"studentId": 102 ,
-"studentName": "shubhangi chim"
-}]
 ---
-join(join1 , join2 , (join1)-> join1.studentId , (join2)-> join2.studentId)
+{
+  customer: payload."0".payload,
+  order: payload."1".payload,
+  payment: payload."2".payload
+}
 
+// Better (dynamic way):
+%dw 2.0
+output application/json
+---
+{
+  customer: payload.*payload[0],
+  order: payload.*payload[1],
+  payment: payload.*payload[2]
+}
+------------------------------------------------------------------------
+payload:
+[{
+    "case_type_id": 1250,
+    "case_type" :  "positive" 
+}]
 
-//-------------------------------------------------------------------------------
 
 // %dw 2.0
 // output application/json
 // ---
-// // [0 , 1 , 2 , 3 , 4 , 5 , 1 , 2 , 3 , 4] distinctBy ((item, index) -> item )
-// [0, 1, 2, 3, 3, 2, 1, 4] distinctBy (value) -> { "unique" : value }
+// payload map{
+//     ($.case_type_id) : $.case_type
+// }
 
-//-------------------------------------------------------------------------------
-
-// %dw 2.0
-// output application/json
-// var readXML = read("<students>
-// <studentInfo>Bharat</studentInfo>
-// <id>100</id>
-// <id>200</id>
-// <id>300</id>
-// <id>100</id>
-// <id>200</id>
-// <id>300</id>
-// </students>" , "application/xml")
-// ---
-
-//     students: {
-//         "studentInfo": readXML.students.studentInfo ,
-//         "duplicateId": readXML.students.&id distinctBy $
-//     }
-
-// ----------------------------------------------------------------
+// {
+// (payload map{
+//         ($.case_type_id): $.case_type
+//     })
+// }
+----------------------------------------------------------------------

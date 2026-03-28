@@ -1,156 +1,232 @@
-////////////////////////////////////////////////////////////////////////////
- 
-//map and mapObject:-
-
-// %dw 2.0 
-// var studentArrayList = 
-// [
-
-// {
-//     "studentName": "bharat_chim" ,
-//     "studentId" : 1 ,
-//     "studentLocation" : "mumbai"
-// },
-// {
-//     "studentName": "ajinkya_deshmukh" ,
-//     "studentId" : 2 ,
-//     "studentLocation" : "pune"
-// },
-// {
-//     "studentName": "sagar_gawai" ,
-//     "studentId" : 3 ,
-//     "studentLocation" : "khamgaon"
-// }
-
-// ]
-// ---
-// studentArrayList map ((item, index) ->
-// {
-//     "index" : index ,
-//     "studentName" : item.studentName , 
-//     "studentId": item.studentId ,
-//     "studentLocation" :item.studentLocation
-// } )
-
-// studentArrayList map (item, index) ->
-// {
-//     "index" : index ,
-//      "studentName" : item.studentName , 
-//     "studentId": item.studentId ,
-//     "studentLocation" :item.studentLocation 
-// } 
-
-// studentArrayList map 
-// {
-//    "index" : $$ ,
-//    "studentName" : $.studentName , 
-//    "studentId": $.studentId ,
-//    "studentLocation" :$.studentLocation
-// }
-
-
-// studentArrayList map 
-// {
-//      ($$) : $
-// }
-
-
+// ---------------------------------------------------------------------------------
 // %dw 2.0
 // output application/json
+
+// var numberArray = [2,3,4]
+// var stringArray = ["Mule","ESB"]
+// var covidObjectArray1 = [{
+// 	"firstName": "John",
+// 	"lastName": "Nix",
+// 	"phone": "541-754-3010",
+// 	"email": "john@gmail.com",
+// 	"caseType": "positive"
+// },
+// {
+// 	"firstName": "Jake",
+// 	"lastName": "Vend",
+// 	"phone": "655-789-2345",
+// 	"email": "jake@yahoo.com",
+// 	"caseType": "positive"
+// }]
+// var covidObjectArray2 = [{
+// 	"firstName": "Mike",
+// 	"lastName": "Tyson",
+// 	"phone": "789-655-3878",
+// 	"email": "mike@gmail.com",
+// 	"caseType": "recovered"
+// }]
 // ---
-// [
-//     "bharat" ,
-//     "ajinkya" ,
-//     "sugat"
-// ]
-
-//  map ((item, index) ->
 // {
-//     (index + 1) : item
-// } )
-
-// map
-// {
-//     ($$ + 1) : $
+// 	"a": flatten(numberArray + stringArray),
+// 	"b": flatten(covidObjectArray1 + covidObjectArray2) map $.firstName,
+// 	"c": (covidObjectArray1 + covidObjectArray2) flatMap$	
 // }
-
-
+// --------------------------------------------------------------------------
+//Dataweave core by functions:
 // %dw 2.0
 // output application/json
-// ---
+
+// var numberArray = [0, 1, 2, 3, 3, 2, 1, 4]
+
+// var covidObjectArray = [
 // {
-//     "key1" : "value1" ,
-//     "key2" : "value2" ,
-//     "key3" : "value3" 
-
-// }
-
-// mapObject ((value, key, index) -> 
-// {
-//     (index + 1): 
-
-//     {
-//     (key) : value
-//     }
-// })
-
-// mapObject 
-// {
-//     ($$$ + 1):
-
-//     {
-//         ($$) : $
-//     }
-// }
-
-
-// filter:- 
-
-//  %dw 2.0 
-//  output application/json
-// var studentArrayList = 
-// [
-
-// {
-//     "studentName": "bharat_chim" ,
-//     "studentId" : 1 ,
-//     "studentLocation" : "mumbai"
+//   "firstName": "John",
+//   "lastName": "Nix",
+//   "phone": "541-754-3010",
+//   "email": "john@gmail.com",
+//   "caseType": "positive"
 // },
 // {
-//     "studentName": "ajinkya_deshmukh" ,
-//     "studentId" : 2 ,
-//     "studentLocation" : "pune"
+//   "firstName": "Mike",
+//   "lastName": "Tyson",
+//   "phone": "789-655-3878",
+//   "email": "john@gmail.com",
+//   "caseType": "recovered"
 // },
 // {
-//     "studentName": "sagar_gawai" ,
-//     "studentId" : 3 ,
-//     "studentLocation" : "khamgaon"
+//   "firstName": "Jake",
+//   "lastName": "Vend",
+//   "phone": "655-789-2345",
+//   "email": "jake@yahoo.com",
+//   "caseType": "positive"
 // }
-
 // ]
+
 // ---
-// studentArrayList  map 
 // {
-//     "index" : $$ + 1 ,
-//    "studentNam" : $.studentName , 
-//    "studentid": $.studentId ,
-//    "studentLoc" :$.studentLocation
-// } filter($.studentid == 1 and ($.studentLoc startsWith "mu"))
+	
+// 	"a": numberArray distinctBy $,
+// 	"c": covidObjectArray distinctBy $.email,
+// 	"e": numberArray orderBy $,
+// 	"g": covidObjectArray orderBy $.caseType,
+// 	"i": numberArray groupBy $,
+// 	"k": covidObjectArray groupBy $.caseType,
+// 	"m": numberArray joinBy "-",
+// 	"n": covidObjectArray.caseType joinBy ","
 
-
-// studentArrayList filter($.studentId == 1 and ($.studentLocation startsWith "mu")) map 
+// }
+// // ------------------------------------------------------------
+// reduce function:
+%dw 2.0
+import * from dw::core::Arrays
+output application/json
+var numberArray = [2,3,4]
+---
+{
+	"a": numberArray reduce($+$$),
+	"b": numberArray reduce ((item, accumulator) -> item + accumulator ),
+    "c": numberArray sumBy((item) -> item ),
+    "d" : numberArray sumBy $
+}
+// ---------------------------------------------------------------
+// %dw 2.0
+// output application/json
+// var numberArray = [2,3,4]
+// var stringArray = ["Mule","ESB"]
+// var mixedArray = [ [0,"a"], [1,"b"], [2,"c"],[ 3,"d"] ]
+// var covidObject = {
+//   "firstName": "Mike",
+//   "lastName": "Tyson",
+//   "phone": "789-655-3878",
+//   "email": "mike@gmail.com"
+// }
+// var covidObjectArray1 = [{
+// 	"firstName": "John",
+// 	"lastName": "Nix",
+// 	"phone": "541-754-3010",
+// 	"email": "john@gmail.com",
+// 	"caseType": "positive"
+// },
 // {
-//     "index" : $$ + 1 ,
-//    "studentName" : $.studentName , 
-//    "studentId": $.studentId ,
-//    "studentLocation" :$.studentLocation
-// } 
+// 	"firstName": "Jake",
+// 	"lastName": "Vend",
+// 	"phone": "655-789-2345",
+// 	"email": "jake@yahoo.com",
+// 	"caseType": "positive"
+// }]
+// ---
+// {
+// 	"++ ex1": numberArray ++ stringArray,
+// 	"++ ex2": covidObject ++ {"caseType": "positive"},
+// 	"++ ex3": stringArray[0] ++ " " ++ stringArray[1],
+// 	"-- ex1": numberArray -- [4],
+// 	"-- ex2": covidObject -- {"phone": "789-655-3878"},
+// 	"pluck ex-keys": covidObject pluck $$,
+// 	"pluck ex-values": covidObject pluck $,
+// 	"pluck ex-indexes": covidObject pluck $$$,
+// 	"to-ex": 1 to 10,
+// 	"uuid-ex": uuid(),
+// 	"zip-ex": zip(numberArray, stringArray),
+// 	"unzip-ex": unzip(mixedArray)
+// }
+// --------------------------------------------------------------
+// %dw 2.0
+// output application/json
+//  var numberArray = [0, 1, 2, 3, 3, 2, 1, 4]
+// ---
+// //numberArray orderBy $
+// //numberArray orderBy -$
+// //(numberArray orderBy -$)[0]
+// //numberArray orderBy ((item , index)-> item)
+// //numberArray orderBy ((item , index)-> - item)
+// //(numberArray orderBy ((item , index)-> - item))[0]
+// (numberArray orderBy ((item , index)-> - item))[0 to -1]
+// ------------------------------------------------------------------------------
+// Dataweave-arithemetic-relational-logical-operators:
 
-// studentArrayList[0] filterObject 
-// (
+%dw 2.0
+output application/json
+var number1 = 1
+var number2 = 2
+var boolean1 = true
+var boolean2 = false
+var numberArray = [1,2,3]
+var stringArray = ["3","hello","mule"]
+var mixedArray = [1,1,2,3,"hello","mule"]
+---
+[{
+	"mathemeticalOperators": {
+		"+": number1+number2,
+		"-": number2-number1,
+		"*": numberArray[1] * numberArray[2],
+		"/": numberArray[2]/numberArray[1],
+	},
+	"relationalOperators": {
+		"<": number1 < number2,
+		">": number1 > number2,
+		"<=": numberArray[1] <= numberArray[2],
+		">=": numberArray[1] >= numberArray[2],
+		"==": mixedArray[0] == mixedArray[1],
+		"~=": numberArray[2] ~= stringArray[0]
+	},
+	"logicalOperator": {
+		"and-ex1": boolean1 and boolean2,
+		"and-ex2": (number1 < number2) and (number1 + 1 == number2),
+		"or-ex1": boolean1 or boolean2,
+		"or-ex2": (number1 > number2) or (number1 + 2 == number2),
+		"not-ex1": not (boolean1 or boolean2),
+		"not-ex2": not ((number1 < number2) or (number1 + 1 == number2)),
+		"!-ex1": ! (boolean1 or boolean2),
+		"!-ex2": ! ((number1 < number2) or (number1 + 1 == number2))
+	}
+		
+}]
 
-// (value , key) -> (value startsWith 1) and (key startsWith "s")
+*dataweave-append-prepend-(+)-(-)-operators:
 
-// )
-
-//---------------------------------------------------------------------------------------
+%dw 2.0
+output application/json
+var numberArray = [1,2,3]
+var stringArray = ["3","hello","mule"]
+var mixedArray = [1,1,2,3,"hello","mule"]
+var covidObject = {
+  "firstName": "Mike",
+  "lastName": "Tyson",
+  "phone": "789-655-3878",
+  "email": "mike@gmail.com"
+}
+var covidObjectArray = [
+{
+  "firstName": "John",
+  "lastName": "Nix",
+  "phone": "541-754-3010",
+  "email": "john@gmail.com"
+},
+{
+  "firstName": "Jake",
+  "lastName": "Vend",
+  "phone": "655-789-2345",
+  "email": "jake@yahoo.com"
+}
+]
+---
+[{
+  	 // Array on right side when prepending.
+      "prepend" : 1 >> numberArray,
+      "prepend-string" : "a" >> stringArray,
+      "prepend-object" :  covidObject >> covidObjectArray,
+  	 // Array is on left side when appending.
+      "append-number" : numberArray << 2 ,
+      "append-string" : stringArray << "a" ,
+      "append-object" : covidObjectArray <<  covidObject ,
+     // + always appends within the array
+      "append-with-+" : numberArray + 2 ,
+      "removeNumberFromArray" : numberArray - 2 ,
+      "removeObjectFromArray" : covidObjectArray -  {
+		  "firstName": "John",
+		  "lastName": "Nix",
+		  "phone": "541-754-3010",
+		  "email": "john@gmail.com"
+		}
+  }]
+//   -----------------------------------------------------------------------------
