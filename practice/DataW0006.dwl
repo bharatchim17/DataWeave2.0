@@ -29,52 +29,10 @@
 // {
 // 	"a": flatten(numberArray + stringArray),
 // 	"b": flatten(covidObjectArray1 + covidObjectArray2) map $.firstName,
-// 	"c": (covidObjectArray1 + covidObjectArray2) flatMap$	
+// 	"c": ([covidObjectArray1 + covidObjectArray2]) flatMap ((item, index) -> item )
+//  "d" : ([covidObjectArray1 + covidObjectArray2]) flatMap $	
 // }
-// --------------------------------------------------------------------------
-//Dataweave core by functions:
-// %dw 2.0
-// output application/json
 
-// var numberArray = [0, 1, 2, 3, 3, 2, 1, 4]
-
-// var covidObjectArray = [
-// {
-//   "firstName": "John",
-//   "lastName": "Nix",
-//   "phone": "541-754-3010",
-//   "email": "john@gmail.com",
-//   "caseType": "positive"
-// },
-// {
-//   "firstName": "Mike",
-//   "lastName": "Tyson",
-//   "phone": "789-655-3878",
-//   "email": "john@gmail.com",
-//   "caseType": "recovered"
-// },
-// {
-//   "firstName": "Jake",
-//   "lastName": "Vend",
-//   "phone": "655-789-2345",
-//   "email": "jake@yahoo.com",
-//   "caseType": "positive"
-// }
-// ]
-
-// ---
-// {
-	
-// 	"a": numberArray distinctBy $,
-// 	"c": covidObjectArray distinctBy $.email,
-// 	"e": numberArray orderBy $,
-// 	"g": covidObjectArray orderBy $.caseType,
-// 	"i": numberArray groupBy $,
-// 	"k": covidObjectArray groupBy $.caseType,
-// 	"m": numberArray joinBy "-",
-// 	"n": covidObjectArray.caseType joinBy ","
-
-// }
 // // ------------------------------------------------------------
 // reduce function:
 %dw 2.0
@@ -86,8 +44,46 @@ var numberArray = [2,3,4]
 	"a": numberArray reduce($+$$),
 	"b": numberArray reduce ((item, accumulator) -> item + accumulator ),
     "c": numberArray sumBy((item) -> item ),
-    "d" : numberArray sumBy $
+    "d": numberArray sumBy $ ,
+    "e": numberArray reduce ((last , first) -> last)
 }
+
+// %dw 2.0 
+// output application/json
+
+// var a = 
+// [
+//  {
+//     name: "sravan",
+//      id :   406  
+//  },
+//  {
+//     name: "lingam",
+//      id :   102  
+//  }
+// ]
+// var arr = [10, 25, 30, 45]
+
+// ---
+// a reduce ((item, accumulator) -> item ++ accumulator )
+
+// // arr reduce ((item, accumulator = []) -> 
+// // if(item > 20) accumulator ++ [item] else accumulator
+// // )
+
+// %dw 2.0 
+// output application/json
+// ---
+//   reduce ($$ ++ $ )
+// // [1 , 2 , 3 , 4 , 5]  reduce ($$ + $ )
+// // [1 , 2 , 3 , 4 , 5]  reduce ((item, accumulator) -> item)
+// // [1 , 2 , 3 , 4 , 5]  reduce ($)
+
+// [1 , 2 , 3 , 4 , 5] reduce ($$ ++ $ )  //"12345"
+//  [1 , 2 , 3 , 4 , 5]  reduce ((item, accumulator) -> accumulator ++ item) //"12345"
+
+// [1 , 2 , 3 , 4 , 5] reduce ($ ++ $$ )  //"54321"
+//  [1 , 2 , 3 , 4 , 5]  reduce ((item, accumulator) -> item ++ accumulator) //"54321"
 // ---------------------------------------------------------------
 // %dw 2.0
 // output application/json
@@ -129,18 +125,7 @@ var numberArray = [2,3,4]
 // 	"zip-ex": zip(numberArray, stringArray),
 // 	"unzip-ex": unzip(mixedArray)
 // }
-// --------------------------------------------------------------
-// %dw 2.0
-// output application/json
-//  var numberArray = [0, 1, 2, 3, 3, 2, 1, 4]
-// ---
-// //numberArray orderBy $
-// //numberArray orderBy -$
-// //(numberArray orderBy -$)[0]
-// //numberArray orderBy ((item , index)-> item)
-// //numberArray orderBy ((item , index)-> - item)
-// //(numberArray orderBy ((item , index)-> - item))[0]
-// (numberArray orderBy ((item , index)-> - item))[0 to -1]
+
 // ------------------------------------------------------------------------------
 // Dataweave-arithemetic-relational-logical-operators:
 

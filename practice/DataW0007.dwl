@@ -1,6 +1,139 @@
-////////////////////////////////////////////////////////////////////////////
- 
-//map and mapObject:-
+//--------------------------------------------------------------------------
+//payload-04:-
+
+// [
+// {
+//     "Tech" : "java" ,
+//     "Empid": 123   ,
+//     "City" : "Delhi"
+// },
+// {
+//     "Tech" : "python" ,
+//     "Empid":  124  ,
+//     "City" : "pune"
+// },
+// {
+//     "Tech" : "javaScript" ,
+//     "Empid":  125  ,
+//     "City" : "khamgaon"
+// }    
+// ]
+
+// %dw 2.0
+//  output application/json
+//  ---
+// payload map ((item, index) ->{
+//     "tech" : item.Tech ,
+//     "empId": item.Empid ,
+//     "city" : item.City
+// } )
+
+// payload map{
+//        "index": $$ ,
+//        "tech" : $.Tech ,
+//        "empid": $.Empid ,
+//        "city" :  $.City
+// }
+// ---------------------------------------------------------------
+//payload-01:- Array of object to csv.
+
+// [
+// {
+//  "id" : "1" ,
+//  "status": "Active"
+// },
+// { "id" : "1" ,
+//  "status": "Active"
+// }
+// ]
+
+// %dw 2.0
+// output application/csv  separator= "|"
+// ---
+// payload map ((item, index) -> 
+// {
+//     "id" : item.id ,
+//     "status" : item.status
+// })
+
+//payload-02:- Interchange keys and values in Dataweave.
+// [
+// {
+//     "message-01" : "Hello World"
+// },    
+// {
+//     "message-02" : "Hello Mule"
+// }
+// ]
+
+// %dw 2.0
+// output application/json
+// ---
+// // payload map ((item, index) -> 
+// // item mapObject (value, key, index) -> {
+// // (value ): key
+// // })
+//--------------------------------------
+//payload:
+// [
+
+// {
+//     "firstName" : "Sachin" ,
+//     "lastName"  : "tendulakar" ,
+//     "age"  : 40
+// },
+// {
+//     "firstName" : "rahul" ,
+//     "lastName"  : "dravid" ,
+//     "age"  : 42
+// },
+// {
+//     "firstName" : "Rohit" ,
+//     "lastName"  : "sharma" ,
+//     "age"  : 35
+// },
+// {
+//     "firstName" : "hardik" ,
+//     "lastName"  : "pandya" ,
+//     "age"  : 30
+// }
+// ]
+
+// %dw 2.0
+// output application/json
+// ---
+// payload map 
+// {
+//     "name" : $.firstName as String ++  " "  ++ $.lastName as String ,
+//     "age"  : $.age   
+// }
+
+// payload map ((item, index) ->{
+//     "name" : item.firstName as String ++  " "  ++ item.lastName as String ,
+//     "age"  : item.age  
+// } )
+// ----------------------------------------------------------------
+
+// %dw 2.0
+// var a = 
+// [
+//         {"name" : "sravan" , "id"   : 2 },
+//         {"name" : "sardar" , "id"   : [ 3 , 7 , 9] },
+//         {"name" : "Mule"   , "id"   : [14 , 78 , 25 ,40] }
+// ]
+
+//  output application/json
+//  ---
+// //  a map {
+// //     "UpperCase" : upper($.name) 
+// //        }
+
+// a map (key, index) -> {
+//      "UpperCase" : upper(key.name),
+//      "empId" : key.id 
+// } 
+
+
 
 // %dw 2.0 
 output application/json
@@ -75,6 +208,7 @@ output application/json
 //     ($$ + 1) : $
 // }
 
+///////////////////////////////////////////////////////////////
 
 // %dw 2.0
 // output application/json
@@ -104,6 +238,56 @@ output application/json
 //     }
 // }
 
+// %dw 2.0
+//  output application/json
+//  ---
+// [10 , 20 , 30 , 40 , 50] map ((item , index) -> {
+//     (index): item + 50
+// })
+
+// [10 , 20 , 30 , 40 , 50] map {
+//     ($$): $ + 50
+// }
+
+// [11 , 22 , 33] map ($ + 100)
+
+//map object
+//payload-05:-
+// {
+//     "english_marks" : 45 ,
+//     "maths_marks" : 65 ,
+//     "physics_marks" : 87
+// }
+
+
+//payload-06:-
+// {
+//     "Tech" : "JAVA" ,
+//     "City" : "New Delhi" ,
+//     "Design": "Developer"
+// }
+
+// %dw 2.0
+// output application/json
+//  ---
+// [ 
+// payload mapObject ((value , key , index)->{
+//  index : index,
+//  (key) : value 
+//  })
+// ,
+// payload mapObject ((value , key , index)->
+//    (index):
+//    {
+//     (key) : value + 10
+//    })  ,
+//    payload mapObject ($$$):{
+//     ($$): $
+// },
+// payload mapObject ($$$):{subject: $$ , marks: $}
+// ]
+
+//-------------------------------------------------------------------
 
 // filter:- 
 
@@ -194,7 +378,6 @@ output application/json
 // } )
 
 // -----------------------------------------------------------
-
 // studentArrayList map (item, index) -> {
 // (item mapObject 
 // if ($ == "sagar_gawai"){
@@ -204,44 +387,6 @@ output application/json
 //     ($$): $
 // })}
 
-//-----------------------------------------------------------------------------
-//pluck
-
-//  %dw 2.0 
-//  output application/json
-// ---
-
-// {   
-//      "key1": "value1" ,
-//     "key2": "value2"
-// }
-// pluck {
-//     ($$$): {
-//         ($$): $
-//     }
-// }
-
-//-----------------------------------------------------------------
-
-//read function 
-
-// %dw 2.0
-// output application/xml
-// ---
-// read('{ "hello" : "world" }','application/json')
-
-//  %dw 2.0 
-//  output application/json
-// var readXML  = read(
-//     "
-//     <student>
-//     <name>Bharat chim</name>
-//     <id>466</id>
-//     </student>
-//     " , "application/xml"
-// )
-// ---
-// readXML.student pluck $ 
 //-----------------------------------------------------------------
 
 // %dw 2.0
@@ -260,57 +405,5 @@ output application/json
 // }
 
 // ----------------------------------------------------------------------------------
-//Coersion:
-
-%dw 2.0
-output application/json
----
-{
-    "key1": "22" as Number ,
-    "key2": 12.3 as String {format: "##"} as Number,
-    "key3": 12.32596 as String {format: "#.##"} as Number ,
-    "key4": "2025-07-09" as Date as String{format: "dd-MMM-yy"}
-}
-
-//--------------------------------------------------------------------------
-//DateTime
-
-// %dw 2.0
-// output application/json
-// type customDate = String {format: "uuuu/MM-dd"}
-// ---
-// {
-//     "date1" : |2022-07-09T16:10:35| as String {format:"uuuu-MMM-dd"} ,
-//     "date2" : |2022-07-09T16:10:35| as customDate
-// }
 
 
-// %dw 2.0
-// output application/json
-// var daysNo = 20
-// var monthNo = 12
-// var yearsNo = 25
-// ---
-// {
-//    "subDateperios": |2022-07-09T17:23:21Z| - |P1D| ,
-//    "subYearperios": |2022-07-09T17:23:21Z| - |P1Y| ,
-//    "subMonthperios": |2022-07-09T17:23:21Z| - |P1M|
-// }
-
-//--------------------------------------------------------------------------
-
-// %dw 2.0
-// output application/json
-// var learnDT = |2024-04-30T11:10:14.45|
-// ---
-// {
-//     "k1": learnDT.nanoseconds ,
-//     "k2": learnDT.minutes ,
-//     "k3": learnDT.day,
-//     "k4": learnDT.milliseconds ,
-//     "k5": now() as DateTime >> "Asia/Calcutta" ,
-//     "k6": now() as Date as String {format: "yyyy-MM-dd"} ,
-//     "k7": now().hour ,
-//     "k8": now() as Date - |P2D|
-// }
-// --------------------------------------------------------------------

@@ -172,6 +172,8 @@ uuid: returns a v4 UUID using random numbers as source...
 
 zip: merges elements from two array of arrays..
 
+round function remove decimal value..
+
 unzip: performs the opposite of zip it takes an array of array as input...
 ----------------------------------------------------------------------------------
 

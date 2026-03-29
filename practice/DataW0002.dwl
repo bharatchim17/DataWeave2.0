@@ -14,27 +14,6 @@
 //     "addString" : "hi" ++ " " ++ "bharat chim"
 // }
 
-//////////////////////////////////////////////////////////////
-/////// Map operator -
-
-// %dw 2.0
-// var a = 
-// [
-//         {"name" : "sravan" , "id"   : 2 },
-//         {"name" : "sardar" , "id"   : [ 3 , 7 , 9] },
-//         {"name" : "Mule"   , "id"   : [14 , 78 , 25 ,40] }
-// ]
-
-//  output application/json
-//  ---
-// //  a map {
-// //     "UpperCase" : upper($.name) 
-// //        }
-
-// a map (key, index) -> {
-//      "UpperCase" : upper(key.name),
-//      "empId" : key.id 
-// } 
 
 ////////////////////////////////////////////////////
 /////// Flatten
@@ -53,75 +32,6 @@
 // //  flatten(z)
 // // flatten([[a] , x ,[ b.name]]
 
-
-///////////////////////////////////////////////////////////////
-///// pluck
-
-//  %dw 2.0
-//  output application/json
-
-// var a = read("<prices>
-//             <basic> 9.98 </basic>
-//             <premium> 53.00 </premium>
-//             <vip> 398099 </vip>
-//             </prices>" , "application/xml")
-//   var b = [
-//     {
-//         name : "sravan"
-//     },
-//     {
-//         name : "lingam"
-//     }
-//   ]
-//  ---
-// a  pluck(value , key , index) ->{
-//     prices: value
-// }
-
-// a.prices pluck (($$): $)
-// a.prices pluck $$
-
-
-//////////////////////////////////////////////////////////
-// Reduce
-
-// %dw 2.0 
-// output application/json
-
-// var a = 
-// [
-//  {
-//     name: "sravan",
-//      id :   406  
-//  },
-//  {
-//     name: "lingam",
-//      id :   102  
-//  }
-// ]
-// var arr = [10, 25, 30, 45]
-
-// ---
-// a reduce ((item, accumulator) -> item ++ accumulator )
-
-// // arr reduce ((item, accumulator = []) -> 
-// // if(item > 20) accumulator ++ [item] else accumulator
-// // )
-
-// %dw 2.0 
-// output application/json
-// ---
-//   reduce ($$ ++ $ )
-// // [1 , 2 , 3 , 4 , 5]  reduce ($$ + $ )
-// // [1 , 2 , 3 , 4 , 5]  reduce ((item, accumulator) -> item)
-// // [1 , 2 , 3 , 4 , 5]  reduce ($)
-
-// [1 , 2 , 3 , 4 , 5] reduce ($$ ++ $ )  //"12345"
-//  [1 , 2 , 3 , 4 , 5]  reduce ((item, accumulator) -> accumulator ++ item) //"12345"
-
-// [1 , 2 , 3 , 4 , 5] reduce ($ ++ $$ )  //"54321"
-//  [1 , 2 , 3 , 4 , 5]  reduce ((item, accumulator) -> item ++ accumulator) //"54321"
-
 //////////////////////////////////////////////////////////////////////////
 //// If else statement
 // if (true) "success" else "False"
@@ -135,7 +45,32 @@
 
 // if(a >= 70 and a <= 100) "FirstClass" else if( a <= 70 and a >= 55) "secondClass" else "Fail"
 
-/////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+//DateTime
+
+// %dw 2.0
+// output application/json
+// type customDate = String {format: "uuuu/MM-dd"}
+// ---
+// {
+//     "date1" : |2022-07-09T16:10:35| as String {format:"uuuu-MMM-dd"} ,
+//     "date2" : |2022-07-09T16:10:35| as customDate
+// }
+
+
+// %dw 2.0
+// output application/json
+// var daysNo = 20
+// var monthNo = 12
+// var yearsNo = 25
+// ---
+// {
+//    "subDateperios": |2022-07-09T17:23:21Z| - |P1D| ,
+//    "subYearperios": |2022-07-09T17:23:21Z| - |P1Y| ,
+//    "subMonthperios": |2022-07-09T17:23:21Z| - |P1M|
+// }
+
+//--------------------------------------------------------------------------
 
 %dw 2.0
 output application/json
@@ -159,7 +94,23 @@ output application/json
 "Weekend" : now() as String {format : "eeee"}, //"Thursday"
 "AM/PM?" : now() as String {format: "a"}  //PM
 }
-//////////////////////////////////////////////////////////////////////////
+
+
+// %dw 2.0
+// output application/json
+// var learnDT = |2024-04-30T11:10:14.45|
+// ---
+// {
+//     "k1": learnDT.nanoseconds ,
+//     "k2": learnDT.minutes ,
+//     "k3": learnDT.day,
+//     "k4": learnDT.milliseconds ,
+//     "k5": now() as DateTime >> "Asia/Calcutta" ,
+//     "k6": now() as Date as String {format: "yyyy-MM-dd"} ,
+//     "k7": now().hour ,
+//     "k8": now() as Date - |P2D|
+// }
+// --------------------------------------------------------------------
 
 // ...Skip null...
 
@@ -431,17 +382,4 @@ payload:
 // if (a > 10) "yes , a is greater than your value" else "excecute False result"
 
 ////////////////////////////////////////////////////////////////////////
-// Check specific key:-
 
-// %dw 2.0 
-// output application/json
-// var check = 
-// {
-// "name" : "Ana" ,
-// "age"  :  29 ,
-// "dynamickey" : "age"
-// }
-// ---
-// // check.name?
-// //  check.name1?
-////////////////////////////////////////////////////////

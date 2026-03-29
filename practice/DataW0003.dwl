@@ -1,45 +1,5 @@
-////////////////////////////////////////////////////////
-
-//payload-01:- Array of object to csv.
-
-// [
-// {
-//  "id" : "1" ,
-//  "status": "Active"
-// },
-// { "id" : "1" ,
-//  "status": "Active"
-// }
-// ]
-
-// %dw 2.0
-// output application/csv  separator= "|"
-// ---
-// payload map ((item, index) -> 
-// {
-//     "id" : item.id ,
-//     "status" : item.status
-// })
-
-//payload-02:- Interchange keys and values in Dataweave.
-// [
-// {
-//     "message-01" : "Hello World"
-// },    
-// {
-//     "message-02" : "Hello Mule"
-// }
-// ]
-
-// %dw 2.0
-// output application/json
-// ---
-// // payload map ((item, index) -> 
-// // item mapObject (value, key, index) -> {
-// // (value ): key
-// // })
-
-//payload-02:- Dataweave orderBy and filterfunction.
+//---------------------------------------------------------
+//payload-02:- Dataweave orderBy 
 // [
 // {
 //     "name" : "Virat" ,
@@ -59,15 +19,25 @@
 // %dw 2.0
 // output application/json
 // ---
-// payload filter ((item, index) -> item.age >= 20 )
-// payload filter $.age >= 20
-// payload filter ((item, index) -> item.name == "Virat")
-
 // payload orderBy ((item, index) -> - item.age )
 // payload orderBy  ($.age)
 
+// payload filter ((item, index) -> item.age >= 20 )
+// payload filter $.age >= 20
+// payload filter ((item, index) -> item.name == "Virat")
+// [1 , 20 , 3 , 52 , 80 , 72 , 10] filter ((item) -> item > 50) 
 
-//Even Odd in DataWeave
+
+// Filter function
+// %dw 2.0
+// output application/json
+// ---
+// [11 , 22 , 33 , 44] filter ((item, index) -> item > 22 )
+
+// [80 , 11 , 20 , 60 , 5 , 66 , 77] filter (($$ > 1) and
+// ($ >= 50)
+//  )
+
 
 // %dw 2.0
 // output application/json
@@ -83,16 +53,75 @@
 //     "Odd"  : arr filter isOdd($)
 // }
 
-// Filter function
-// %dw 2.0
-// output application/json
+// payload02 :- 
+// [
+//     {
+//         "empId" : 1 ,
+//         "empName" : "bharat" ,
+//         "empSalery" : 10000
+//     } ,
+
+//     {
+//         "empId" : 2 ,
+//         "empName" : "ajinkya" ,
+//         "empSalery" : 100000
+//     }
+// ]
+
+//  %dw 2.0 
+//  output application/json
+//  ---
+// payload filter $.empSalery > 20000
+
+
+// lambda function
+
+// %dw 2.0 
+//  output application/json
+//  ---
+// () -> 2 + 3
+// (() -> 2 + 3)
+// (() -> 2 + 3)() as Number
+// (() -> 2 + 3)() as String
+
+
+// [
+//     {
+//         "name" : "bharat" ,
+//         "id" :255
+//     } ,
+
+//      {
+//         "name" : "Rahul" ,
+//         "id" : 105
+//     }
+// ] filter ((item) -> item.id > 110 )
+
+
+// %dw 2.0 
+//  output application/json
+//  var Numbers = (1 to 10)
+//  ---
+// //  filter (Numbers , (item , index) -> (item / 2)== 1)
+
+// // arg1 function arg2
+
+// // Numbers filter ((item , index) -> (item / 5) == 1)
+
+// Numbers  filter((item , index) -> (item) > 1)
+//          filter((item , index) -> (item) < 5)
+//          filter((item , index) -> (item mod 2) == 1)
+
+
+//  %dw 2.0 
+//  output application/json
+//  var Numbers = (6 to 15)
 // ---
-// [11 , 22 , 33 , 44] filter ((item, index) -> item > 22 )
+//  Numbers filter ((argument1) -> (argument1 mod 2) == 1)
+//  Numbers filter ((argument1) -> (argument1 > 2) and (argument1 < 10) )
+// Numbers filter(($ > 2 and $ < 10))
 
-// [80 , 11 , 20 , 60 , 5 , 66 , 77] filter (($$ > 1) and
-// ($ >= 50)
-//  )
-
+//----------------------------------------------------------------------------
 
 //pluck function
 // %dw 2.0
@@ -119,132 +148,99 @@
 //     "keys"  : $$ ,
 //     "value" : $ 
 // }
-//////////////////////////////////////////////////////////////////////////////////////////
 
-//Map function
-//payload-03:-
-
-// [
-
-// {
-//     "firstName" : "Sachin" ,
-//     "lastName"  : "tendulakar" ,
-//     "age"  : 40
-// },
-// {
-//     "firstName" : "rahul" ,
-//     "lastName"  : "dravid" ,
-//     "age"  : 42
-// },
-// {
-//     "firstName" : "Rohit" ,
-//     "lastName"  : "sharma" ,
-//     "age"  : 35
-// },
-// {
-//     "firstName" : "hardik" ,
-//     "lastName"  : "pandya" ,
-//     "age"  : 30
-// }
-// ]
-
-// %dw 2.0
-// output application/json
+//  %dw 2.0 
+//  output application/json
 // ---
-// payload map 
-// {
-//     "name" : $.firstName as String ++  " "  ++ $.lastName as String ,
-//     "age"  : $.age   
+
+// {   
+//      "key1": "value1" ,
+//     "key2": "value2"
+// }
+// pluck {
+//     ($$$): {
+//         ($$): $
+//     }
 // }
 
-// payload map ((item, index) ->{
-//     "name" : item.firstName as String ++  " "  ++ item.lastName as String ,
-//     "age"  : item.age  
-// } )
-
-//payload-04:-
-
-// [
-// {
-//     "Tech" : "java" ,
-//     "Empid": 123   ,
-//     "City" : "Delhi"
-// },
-// {
-//     "Tech" : "python" ,
-//     "Empid":  124  ,
-//     "City" : "pune"
-// },
-// {
-//     "Tech" : "javaScript" ,
-//     "Empid":  125  ,
-//     "City" : "khamgaon"
-// }    
-// ]
-
-// %dw 2.0
+//  %dw 2.0
 //  output application/json
+
+// var a = read("<prices>
+//             <basic> 9.98 </basic>
+//             <premium> 53.00 </premium>
+//             <vip> 398099 </vip>
+//             </prices>" , "application/xml")
+//   var b = [
+//     {
+//         name : "sravan"
+//     },
+//     {
+//         name : "lingam"
+//     }
+//   ]
 //  ---
-// payload map ((item, index) ->{
-//     "tech" : item.Tech ,
-//     "empId": item.Empid ,
-//     "city" : item.City
-// } )
-
-// payload map{
-//        "index": $$ ,
-//        "tech" : $.Tech ,
-//        "empid": $.Empid ,
-//        "city" :  $.City
+// a  pluck(value , key , index) ->{
+//     prices: value
 // }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// %dw 2.0
-//  output application/json
-//  ---
-// [10 , 20 , 30 , 40 , 50] map ((item , index) -> {
-//     (index): item + 50
-// })
+// a.prices pluck (($$): $)
+// a.prices pluck $$
 
-// [10 , 20 , 30 , 40 , 50] map {
-//     ($$): $ + 50
-// }
-
-// [11 , 22 , 33] map ($ + 100)
-
-//map object
-//payload-05:-
-// {
-//     "english_marks" : 45 ,
-//     "maths_marks" : 65 ,
-//     "physics_marks" : 87
-// }
-
-
-//payload-06:-
-// {
-//     "Tech" : "JAVA" ,
-//     "City" : "New Delhi" ,
-//     "Design": "Developer"
-// }
-
+// --------------------------------------------------------------
 // %dw 2.0
 // output application/json
-//  ---
-// [ 
-// payload mapObject ((value , key , index)->{
-//  index : index,
-//  (key) : value 
-//  })
-// ,
-// payload mapObject ((value , key , index)->
-//    (index):
-//    {
-//     (key) : value + 10
-//    })  ,
-//    payload mapObject ($$$):{
-//     ($$): $
+//  var numberArray = [0, 1, 2, 3, 3, 2, 1, 4]
+// ---
+// //numberArray orderBy $
+// //numberArray orderBy -$
+// //(numberArray orderBy -$)[0]
+// //numberArray orderBy ((item , index)-> item)
+// //numberArray orderBy ((item , index)-> - item)
+// //(numberArray orderBy ((item , index)-> - item))[0]
+// (numberArray orderBy ((item , index)-> - item))[0 to -1]
+// --------------------------------------------------------------------------
+//Dataweave core by functions:
+// %dw 2.0
+// output application/json
+
+// var numberArray = [0, 1, 2, 3, 3, 2, 1, 4]
+
+// var covidObjectArray = [
+// {
+//   "firstName": "John",
+//   "lastName": "Nix",
+//   "phone": "541-754-3010",
+//   "email": "john@gmail.com",
+//   "caseType": "positive"
 // },
-// payload mapObject ($$$):{subject: $$ , marks: $}
+// {
+//   "firstName": "Mike",
+//   "lastName": "Tyson",
+//   "phone": "789-655-3878",
+//   "email": "john@gmail.com",
+//   "caseType": "recovered"
+// },
+// {
+//   "firstName": "Jake",
+//   "lastName": "Vend",
+//   "phone": "655-789-2345",
+//   "email": "jake@yahoo.com",
+//   "caseType": "positive"
+// }
 // ]
-///////////////////////////////////////////////////////////////////////////
+
+// ---
+// {
+	
+// 	"a": numberArray distinctBy $,
+// 	"c": covidObjectArray distinctBy $.email,
+// 	"e": numberArray orderBy $,
+// 	"g": covidObjectArray orderBy $.caseType,
+// 	"i": numberArray groupBy $,
+// 	"k": covidObjectArray groupBy $.caseType,
+// 	"m": numberArray joinBy "-",
+// 	"n": covidObjectArray.caseType joinBy ","
+
+// }
+//////////////////////////////////////////////////////////////////////////////////////////

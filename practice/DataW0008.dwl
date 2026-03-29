@@ -347,6 +347,14 @@ join(join1 , join2 , (join1)-> join1.studentId , (join2)-> join2.studentId)
 
 //-------------------------------------------------------------------------------
 
+//read function 
+
+// %dw 2.0
+// output application/xml
+// ---
+// read('{ "hello" : "world" }','application/json')
+
+//-----------------------------------------------------------------------------
 // %dw 2.0
 // output application/json
 // var readXML = read("<students>
@@ -364,5 +372,18 @@ join(join1 , join2 , (join1)-> join1.studentId , (join2)-> join2.studentId)
 //         "studentInfo": readXML.students.studentInfo ,
 //         "duplicateId": readXML.students.&id distinctBy $
 //     }
+
+//  %dw 2.0 
+//  output application/json
+// var readXML  = read(
+//     "
+//     <student>
+//     <name>Bharat chim</name>
+//     <id>466</id>
+//     </student>
+//     " , "application/xml"
+// )
+// ---
+// readXML.student pluck $ 
 
 // ----------------------------------------------------------------
