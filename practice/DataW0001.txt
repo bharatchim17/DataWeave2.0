@@ -1,11 +1,12 @@
 // ------------------------------------------------------------------------------------------------------
-//To check media type:
+1. To check media type:
 %dw 2.0
 output application/json
 ---
 payload.^mediaType
 
-//JSON string:
+
+2. JSON string:
 %dw 2.0
 output application/json
 ---
@@ -30,10 +31,13 @@ var inpPayload = []
 ---
 inpPayload << payload reduce ((item, accumulator) -> item)
 
-// Set logger message in ""
 
+
+// Set logger message:
 ----------------
 #['\n']
-
+"payload is sent successfully"
 #['\n']
 ----------------
+
+//We can know exact error sometimes by ---> error.exception.message

@@ -270,7 +270,7 @@
 // 		"covidCaseType": covidPayload.caseType }
 // }
 // ------------------------------------------------------------------
-//Index "0", "1" depends on route order:
+//Scatter gather: index "0", "1" depends on route order:
 {
   "0": {
     "payload": {
@@ -331,3 +331,45 @@ payload:
 //     })
 // }
 ----------------------------------------------------------------------
+%dw 2.0
+output application/json
+vars inpDepositeAmt = 500
+---
+(payload orderBy ((item) -> item.TRANSACTIONTIMESTAMP))[-1] 
+    default {} 
+    match {
+        case latest -> {
+            totalAmount: (latest.TOTALBALANCE as Number) + vars.inpDepositeAmt,
+            custAccNum: latest.CUSTACCNUM,
+            bankName: latest.BANKNAME
+        }
+    }
+-----------------------------------------------------------------
+(payload filter($.id as String == vars.empId))[0]
+
+if(payload.affectedRows > 0){
+caseId: vars.payload.case_Id
+} else{}
+-------------------------------------------------------------
+choice: sync?
+1. #[(vars.syncState != 'running' and vars.syncState == 'fromSalesforce') or vars.syncState == null]
+2. #[vars.syncState != 'running' and vars.syncState == 'fromDatabase']
+-----------------------------------------------------------------
+%dw 2.0
+output application/json
+fun vaccinatedByState(state) = (payload filers($.STATE == state as String) and 
+($.CASE_TYPE = "vaccinated")) map{
+COUNT: $.COUNT
+})[0]
+---
+((payload groupBy($.STATE) mapObject{
+caseReports:{
+state: $$ ,
+reports:{
+total: ($.COUNT reduce $ + $$) - (vaccinatedByState($$).COUNT as Number default 0) ,
+orderBy($.CASE_TYPE) map{
+($.CASE_TYPE): $.COUNT
+})
+}}
+}).*caseReports) default[]
+-------------------------------------------------------------------

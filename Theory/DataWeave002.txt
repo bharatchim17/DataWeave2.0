@@ -118,16 +118,3 @@ Mule::lookup('flow2', {test:'hello '})
 Mule::lookup('privateFlow_Name') 
 We can use lookup functions but , we can call private flow but not subflow..  
 --------------------------------------------------------------------------------------
-%dw 2.0
-output application/json
-vars inpDepositeAmt = 500
----
-(payload orderBy ((item) -> item.TRANSACTIONTIMESTAMP))[-1] 
-    default {} 
-    match {
-        case latest -> {
-            totalAmount: (latest.TOTALBALANCE as Number) + vars.inpDepositeAmt,
-            custAccNum: latest.CUSTACCNUM,
-            bankName: latest.BANKNAME
-        }
-    }
