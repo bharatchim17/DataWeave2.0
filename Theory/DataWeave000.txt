@@ -1,0 +1,52 @@
+------------------------------------------------------------------------------------------------------
+
+To check media type:
+%dw 2.0
+output application/json --- payload.^mediaType
+----------------------------------------------
+JSON string:
+%dw 2.0
+output application/json --- write(payload , "application/json")
+---------------------------------------------
+%dw 2.0
+output application/json --- attributes.headers.'x-correlation-id' default ""
+%dw 2.0
+output application/json --- attributes.headers.'x-transaction-id' default uuid()
+---------------------------------------------
+
+// Set logger message:
+----------------
+#['\n']
+"payload is sent successfully"
+#['\n']
+----------------
+
+//We can know exact error sometimes by ---> error.exception.message , get name_space:indeifier by error.errorType
+-------------------------------------------------------------------------------------------------
+//Create a variable called inpPayload to store the input-data inside the payload:
+
+In 'set variable' transformer:  <--- place this before all-validation or any-validation. 
+Name: inpPayload
+value: %dw 2.0 output application/java --- payload.employees
+
+{
+this variable is not just for the payload itself, but specifically for the inner content under the root element.
+For example: if the root element of the payload is employees, then accessing payload.employees gives us the 
+actual data we want to work with. Instead of repeatedly writing payload.employees, we store that value in a 
+variable like inpPayload.
+By doing this, we skip the root element and work directly with the data inside it. This is helpful because mule 
+represents the payload as a Java-based object and traversing nested structures becomes cleaner and easier when 
+we pull out the inner object into a separate variable...
+}
+-----------or------------------
+
+//variable Name: inpPayload 
+%dw 2.0 output application/json 
+var inpPayload = []
+---
+inpPayload << payload reduce ((item, accumulator) -> item)
+-----------------------------------------------------------------------------------------
+To externalize dataweave create folder 'Dataweave' under src/main/resources now , create dataweave file here
+and slect 'dataweve/file_name.dwl' or give file_name for example: 'filename.dwl' and add it in 'Dataweave' 
+folder.
+------------------------------------------------------------------------------------------

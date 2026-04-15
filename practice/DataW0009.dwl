@@ -373,3 +373,5 @@ orderBy($.CASE_TYPE) map{
 }}
 }).*caseReports) default[]
 -------------------------------------------------------------------
+error.errors[0].errorType.namespace == "SALESFORCE" and error.errors[0].errorType.identifier == "UNKNOWN"
+error.errors[0].errorType.namespace == "SALESFORCE" and error.errors[0].errorType.identifier == "CONNECTIVITY"
