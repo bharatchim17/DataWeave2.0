@@ -1,20 +1,17 @@
 -------------------------------------------------------------------------------------
-//What is dataweave & why we have to use it..?
--->
-Dataweave is a programming language designed by mulesoft for accessing and transforming data that travels 
-through mule application.. 
-Datawave (dw) format is canonical format (generical format i.e. predefined structure), for all transformation.. 
-
-//What is the latest version for dataweave..?
--> 3.2
-we can't write it in header because DataWeave does not support patch/minor version numbers in the header.
+//What is the latest version for Dataweave..?
+-> 
+dataWeave does not have a separate standalone latest version; instead, it is bundled with mule-runtime. The 
+latest version is DataWeave 2.11.0, which comes with mule 4.11 and all dataWeave updates are released through 
+mule runtime upgrades.
+we can't write it in header because it only recognizes the major version (for example, %dw 2.0). this ensures 
+backward compatibility and simplifies version management, where all minor and patch-level updates are handled 
+internally by muleSoft without requiring changes in the dataWeave-script.
 ---------------------------------------------------------------------------------------------
 //List out frequently used dataweave inbuilt functions..?
 --> 
-We can list out few dataweave functions that we have worked in realtime projects..
-map , mapObject , filter, filterObject , flatten , pluck etc..
-
-
+We can list out few dataweave functions that we have worked in realtime projects:
+map , mapObject , filter, filterObject , flatten, pluck etc.
 
 //How to access property in dataweave..?
 --> 

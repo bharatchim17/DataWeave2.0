@@ -227,3 +227,16 @@ var bro = [1000 , 100 , 1000.1 , 10]
 // employee : employeesName map ((argument) -> upper(argument))
 
 ///////////////////////////////////////////////////////////////////////////////////////
+// import * from dw::core::Strings
+// camelize("hi_mule")  //In input underscore use for camelize
+// capitalize("hello mule")  //space added between words for capitalize first letter. output:- "Hello Mule"
+//upper("hello") //output: "HELLO"
+//lower("CHIM")  //output: "chim"
+//isUpperCase("hi")  //output: false (return boolean value)
+//isLowerCase("hi")  //output: true (return boolean value)
+//replaceAll(" Hello , CHIM " ,  "CHIM" , "Mule")  // (value  , target , replacement) output:- "Hello , Mule"
+//substring("bharat" , 0 , 3) //output: bha 
+//singularize("boys") //output: boy
+//pluralize("girl") //output: girls
+//wrapWith("bharat" , "*") //output: "*bharat*"
+----------------------------------------------------------------------------------
