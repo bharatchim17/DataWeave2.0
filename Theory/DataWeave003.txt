@@ -1,355 +1,201 @@
--------------------------------------------------------------------------------------
-//What is the latest version for Dataweave..?
--> 
-dataWeave does not have a separate standalone latest version; instead, it is bundled with mule-runtime. The 
-latest version is DataWeave 2.11.0, which comes with mule 4.11 and all dataWeave updates are released through 
-mule runtime upgrades.
-we can't write it in header because it only recognizes the major version (for example, %dw 2.0). this ensures 
-backward compatibility and simplifies version management, where all minor and patch-level updates are handled 
-internally by muleSoft without requiring changes in the dataWeave-script.
 ---------------------------------------------------------------------------------------------
-//List out frequently used dataweave inbuilt functions..?
---> 
-We can list out few dataweave functions that we have worked in realtime projects:
-map , mapObject , filter, filterObject , flatten, pluck etc.
+Map: is used to iterate over an array and transform each element, returning a new array as output. It works on 
+arrays such as simple arrays [], arrays of objects [{}]and even nested arrays[[]]. The map function takes an 
+input-array and applies a lambda (transform) expression to each element. The result of each iteration is 
+collected into a new array.
+Inside the lambda expression:
+  - $ represents the current element.
+  - $$ represents the index-position of the element.
 
-//How to access property in dataweave..?
---> 
-by using P function...  p('http.port')
----------------------------------------------------------------------------------------------
-//How to sort an array..?
--->
-using orderBy function we can sort array:
-To sort in  ascending order: payload orderBy ((item , index)-> item)
-//payload orderBy $ give ascending order value..
-To sort in descending order: payload orderBy ((item, index) -> - item)
-//payload orderBy -$ give descending order value..
----------------------------------------------------------------------------------
-//Find smallest and greatest number in an array..?
--->
-(payload orderBy((item , index)-> item))[0] <--- for greatest number
-(payload orderBy -$)[0] | (payload orderBy $)[-1] to get the highest value..
-(payload orderBy((item , index)-> item))[-1] <--- for smallest number
-(payload orderBy -$)[-1] | (payload orderBy $)[0] to get the lowest value..
+For-example: in an array of objects[{}], $ refers to the object itself while $$ gives the index of that object 
+in the array. the general syntax is 'array map (item, index) -> transformation', where each element is processed 
+individually and returned as a transformed array. In muleSoft anypoint-platform, map is one of the most commonly 
+used functions for data transformation, restructuring payloads and converting input-data into required output 
+formats.
+It works like a for-each loop over an array. it iterates through each element, temporarily assigns it to the
+variable $, applies the transformation logic and returns a new transformed array. It doesn't modify the original 
+payload; instead, it produces a new output array based on the transformation-logic.
 
-//Filter out even and odd numbers..?
--->
-payload filter ((item , index) -> (item mod 2) == 0) <--- even number
-payload filter ((item , index) -> (item mod 2) != 0) <--- Odd number
--------------------------------------------------------------------------------
-//How to print current date..?
--->
-now() as Date { format: "yyyy-MM-dd" }
-now() as Date <-- This outputs only the date part of the current timestamp...
-----------------------------------------------------------------------------------
-//What is causedBy function in Dataweave..? 
--->
-causedBy() is a dataWeave function used inside a try-catch (error handling) block to check whether the
-error was thrown by a specific error type..
-It works just like checking an error type in a Mule error handler, but inside DataWeave..
-error.causedBy("MULE:CONNECTIVITY")
-
-we use it inside a DataWeave try...catch block:
-%dw 2.0
-output application/json
-var result = 
-    try 
-        payload.a / payload.b
-    catch (e) 
-        if (e.causedBy("MULE:EXPRESSION")) 
-            "Expression Error"
-        else 
-            "Some other error"
----
-result
----------------------------------------------------------------------------------------------------
-%dw 2.0
-output application/json
-fun divide(a, b) =
-    try 
-        a / b
-    catch (e) 
-        if (e.causedBy("MULE:ZERO_DIVISION")) 
-            "Divide by zero detected"
-        else 
-            "Unknown error"
-
----
-divide(10, 0)
-
---------------------------------------------------------------------------------------
-//Does the desendent(..) selector select all the keys or just first one in nested object..?? 
---> 
-The descendant selector (..) selects all matching keys at any nested level, not just the first one.
-paylod..name  Use payload..name[0] to access only the first match..
------------------------
-//Does the multi value selector(.*) select keys on nested level of the object.. ??
---> 
-No , multi value selector doesn't select keys on nested level of the object.
-.* only selects immediate child values of an object, not keys nested deeper..
-payload.*name
-
-Immediate child = a key/value directly inside the object Not inside another object or array...
------------------------
-//What happens if we combine both Descendent and Multi-value selectors(..*) ??
---> 
-..* selects all matching keys at all nested levels, that we want to access..
- payload..*name
-
-//output of multi-value selector is an array(The result of .* is always an array) , it works for both
- array and objects..
-
- %dw 2.0
- output application/json
- ---
-// payload.id //1 (single value selector)
-// payload..id //[1 , 2 , 3] (decendent selector select first value in nested object)
-// payload.*id //[1 , 11] (multivalue selector select all value but , not work in nested object)
-payload..*id //[1 , 11 , 2 , 22 , 3 ,33](combination of multi-value and decendent selector select all values)
-------------------------------------------------------------------------------
-//How to update value of key..?
--->
-%dw 2.0
-import * from dw::util::Values
-output application/json
-var payload = [
-  { key: "old1", other: "x" },
-  { key: "old2", other: "y" }
-]
----
-payload map ((item, index) -> 
-    item update "key" with "value"
-)
------------------------------------------------------------------------------
-//How to convert all keys in object to uppercase..? 
--->
-by using upper() from the string as by import * from dw::core::Strings
-
-//How to fetch keys and values of an object..?
---> 
-keysOf(payload) ; valuesOf(payload)
-----------------------------------------------------------------------------
-//How to remove key value pair in JSON object..?
--->
-payload -"key1" - "key2"
-payload - (["key1", "key2"])
-Works only for keys at the same level...
-Doesn't delete nested keys (must use other methods for that)...
--------------------------------------------------------------------------------
-//How to extract integers only from "a1b2c3d4"..?
--->
-%dw 2.0
-output application/json
-var kela = "a1b2c3d4"
----
-(flatten(kela scan /\d/) joinBy "") as Number
-(flatten(kela scan /[a-zA-Z]/)) joinBy ""
-
-//How to use splitBy function to "192,88.99.0/24"..?
--->
-payload splitBy (/[,.\/]/)
-
---------------------------------------------------------------------------------
-//How to skip null value..?
--->
-%dw 2.0 
-output application/json skipNullOn="everywhere"
----
-payload
-
-
-%dw 2.0
-output application/json skipNullOn="everywhere"
-var payload = {
-  name: "Bharat",
-  age: null,
-  skills: ["MuleSoft", null, "Java"],
-  details: {
-    city: null,
-    country: "India"
-  }
-} 
----
-payload
----------------------------------------------------------------------------------
-//Merge two Arrays and remove duplicates..?
- --> flatten(valuesOf(payload))
- --> flatten(valuesOf(payload)) distinctBy((item , index) -> item)
- --> paylaod reduce ((item , accumulator) -> accumulator ++ item)
-
- %dw 2.0
-output application/json
-var duplicates = {
-  a: [1, 2, 3],
-  b: [3, 4, 5]
+syntax-1: Without explicit parameters (shorthand form)
+arrayPayload map{
+($$):$
 }
----
-flatten(valuesOf(duplicates)) distinctBy $ 
+syntax-2: with parameters (explicit form)
+arrayPayload map(value,index)->{
+(index):value
+}
+------------------------------------------------------------------
+mapObject: is used to transform an object by iterating over each key-value pair and returning a new object as 
+output. Unlike map, which works on arrays, mapObject works on objects {} and nested objects {{}}, where each 
+property is processed individually. it takes two inputs: the object to transform on-left-side and a lambda 
+expression on-right-side that defines the transformation logic. during iteration, $ represents the value, $$ 
+represents the key and mapObject is commonly used when we need to rename keys, restructure JSON objects or 
+transform object-based payloads into a different schema while preserving object format.
 
-------------------------------------------------------------------------------------------------
-//How to swap the key:value pairs..?
--->
-%dw 2.0
-output application/json
-var payload = [
-  { id: 1, name: "apple", color: "red" },
-  { id: 2, name: "banana", color: "yellow" }
-]
----
-payload map (item) ->
-    item mapObject ((value, key) -> {
-        (value as String): key
+syntax-1: Without explicit parameters (shorthand form)
+objectPayload mapObject {
+    ($$): ($)
+}}
+syntax-2: with parameters (explicit form)
+objectPayload mapObject ((value, key, index) -> {
+    (key): value
 })
-map → loops through each object in the array..
-mapObject → loops through the key/value pairs inside each object..
-(value as String): key → creates a new key using the original value..
-------------------------------------------------------------------------
-//What's difference between mapObject & pluck..?
--->
-mapObject: The input & output for mapObject function is an object{}..
-pluck: Is designed to transform an object into an array by iterating over its key-value pairs
-The input of pluck is object{} & output is an Array[]..
-----------------------------------------------------------------------
-//What is dataweave script to check if input is prime number..?
---> 
-A prime number is a natural number greater than 1 that has no positive divisors other than 1 and 
-itself...
---------------------------------------------------------
-//How to convert datetime to specific timezone..?
--->
-%dw 2.0
-output application/json
----
-now() >> "PST"
-
-now() >> "Asia/Kolkata"
-now() >> "UTC"
-now() >> "America/Los_Angeles"
-now() >> "Europe/London"
+is used to iterate over object key-value pairs and transform them while preserving object structure. in 
+shorthand form, we use $ for value and $$ for key. In explicit form, we define parameters like value and key in 
+a lambda expression. The output remains an object.
 ----------------------------------------------------------------
-//what is factorial value and how to find it..?
--->
-The factorial of a number n (written as n!) means:
-👉 Multiply all whole numbers from n down to 1..
-Example:
+Filter-function: is used to iterate over an array and return only those elements that satisfy a given 
+condition. It evaluates each element of the array using a lambda expression that must return a boolean value 
+(true or false). If the condition evaluates to true, the element is included in the output; otherwise, it is 
+excluded. the filter function works only on arrays ([]) and returns an array as output, containing only the 
+matching elements. It's commonly used in transformations to perform data selection or to extract specific 
+records from a dataset based on conditions like age, status or Id matching.
 
-5! = 5 × 4 × 3 × 2 × 1 = 120
+syntax-1: Without explicit parameters (shorthand form)
+  arrayPayload filter(condition)
+  $ represents the current value on each iteration.
+syntax-2: with parameters (explicit form)
+  arrayPayload filter(value,index)-> condition
 
-4! = 4 × 3 × 2 × 1 = 24
+Filter can be written in two ways. In shorthand form, it uses $ to represent the current element, such as array 
+filter ($ > 10). In explicit lambda form, we define parameters like value and index using 
+(value, index) -> condition. both forms evaluate a boolean condition and return a new filtered array.
 
-3! = 3 × 2 × 1 = 6
-
-//Using reduce function:
-%dw 2.0
-output application/json
-var n = 5
----
-if (n == 0) 1
-else (1 to n) reduce ($$ * $)
-
-//Using a recursive function:
-%dw 2.0
-output application/json
-fun factorial(n) =
-    if (n == 0) 1
-    else n * factorial(n - 1)
----
-factorial(5)
-
-----------------------------------------------------------------------
-//How to skip header in csv..?
-%dw 2.0
-output application/csv header=false
----
-payload
-------------------------------------------------------------------------------
-//How to remove indentation from json output to save memory..?
--->
-%dw 2.0
-output application/json indent=false
----
-paylaod
-
-//What this does:
-Produces compact JSON..
-Reduces output size (memory + disk)..
----------------------------------------------------------------------------------
-//How to print $(doller) in the output..? 
--->
-by using \$:
-
-%dw 2.0
-output application/json
-var price = 99
----
-"\$${price}"
-"\$$(price)"
-
-%dw 2.0
-output application/json
----
-"\$100"
--------------------------------------------------------
-//How to convert JSON string to JSON..? 
---> 
-%dw 2.0
-output application/json
-var jpayl = {
-  user: "{\"name\":\"Bharat\",\"age\":30}",
-  status: "\"active\""
+{
+Implicit means dataWeave automatically provides parameters like $ without explicit declaration, making the 
+syntax shorter. explicit means we manually define parameters like value and index in lambda expressions, giving 
+more control and clarity in transformations.
 }
----
-jpayl mapObject ((value, key) -> {
-  (key): read(value, "application/json")
-})
----------------------------------------------------------------------------------
-//How many types of targets can created in transform message..?
--->
-Three types of targets can created in transform message:
-1. payload
-2. attributes
-3. variable
---------------------------------------------------------------------------------
-//How to check if the given string palindrome..?
--->
-%dw 2.0
-import * from dw::core::Strings
-output application/json
-var payml= "wow"
----
-if(payml == reverse(payml))
-"palindrome"
-else
-"Not palindrome"
+----------------------------------------
+filter-object: is used to iterate over key-value pairs of an object and return only those pairs that satisfy a 
+given condition. It evaluates each entry using a lambda expression that must return a boolean (true or false). 
+if the condition is true, the key-value pair is included in the output object; otherwise, it is excluded.
+Unlike filter, which works on arrays, filterObject works on objects {} and returns a filtered object as output, 
+preserving object structure while removing non-matching entries.
+
+syntax-1: Without explicit parameters (shorthand form)
+   objectPayload filterObject ((value) -> value > 10)
+syntax-2: with parameters (explicit form)
+    objectPayload filterObject ((value, key, index) -> value > 10)
+we should use explicit variables like value and key instead of $, because $ is primarily meant for array 
+operations. Since filterObject works on key-value pairs of objects, using value and key makes the 
+transformation clearer and more reliable..
+
+we can use, map + filter → array operations & mapObject + filterObject → object operations
+----------------------------------------------------------------
+//Dataweave core flatten & flatMap functions:
+
+flatten: is used to convert an array of arrays (nested arrays) into a single flat array by removing one level of 
+nesting. It takes a structure like [ [1,2,3], [4,5] ] and transforms it into [1,2,3,4,5]. In other words, it 
+merges all inner arrays into one continuous array. this function is commonly used when dealing with hierarchical 
+or grouped data that needs to be simplified for processing or integration.
+
+flatMap: is a function that iterates over each element of an array, applies a transformation, and automatically 
+flattens the resulting arrays into a single-level array. it's commonly described as a combination of 
+map + flatten, because it first transforms each element and then removes one level of nesting from the result. 
+the function operates on arrays and uses $ for the current value and $$ for the index during iteration.
+
+//Difference between flatMap and flatten..?
+--> 
+flatten is used to convert an array of arrays into a single flat array by removing one level of nesting, 
+without performing any transformation. flatMap, on the other hand, first applies a transformation to each 
+element of the array and then flattens the result into a single array. So flatten only handles structure, while 
+flatMap handles both transformation and flattening.
+
+syntax-1: Without explicit parameters (shorthand form)
+arrayOfArrayPayload flatMap ($)
+where, $ = current value ; $$ = current index
+
+syntax-2: with parameters (explicit form)
+arrayOfArrayPayload flatMap ((value, index) -> value)
+
+                    %dw 2.0 output application/json ---
+                    [[1,2], [3,4]] flatMap {
+                        $  // returns inner arrays
+                    }
+-----------------------------------------------------------------------------------------
+//dataweave core by functions:
+
+//distinctBy: is used to iterate over an array and return only unique elements based on a specified condition 
+or key. It helps in removing duplicate values from an array by comparing elements using a transformation 
+expression. Unlike simple uniqueness checks, distinctBy allows us to define how uniqueness should be determined, 
+for example by a specific field in an object or a computed value. It is commonly used when working with arrays 
+of objects to eliminate duplicate records based on a business key like id or email.
+
+syntax-1: arrayPayload distinctBy $
+syntax-2: arrayPayload distinctBy(value)-> value
+
+orderBy: is used to sort or reorder elements of an array based on a specified sorting condition or key. it 
+iterates over the input array and evaluates each element using a lambda expression to determine the sorting 
+criteria, such as numeric value, string value or a specific field in an object. the result is a new sorted array, 
+either in ascending or descending order depending on the logic provided. this function is commonly used to 
+organize data such as sorting records by name, age, date during transformation.
+
+syntax-1: arrayPayload orderBy $
+syntax-2: arrayPaylaod orderBy(value)-> value
+
+groupBy: is used to group elements of an array into an object based on a specified condition or key. it 
+evaluates each element using a lambda expression and groups all elements with the same result under a single-key, 
+returning an object of grouped arrays. [] --> {[]}
+
+syntax: arrayPayload groupBy(value)-> value
+
+joinBy: is used to merge all elements of an array into a single string, using a specified separator between 
+each element. during this process, all elements in the array are automatically converted to strings before 
+concatenation. it's commonly used for generating formatted outputs such as CSV lines, readable messages or 
+custom string formats. The joinBy function performs the opposite operation of splitBy, where splitBy divides a 
+string into an array, while joinBy combines an array into a string. 
+syntax: arrayPayload joinBy "separator" joinBy ", " joinBy " - "
 ------------------------------------------------------------------------------
-//What's differene between == and ~= ?
-== will check data & data_types too ---->  5 == 5 , 5 =❌= "5"
-~= will only check the data  ---->  5 ~= "5" same as 5 ~= 5
+//reduce function: is used to iterate over an array and produce a single accumulated result by applying a 
+lambda expression on each element. It uses an accumulator to store intermediate results and can return different 
+types such as number, string, array or object depending on the logic. It is mainly used for aggregation 
+operations like sum, concatenation or building complex structures.
 
-------------------------------------------------------------------------------------
-//DataWeave is the primary data trasformation language for use in Mule flows...
-//DataWeave 2.0 is for Mule 4 apps and dataweave 1.0 is for Mule 3 app..
+syntax-1: array reduce ((accumulator, item) -> expression)
+example: [2,3,4]reduce($+$$)
+
+syntax-2: array reduce ((accumulator, item, index) -> expression)
+example:[2,3,4] reduce(item,acc)-> item + acc
+
+Explanation:
+iteration-1: item is 2 (assigns first item to acc = 2)..
+iteration-2: item is 3 & acc is 2 -> 3 + 2 (assigns result to acc = 5)..
+iteration-3: item is 4 & acc is 5 -> 4 + 5 (assigns result to acc = 9)..
+result:9
+
+                      %dw 2.0 output application/json var numberArray = [2,3,4] ---
+                      {
+                        "a": numberArray reduce($+$$),
+                        "b": numberArray reduce(i, a) -> (i + a)
+                      }
+-----------------------------------------------------------------------------------
+Pluck: is used to iterate over key-value pairs of an object and return the result as an array. it allows 
+extraction of values, keys or both using a lambda expression. in shorthand, $ represents value and $$ represents
+key, while index can be accessed in explicit-form.  
+
+{   
+  
+} pluck $ | $$ <--- $ value , $$ key 
+
+
+'to operatior':  is used to create a range of values between two specified boundaries. it generates a sequence 
+including both the start and end values and is commonly used for iteration or generating arrays of numbers.
+to = generate sequence from start to end
+
+uuid: it generates a version-4 UUID using random numbers as the source. it produces a unique identifier string 
+that is commonly used for tracking, correlation IDs, and ensuring uniqueness in mule integrations.
+
+zip: is used to combine two arrays by pairing elements at the same index and returning them as sub-arrays. it 
+produces an array of arrays and stops at the shortest input array-length.
+
+unzip: is used to reverse the zip operation. it takes an array of paired elements as input and splits them into 
+multiple arrays based on their positions, effectively separating combined data into individual arrays.
+
+round: is used to round a number to the nearest integer or specified decimal places based on standard rounding 
+rules. It does not simply remove decimals but adjusts the value depending on whether the fractional part is 
+greater or less than 0.5
 ----------------------------------------------------------------------------------
-//%dw: Is dataweave version %dw2.0
-//import: For importing dataWeave function module...
-var: Global variables for defining constants that we can reference throughout the body of the DataWeave script..
-fun: For creating custom functions that can be called from within the body of the script..
-type: For specifying custom type that we can use as expression...
-na: Use to import namespace...
-output: Commonly used directive that specifies the mime...
-If there is no output then default output is application/java ...
-If mime types of the inputs differ , and no output is specified , the script throws an exception so that
-we know to specify an output mime type..
-----------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
 
 
 

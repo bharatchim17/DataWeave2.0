@@ -1,2 +1,258 @@
--------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+// %dw 2.0
+output application/csv headerLineNumber = 0, header = true
+---
+[
+  {
+    title: "Everyday Italian",
+    author: "Giada De Laurentiis",
+    year: 2005,
+    language: "en",
+    price: 30
+  }
+]
+-->
+Notes:
+- headerLineNumber = 0 means the header will be placed at the first line.
+- header = true ensures column names are included.
+- CSV output requires a list of objects.
+----------------------------------------------------------------------------------
+// %dw 2.0 output application/json
+---
+{
+"singleValueSelector": payload[0].source,
+"multiValueSelector": payload.*source,
+"indexSelector": payload[0],
+"rangeSelector": payload[0 to 2] ,
+"singleValueSelector": payload.covidCases.*covidCase[0].source,
+"xmlNamespaceSelector": payload.covidCases.*covidCase[0].source.@id,
+"multiValueSelector": payload.covidCases.*covidCase.source,
+"indexSelector": payload.covidCases.*covidCase[1] ,
+"rangeSelector": payload.covidCases.*covidCase[0 to 2]
+}
 
+---------------------------------------------------------------------------
+Type coercion: the process of changing field value from one data-type to other data-type. type can be coerced 
+from one type to other using the 'as' operator. for example: Input: {"caseId": 667"} type coercion from string 
+to number: payload.caseId as Number
+
+%dw 2.0 output application/java ---
+payload.dateOfBirth as Date  {format: "dd-MM-yyyy"}/{format: "yyyy/MM/dd"}
+
+
+%dw 2.0 output application/java ---
+{
+"date-now": now() as Date,
+"date-time": now() as Time,
+"date-in-yyyy/MM/dd-format": now() as String {format: "MMMM"},
+"date-in-yyyy-MM-dd-format": now() as String {format: "yyyy-MM-dd"}
+}
+
+//Lua: ~= means 'not equal' 
+print(1 == "1")    <-- false
+print(1 ~= "1")    <-- true
+--------------------------------------------------------
+//operator:
+
+logical-operators allow us to write true/false kind of expression.
+
+! is the logical NOT (negation) operator. ! inverts the boolean value of the expression that follows it.
+ 
+Prepend >> [] : Data is left hand side and array is right hand side.. it prepend to 0 postion i.e. first 
+postion of array..
+Append  [] << : Data is right hand side and array is left hand side.. it append to the last postion of an 
+array.
+
+'+ operator' is used to append data from the right-hand side to the left-hand side, where the left-hand side must 
+be an array. It adds the right-hand value as a new element into the array. For example, [1] + 2 results in 
+[1, 2], where the value 2 is appended to the existing array. key-rule is that the array must always be on the 
+left-hand side of the + operator; otherwise, the operation is not valid.
+
+'- operator' is used to remove a specific element from an array of any supported type. It works by taking an 
+array on the left-hand side and the value to be removed on the right-hand side and then returning a new array 
+with that element excluded. For example, [1, 2, 3] - 2 results in [1, 3], where the value 2 is removed from the 
+array.
+
+'combine ++': this statement ++  is used to concatenate or merge data-types such as strings, arrays and objects.
+'remove --': is used to remove specified-elements, filters-out matching values from arrays. 
+--------------------------------------------------------------------------------------------
+//Dataweave control statements:
+
+1. Conditional statement are 1. If_else 2. Else_if
+
+If_else statement evaluates a condition and returns a value based on whether the condition is true or false. If 
+the condition evaluates to true, the expression under the if block is executed; otherwise, the expression under 
+the else block is executed.
+
+Else_if statement is used when multiple conditions need to be evaluated sequentially. It allows chaining of 
+multiple conditions within a single if-else construct, where each condition is checked one after another until 
+a true condition is found, and its corresponding expression is executed. 
+In DataWeave, 'every if-expression must have a corresponding else-expression', every expression must produce an 
+output regardless of the condition outcome. Therefore, an if-statement must always have a corresponding else 
+block. example: 1. if(condition) code1 else code2 i.e. if(condition) value1 else value2
+                2. (expression) match  {
+                                        case (condition) -> execute_if_condition_pass
+                                        else (condition) -> if_no_condition_pass
+                                        }
+
+
+%dw 2.0 output application/json var country = "India" var city = "mumbai"
+---
+{
+	currency: if(country == "USA") "USD" else if(country == "India") "IRS" else "None",
+	city: if(city != null) city as String else ""
+}
+
+2. Default-values: are used to ensure that a field always has a meaningful-value even when the input is 
+missing or empty. The default operator assigns a fallback-value when the original value is null or not present 
+in the payload. Internally, it behaves like a simple conditional check (similar to if-else), where dataWeave 
+returns the original value if it exists; otherwise, it returns the specified default value. for-example:
+"userName": payload.name default "Undefined" means that if payload.name is available, it will be used but if it's 
+null or missing, the output will be "Undefined".
+-------------------------------------------------------------------------------------------
+Dataweave pattern matching: is used to evaluate an input expression against multiple conditions and route it 
+to the appropriate output based on the first matching case. It works similarly to a switch-case statement in 
+languages like Java or C++, where different conditions are checked and the corresponding expression is executed 
+when a match is found.
+The syntax consists of an input expression followed by multiple case conditions, each mapping to a specific 
+output expression. If none of the conditions match, the else block is executed as a default fallback.
+Syntax:
+  inputExpression match{
+  case <condition> -> <routing expression>
+  case <condition> -> <routing expression>
+  else -> <default routing expression>
+  }
+---------------------------------------------------------------------------------------------------
+//do operator:
+
+A do statement creates a scope in which new variables ,functions, annotations or namespaces can be declared 
+and used.. The syntax is similar to a mapping in that it's composed of header and body separated by --- , it's 
+header is where all the declarations are defined and its body is the result of the expression..
+syntax:
+do{
+header
+---
+body
+}
+
+for-example: if we would like to create any variable local to this function, then we can make use of do-scope.
+----------------------------------
+%dw 2.0 output application/json
+
+fun fullName(firstName: String, lastName: String): String = do {
+	var middleName = "SA"
+	---
+	firstName ++ " " ++ middleName ++ " " ++ lastName
+}
+---
+{
+	"a": fullName("Chinna", "Reddy")
+}
+---------------------------------------------------------------------------------------------------
+//Dataweave core string functions(dw::core):
+
+1.contains:
+return true if an input contains given value, false if not..
+
+2.Find:
+returns indices of an input that match a specified value..
+
+3.lower:
+returns the provided string in lowercase characters..
+
+4.upper:
+returns the provided string in uppercase character..
+
+5.matches:
+check if an expression matches the entire input string..
+
+6.replace:
+performs string replacement..
+
+7.splitBy:
+splits string into string array based on value that matches part of that string...
+
+8.startsWith:
+returns true or false depending on whether the input string starts with matching prefix..
+
+9.endsWith:
+returns true if string ends with provided substring , false if not..
+
+10.Trim:
+removes any blank spaces from the begining and end of string..
+
+11.isEmpty:
+Returns true if the input string is empty(""), false if not.
+
+12.isBlank:
+returns true if the given string is empty(""),completely composed of whitespaces , or null otherwise, the 
+function returns false..
+
+13.sizeOf: Is used to determine the length or size of a data-structure such as a string, array or object.
+When applied to a string, it returns the number of characters including white spaces. When applied to an array, 
+it returns the number of elements present in the array and if the array is empty it returns 0. it can also be 
+used with an array of arrays, where it counts the top-level elements. for-example: sizeOf(payload.items) returns 
+the number of elements inside the items array. This function is commonly used in DataWeave transformations to 
+perform validations or conditional checks based on the size of incoming data.
+
+14.typeOf:
+returns the primitive data type of value, such as String..
+
+15.namesOf:
+returns an array of strings with names of all the keys within the given object..
+
+16.keysOf:
+returns an array of keys from key-value pairs within the input object..
+
+17.valuesOf:
+returns an array of the values from key-value pairs within the input object..
+
+18.indexOf:
+returns the index of the first occurence of the specified element in given array  or -1 , if this list 
+does not contain the element..
+
+19.lastIndexOf:
+returns the index of the last occurence of specified element in given array or -1 if the array does not 
+contain element..
+
+20.entriesOf:
+returns an array of key-value pairs that describe the key , value and any attributes in the input object. 
+--------------------------------------------------------------------------------
+//Datawave function:
+
+1. 'p() function': Is used to read values from property files or configuration properties at runtime. it allows 
+us to externalize configuration such as URL's, credentials or environment-specific values instead of hardcoding 
+them inside the transformation.
+The p() function works by referencing a property key and mule resolves its value from the configured properties 
+files like config.yaml, .properties for example: p('api.host') will fetch the value of api.host from the 
+properties file. this helps in making applications more flexible, reusable and environment-independent like dev, 
+test, prod. In Transform-Message components, it's commonly used to dynamically inject configuration values during 
+data-transformation.
+
+2. 'min': is used to return the smallest (lowest) comparable value from an array of values, It works on arrays 
+containing comparable data-types such as numbers or strings and it evaluates all elements in the array to 
+identify the minimum value. For-example: if an array contains numeric values like [10, 5, 20] then min will 
+return 5. This function is useful in data-transformations where we need to find the lowest value from a dataset, 
+such as minimum price, minimum age or earliest value in a list.
+
+3.'max': is used to return the highest (largest) comparable value from an array of elements. It works on arrays 
+containing comparable values such as numbers or strings and evaluates all elements to identify the maximum value. 
+For-example: if the input array is [10, 5, 20], then max will return 20. This function is commonly used in 
+data-transformation scenarios where we need to determine the highest value from a dataset, such as 
+maximum-salary, maximum-score or latest/highest numeric value in a list also we use it in manual-watermarking.
+
+4.'mod': Returns the modulo (the remainder after dividing the dividend by the divisor)also known as the modulo 
+operation. a dividend and a divisor performs division and returns only the remainder. for example: 10 mod 3 
+returns 1 because, 10 divided by 3 is 3 with a remainder of 1. this function is commonly used in data
+transformations for tasks like checking even/odd numbers, grouping records or cyclic operations based on 
+remainder logic.
+{
+Real-life analogy If we have: 10 chocolates 3 kids, each kid gets 3 chocolates (total 9) and:
+1 chocolate remains. so, remainder = 1
+}
+
+5.'isDecimal': is used to check whether a given number contains a decimal part or not. It returns true if the 
+number is a decimal i.e. has fractional values like 10.5, 3.14 and returns false if the number is a whole-number 
+without any decimal part (like 10, 25, 100). This function is commonly used in data-validation scenarios where 
+we need to differentiate between integer values and floating-point numbers during transformations.
+-------------------------------------------------------------------------------------

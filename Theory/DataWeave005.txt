@@ -1,105 +1,382 @@
---------------------------------------------------------
-//do operator:
-A do statement creates a scope in which new variables ,functions, annotations or namespaces can be declared 
-and used.. The syntax is similar to a mapping in that it's composed of header and body separated by --- , it's 
-header is where all the declarations are defined and its body is the result of the expression..
-syntax:
-do{
-header
+ ----------------------------------------------------------------------------------------------------------------
+//vitech-dataweave interview:
+ ----------------------------------------------------------------------------------------------------------------
+// 1. How to find the even numbers from array example: [1,2,3,4,5,6,7,9]
+-->
+%dw 2.0
+output application/json
 ---
-body
-}.. 
+payload filter ((item, index) -> (item mod 2) == 0)
 
-if we would like to create any variable local to this function, then we can make use of do scope..
+Odd numbers:
+%dw 2.0
+output application/json
+---
+payload filter ((item, index) -> (item mod 2) == 1)
+
 
 %dw 2.0
 output application/json
+---
+payload filter ((item, index) -> (item mod 2) != 0)
 
-fun fullName(firstName: String, lastName: String): String = do {
-	var middleName = "SA"
-	---
-	firstName ++ " " ++ middleName ++ " " ++ lastName
-}
+-------------------------------------------------------------------------------------------------------------
+2. How to swap firstName and lastName from string example: name = Vitech Talks
+-->
+%dw 2.0
+output application/json
+var name =  "Vitech Talks"
+var names = name splitBy  " "
+---
+names[1] ++ " " ++ names[0]
+
+------------------------------------------------------------------------------------------------------
+3. How to generate numbers from  1 to 15..?
+-->
+%dw 2.0
+output application/json
+var num = [1 to 10]
+---
+num
+--------------------------------------------------------------------------------------------------------
+4. Generate Even numbers/Odd numbers 50 to 100 ..?
+-->
+%dw 2.0
+output application/json
+var num = 50 to 100
+---
+num filter((item) -> (item mod 2) == 0)
+num filter((item) -> (item mod 2) == 1)
+----------------------------------------------------------------------------------------------------------
+5. Find largest and smallest number from an array example: [25 , 5 , 10 , 55 , 2 , 6]..?
+-->
+%dw 2.0
+output application/json
 ---
 {
-	"a": fullName("Chinna", "Reddy")
+    "MaxNumber": max(payload) ,
+    "MinNumber": min(payload)
 }
+
+Find oldest and youngest person from Json object..?
+
+[
+{"name" : "Anu"  , "age": 30} ,
+{"name" : "Ravi"  , "age": 25} ,
+{"name" : "Jhon"  , "age": 55} 
+]
+-->
+%dw 2.0
+output application/json
+var person =
+[
+{"name" : "Anu"  , "age": 30} ,
+{"name" : "Ravi"  , "age": 25} ,
+{"name" : "Jhon"  , "age": 55} 
+]
+---
+{
+    "oldestPerson": person maxBy($.age) ,
+    "youngestPerson": person minBy ($.age)
+}
+
+
+{
+"young": person minBy ((item) -> item.age) ,
+"old": person maxBy ((item) -> item.age)
+}
+
+-------------------------------------------------------------------
+6.1 Combine multiple objects into single..
+[
+{
+    "id1": "101" ,
+    "name": "ravi"
+} ,
+{
+    "id2": "102" ,
+    "name": "mule"
+}
+]
+--->
+%dw 2.0
+output application/json
+---
+payload reduce ((item, accumulator = {}) -> (accumulator ++ item))
+
+{(payload)}
+
+
+6.2 Remove duplicates from given payload..
+[
+   [
+       {
+           "name": "Joye"
+       } ,
+        {
+           "name": "Jack"
+       },
+        {
+           "name": "John"
+       },
+         {
+           "name": "Joye"
+       }
+   ] ,
+   [
+         {
+           "name": "Jimmy"
+       },
+         {
+           "name": "Jack"
+       } ,
+         {
+           "name": "Joye"
+       },
+         {
+           "name": "Boom"
+       }
+   ]
+]
+--->
+%dw 2.0
+output application/json
+---
+flatten(payload) distinctBy ((item, index) -> item.name )
+flatten(payload) distinctBy ($.name)
+
+
+6.3 Add only last index all value into Array:
+%dw 2.0
+output application/json
+---
+(payload map ((item, index) -> item.name))[1] 
+
+%dw 2.0
+var data = payload map ((item, index) -> item.name)
+output application/json
+---
+data[1]
+
+
+%dw 2.0
+var data = payload map ((item, index) -> item.name)
+output application/json
+---
+// data reduce ((item, accumulator) -> item)
+data reduce ((item, accumulator) -> accumulator)
+--------------------------------------------------------------------------------------
+7.1 Separate Odd and Even numbers [2 , 7 , 3 , 16 , 5] 
+--->
+
+%dw 2.0
+output application/json
+---
+{
+    Even: payload filter ((item) -> (item mod 2) == 0),
+    Odd: payload filter ((item) -> (item mod 2) == 1)
+}
+
+
+7.2 Update Capagemini with Accenture
+[
+{
+"Name": "Ram" ,
+"Company": "Capagemini"
+},
+{
+"Name": "Arun" ,
+"Company": "Capagemini"
+},
+{
+"Name": "Surya" ,
+"Company": "Capagemini"
+}
+]
+--->
+
+%dw 2.0
+output application/json
+---
+payload map {
+    "Name": $.Name ,
+    "Company": $.Company replace  "Capagemini"  with "Accenture"
+}
+
+----------------------------------------------------------------------------------------------------
+8. Print table for the given number = 7
+7 * 1 = 7
+7 * 10 = 70
+-->
+%dw 2.0
+output application/json
+var i = 1 to 10
+var number = 7
+---
+i map(number ++ "x" ++ $ ++ " = " ++ (number * $))
+----------------------------------------------------------------------------------------------------
+9.1 Swap key and Value
+input:
+{
+"message": "Hello world"
+}
+-->
+%dw 2.0
+output application/json
+---
+payload mapObject ((value, key, index) ->{
+    (value): key
+} )
+
+9.2 Write your own function to identify given number is "odd" or "even"..?
+-->
+%dw 2.0
+output application/json
+fun isOddOrEven(number: Number): String =
+    if ((number mod 2) == 0) "Even" else "Odd"
+---
+isOddOrEven(5)
+
+9.3 Print number 1 to 100 and add even/odd for every number..
+[
+{ "1" : "odd" } ,
+{ "2" : "Even" } ,
+{ "3" : "odd" } ,
+{ "4" : "Even" } 
+]
+-->
+---------------------------------------------------------------------
+10. 
+input: "0102030405INDUSAAUSENGAFG"
+output:
+{
+"01": "IND" ,
+"01": "USA" ,
+"01": "AUS" ,
+"01": "ENG" ,
+"05": "AFG" ,
+}
+
+Note: Input will dynamically change every time..
+%dw 2.0
+output application/json
+var codes = payload scan /[0-9]{2}/
+var countries = payload scan /[A-Z]{3}/
+---
+{
+(codes zip countries map ((item, index) -> {
+(item[0][0]) : item [1][0]
+}))
+}
+--------------------------------------------------------------------------
+11.1 Sum of total numbers [1,2,3,4,5]     15
+--->
+%dw 2.0
+output application/json
+---
+// sum(payload)
+
+// payload reduce ((item, accumulator) -> item + accumulator)
+
+// payload reduce ($$ + $)
+---------------------------------------------------------------------
+12.1 Print below pattern:
+1
+1 2
+1 2 3
+1 2 3 4
+1 2 3 4 5
+-->
+%dw 2.0
+output text/plain
+var num = 1 to 10
+---
+num map((i) -> 
+(1 to i) map ((j) -> j as String) joinBy  " "
+
+) joinBy "\n"
+
+12.2 pattern printing using dataweave:
+%dw 2.0
+output text/plain
+var num = 1 to 10
+---
+num map((i) ->
+(1 to i) map ((j) -> "*" ) joinBy  " "
+ ) joinBy  "\n"
+------------------------------------------------------------
+
+13.1 input:
+{
+"a": ["12" , "15" , "17"],
+"b": ["15" , "18" , "20" , "12" , "89"]
+}
+
+output: 
+["12" , "15"]
+--->
+%dw 2.0
+output application/json
+---
+payload.a filter((item , index) -> payload.b contains  item )
+
+
+
+13.2 input:
+{
+"fullName": "Ravi Teja Reddy"
+}
+
+output:
+{"shortName" : "RTR"}
+--->
+%dw 2.0
+output application/json
+---
+{
+"shortName" : (payload.fullName splitBy " " map ((item, index) -> item[0]) joinBy  "")
+}
+
+13.3 input:
+["apple" , "banana" , "orange" , "grape"]
+
+output:
+[
+"orange" ,
+"grape" ,
+"banana" ,
+"apple"
+]
+--->
+%dw 2.0
+output application/json
+---
+(payload orderBy ((item, index) -> item))[-1 to 0]
+
+13.4
+input:
+{
+    "message": "Hello world!"
+}
+
+output: "world! Hello" | "!dlrow olleH"
+
+
+%dw 2.0
+output application/json
+---
+// (payload.message splitBy "") [-1 to 0] joinBy  ""
+(payload.message splitBy " ") [-1 to 0] joinBy  " "
 --------------------------------------------------------------------------------------------
-//Dataweave core string functions(dw::core):
-
-1.contains:
-return true if an input contains given value, false if not..
-
-2.Find:
-returns indices of an input that match a specified value..
-
-3.lower:
-returns the provided string in lowercase characters..
-
-4.upper:
-returns the provided string in uppercase character..
-
-5.matches:
-check if an expression matches the entire input string..
-
-6.replace:
-performs string replacement..
-
-7.splitBy:
-splits string into string array based on value that matches part of that string...
-
-8.startsWith:
-returns true or false depending on whether the input string starts with matching prefix..
-
-9.endsWith:
-returns true if string ends with provided substring , false if not..
-
-10.Trim:
-removes any blank spaces from the begining and end of string..
-
-11.isEmpty:
-returns true if the given input value is empty , false if not..
-
-12.isBlank:
-returns true if the given string is empty(""),completely composed of whitespaces , or null otherwise, the 
-function returns false..
-
-13.sizeOf:
-Returns the number of characters (including white space) in  string.. returns the 
-number of elements in an array. It returns 0 if the array is empty. This version of 
-sizeOf takes an array[] or an array of arrays[[]] as input...
-sizeOf(): Returns the size or length of a data structure, such as an array or object.
-sizeOf(payload.items)
-
-14.typeOf:
-returns the primitive data type of value, such as String..
-
-15.namesOf:
-returns an array of strings with names of all the keys within the given object..
-
-16.keysOf:
-returns an array of keys from key-value pairs within the input object..
-
-17.valuesOf:
-returns an array of the values from key-value pairs within the input object..
-
-18.indexOf:
-returns the index of the first occurence of the specified element in given array  or -1 , if this list 
-does not contain the element..
-
-19.lastIndexOf:
-returns the index of the last occurence of specified element in given array or -1 if the array does not 
-contain element..
-
-20.entriesOf:
-returns an array of key-value pairs that describe the key , value and any attributes in the input object.. 
---------------------------------------------------------------------------------
-//Datawave operators:
-
-//isEmpty:- Returns true if the input string is empty("")..
-//min → Returns the lowest (smallest) Comparable value in an array.
-//max → Returns the highest (largest) Comparable value in an array.
-//mod: Returns the modulo (the remainder after dividing the dividend by the divisor)....
-//isDecimal: Returns true if the given number contains a decimal false if not...
-//p function is used for reading data from properties file in transform message generally we use “P” function...
--------------------------------------------------------------------------------------
+14.
+input: ["a" , "a" , "b" , "b" , "b" , "c"]
+output: ["a2" , "b3" , "c1"]
+--->
+%dw 2.0
+output application/json
+---
+payload groupBy ((item, index) -> item)
+mapObject ((value, key, index) -> {
+    "a": key ++  sizeOf(value)
+} ) pluck ((value, key, index) -> value) 
+--------------------------------------------------------------------------------------------------

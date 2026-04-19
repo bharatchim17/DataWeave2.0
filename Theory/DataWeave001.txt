@@ -195,6 +195,11 @@ Whenever there value associate to the first argument, assign value direction wil
 'recursive-function' is a function that calls itself within its own definition. It is useful for solving 
 problems that can be broken down into smaller, similar sub-problems, such as working with tree or hierarchical 
 data structures.
+
+core-functions: are built-in functions that are available by 'default and commonly-used' for data transformation, 
+such as map, filter and reduce. 
+Other-functions: refer to 'module-based or specialized' functions like string, date and math operations, which 
+may belong to specific dataWeave libraries and are used for advanced processing.
 -----------------------------------------------------------------------------------
 In DataWeave, by importing dw::core::Arrays, we can use various predefined array functions to manipulate data 
 efficiently.

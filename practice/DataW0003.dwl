@@ -241,3 +241,50 @@
 
 // }
 //////////////////////////////////////////////////////////////////////////////////////////
+%dw 2.0
+output application/json
+
+var covidObject = {
+  "firstName": "Mike",
+  //"lastName": "Tyson",
+  "phone": "789-655-3878",
+  "email": "mike@gmail.com",
+  "caseType": "positive"
+}
+
+---
+{
+  "firstName": if(covidObject.firstName != null) covidObject.firstName else "Undefined",
+  "lastName": covidObject.lastName default "Undefined",
+  "phone": covidObject.phone,
+  "email": if(covidObject.email != null) covidObject.email ,
+  "caseType": if(covidObject.caseType == "positive") "POS" else if(covidObject.caseType == "recovered")
+   "REC" else ""
+}
+
+
+%dw 2.0
+output application/json
+
+var covidObject = {
+  "firstName": "Mike",
+  "lastName": "Tyson",
+  "phone": "789-655-3878",
+  "email": "",
+  "caseType": "Recovered"
+} 
+
+---
+{
+  "firstName": covidObject.firstName,
+  "lastName": covidObject.lastName,
+  "phone": covidObject.phone,
+  "email": covidObject.email,
+  "caseType-if-else": if(covidObject.caseType == "positive") "POS" else if(covidObject.caseType == "Recovered")
+  "REC" else "",
+  "caseType-match": covidObject.caseType match {
+  	case "positive" -> "POS"
+  	case "Recovered" -> "REC"
+  	else -> ""
+  }
+}
