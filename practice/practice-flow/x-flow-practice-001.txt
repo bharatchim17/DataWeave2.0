@@ -1,0 +1,321 @@
+-----------------------------------------------------------------------------------
+//flow by chinna reddy: Caching OAuth access token using object store: we use it for utility purpose
+
+1. flow name 'consume-create-employee'
+listner path: /employee
+Logger message: "flow started"
+
+Transform message: 'Set OAuth Request Payload'  as name <--- save as variable 'oauthRequestPayload'
+%dw 2.0       
+output application/json
+---
+{
+    "username" : "bharatchim001" ,    "password" : "Durgachim@17" , "client_id": "1255"
+}
+
+flow reference: 'oauth-cache-flow'
+
+Transform message: Create Employee Request Payload <--- as name
+%dw 2.0        
+output application/json
+---
+{
+"empName": "xyz abx" ,
+"empStatus" : "A" ,
+"empAddress": "khamgaon" ,
+"empId" : 558
+}
+
+http request: Request Create Employee Service
+Method: POST
+URL: https://emp-hr-sapi-cloudhub.io/api/create-employee
+header:
+{
+"Authorization" :  vars.bearerTokeen 
+}
+
+
+Transform message: Set Response
+%dw 2.0
+output application/json
+---
+{
+"status" : 200 ,
+"message": "success"
+}
+
+2. Crate another flow  'oauth-cache-flow' as name
+Now click on request component in flow-1  (Request OAuth Service) extract to: subflow and Target
+mule configuration: 'oauth-cache-flow' give flow name 'oauth-cache-flow'
+
+retrive key: vars.oauthRequestPayload.client-id ,default-value:#[""]  <---- enable fx-mode to set it as-empty 
+else it will assume "" as value 
+
+choice: 
+1. isEmpty(payload)
+2. default
+
+1. isEmpty(payload)
+http request: Request OAuth Service
+Method: POST
+URL: https://anypoint.mulesoft.com/accounts/login
+body: vars.oauthRequestPayload
+
+store: Store OAuth Access Token <--- as name
+key: vars.oauthRequestPayload.client-id  <--- set dynamic key for utility purpose
+value: #[payload]
+object-store config: entry TTL: 1 minute 
+
+Set variable: Set Bearer Token
+name: bearerToken
+value: "bearer" ++ payload.accessToken as String
+
+2. default
+Set variable: Set Bearer Token
+name: bearerToken
+value: "bearer" ++ payload.accessToken as String
+
+-----------------------------------------------------------------------------------------------------
+object-store configuration: ✅ persistent
+it is going to be a persistent object-store , if i do not check this then, it will act as in-memory-object-store.
+and entry time to leave we mentioned as 60 minutes i.e. one hour , so for each one hour the cache data will be 
+deleted from the object-store..
+Then for each one hour, it will go to this route and again loads the data to the cache.
+-------------------------------------------------------------------------------------------------
+//Watermarking use case:
+In this scenario, the existing application continues inserting new records into the database until the
+environment is fully retired and the new salesforce-based solution goes live. To handle this, we use 
+watermarking to ensure that only incremental data—records created after the previous run—are fetched 
+and processed. first, we perform an initial full data migration from the legacy database to Salesforce. after 
+that, mule captures and stores a watermark value, typically the last-processed timestamp or Id, and uses 
+it in scheduled jobs to continuously migrate only newly inserted records. mule performs one last incremental 
+sync based on the watermark, ensuring no data loss and a seamless migration to salesforce..
+Always use ✅ persistent for water-marking
+
+Scheduler
+
+retrive key: emp_id , value: 0 , object-store configuration: ✅ persistent <-- without-fx-mode
+
+db select query 
+select emp_id ,  emp_name , emp_phone , emp_skills from hr.emp_profile where emp_id > :empId
+{
+"empId" : payload.emp_id
+}
+
+choice 
+1. sizeOf(payload) > 0
+2. Default
+
+1. sizeOf(payload) > 0
+store
+key: emp_id
+value: #[(payload.emp_id orderby -$)[0]]
+
+
+2. Default
+logger message: no recoed found to process
+------------------------------------------------------------------------------------------------------
+//Flow by manju kaushik: manual matermarking
+listner path: /watermarking
+retrieve key: empId , value: 0 , object store: persistent-object , target variable: retreiveEmp
+select query: select * from learn_mulesoft.'employee' where emp_id > :empId ;
+{
+"empId": vars.retreiveEmp.empId
+}
+
+Transform message: %dw 2.0 output application/json --- payload
+
+store key: empId , value: %dw 2.0 output application/json---max(payload map $.emp_id)
+
+---------------------------------------------------------------------------------------------
+select query: select * from learn_mulesoft.'employee' where emp_id > :empId ;
+- filters records based on a watermark value. it returns all records whose emp_id is greater than 
+the value passed in the parameter. this is useful for incremental fetching but it does not automatically fetch
+the latest single record. To get the latest record, we must use ORDER BY with LIMIT 1 or MAX(emp_id)..
+----------------------------------------------------------------------------------------------------
+//Consolidating (combine) two payload into single response logic:
+
+Db Select Query: select emp_id , emp_name ,emp_status from onboard.emp_master
+
+Set variable Name: empDbPayload , value: payload
+
+HTTP Request URL: http://empfinance-api-cloudhub.io/employees
+
+Transform Message: 
+%dw 2.0
+output application/json
+---
+(payload map(item , index) ->{
+(vars.empDbPayload filter($.emp_id == item.id) map{
+"id": $.emp_id ,
+"name": $.emp_name ,
+"status": $.emp_status ,
+"salary": item.emp_salary ,
+"age": item.emp_age
+})
+}) filter($ != {})
+
+This DataWeave transformation merges two arrays of employee data by iterating over the main payload using map, 
+and for each item it iterates again over the empDbPayload variable to find the matching record. Inside the 
+inner loop, the $ represents the current object from empDbPayload, while item refers to the current object from 
+the outer iteration. The expression filter($.emp_id == item.id) ensures that the rows are matching  between 
+two array of object payloads.. For every matched pair, the map builds a consolidated employee object by taking 
+fields like id, name and status from empDbPayload and combining them with additional fields like salary and age 
+from the main payload. Finally, the outer filter($ != {}) removes any empty results created when no matching 
+record was found. this is a common DataWeave pattern used to merge two arrays based on a matching field and 
+produce a single combined response...
+-------------------------------------------------------------------------------
+https://youtu.be/Em7QLkzVbnU?si=dhk9YFzbt304Qy8-
+
+use case001: storing synchronization information, such as watermarks.
+Retrieve key: watermark, value: 2017-09-11T00:00:000Z
+Set variable: watermark, value: payload.watermark
+Saleforce_Query: Select Id,Name,BillingCity,LastModifiedDate from account WHERE  LastModifiedDate > :mark
+{mark: vars.watermark}
+Store key: watermark, value: max(payload map $.LastModifiedDate)
+
+use case002: storing temporal infromation such as access tokens.
+Retrieve_key: access_token , default-value: #[""] <-- with fx-mode provide "" default-value 
+Set_variable name: access_token, value: #[payload.access_token]
+choice: 
+1. #[vars.access_token !=Empty]
+2. default
+
+1. #[vars.access_token !=Empty]
+Request method: GET, url: http://localhost:8081/apple , body: #[payload] 
+2. default
+logger message: #["Fetching new token"]
+Request method: GET, path: /token , body: #[payload] 
+Store key: access_token, value: payload.access_token
+Request method: GET, path: /data , header: #[{"access_token" : "10844848"}] 
+------------------------------------------------------------------------
+{
+ 1. flow-one
+listner path: /obj-1
+store key: lookUpData  , value: # ["welcome to bojectStore"]  & Set configuration: ✅ as persistent 
+2. flow-two
+listner path: /obj-2
+retrieve key: lookUpData  , value: ""  & choose same obj-configuration as flow-one
+logger message: #[payload]
+}
+------------------------------------------------------------------------
+//Handling guaranteed-delivery in jms with objectStore and activeMQ: jitendra-bapana
+
+
+		name="Publish-JMS-Payload"
+		<http:listener
+			doc:name="Listener"
+			config-ref="HTTP_Listener_config"
+			path="/jms"
+			allowedMethods="POST" />
+		<jms:publish
+			doc:name="Publish"
+			destination="testQueue"
+			config-ref="JMS_Config">
+			<jms:message outboundContentType="application/json" />
+		</jms:publish>
+	</flow>
+
+	<flow
+		name="Get-JMS-Payload-Invloke-HTTP-Request"
+		<jms:listener
+			doc:name="On New Message"
+			config-ref="JMS_Config"
+			inboundContentType="application/json"
+			destination="testQueue">
+			<jms:response outboundContentType="application/json" />
+		</jms:listener>
+		<try
+			doc:name="Try"
+			<until-successful
+				maxRetries="3"
+				doc:name="Until Successful"
+				<http:request
+					doc:name="Request"
+					method="POST"
+					url="http://localhost:8081/process" />
+			</until-successful>
+			<error-handler>
+				<on-error-propagate
+					enableNotifications="true"
+					logException="true"
+					doc:name="On Error Propagate"
+					type="ANY">
+					<os:store
+						doc:name="Store"
+						key='#[now() as String{format:"yyyyMMddHHMMSS"}]'
+						objectStore="Object_store" />
+				</on-error-propagate>
+			</error-handler>
+		</try>
+	</flow>
+
+	<flow
+		name="Log-JMS-Payload"
+		<http:listener
+			doc:name="Listener"
+			config-ref="HTTP_Listener_config"
+			path="/process" />
+		<logger
+			level="INFO"
+			doc:name="Logger"
+			message="--------------#['\n'] #[payload] #['\n']\------------------------" />
+	</flow>
+
+	<flow
+		name="Collect-Fail-JMS-Payload"
+		<http:listener
+			doc:name="Listener"
+			config-ref="HTTP_Listener_config"
+			path="/reprocess" />
+		<os:retrieve-all-keys
+			doc:name="Retrieve all keys"
+			objectStore="Object_store" />
+		<foreach
+			doc:name="For Each"
+			<set-variable
+				value="#[payload]"
+				doc:name="Set Variable"
+				variableName="vKey" />
+			<os:retrieve
+				doc:name="Retrieve"
+				key="#[vars.vKey]"
+				objectStore="Object_store" />
+			<logger
+				level="INFO"
+				doc:name="Logger"
+				message="#[payload]" />
+			<os:remove
+				doc:name="Remove"
+				objectStore="Object_store"
+				key="#[vars.vKey]" />
+		</foreach>
+		<logger
+			level="INFO"
+			doc:name="Logger"
+			message="---------------#['\n'] processing is completed #['\n'] ---------------" />
+	</flow>
+------------------------------------------------------------------------
+
+//globle.xml
+
+	<http:listener-config name="HTTP_Listener_config"
+		doc:name="HTTP Listener config"
+		<http:listener-connection host="0.0.0.0"
+			port="8081" />
+	</http:listener-config>
+	<jms:config name="JMS_Config" doc:name="JMS Config"
+		doc:id="5091a155-3d44-42f1-8b2f-d3662f5cd455">
+		<jms:active-mq-connection username="admin"
+			password="admin">
+			<jms:factory-configuration
+				brokerUrl="tcp://localhost:61616" />
+		</jms:active-mq-connection>
+	</jms:config>
+	<os:object-store name="Object_store"
+		doc:name="Object store" doc:id="4359ddaf-f6d7-47ae-8306-ceabdfcedba9"
+		maxEntries="10" entryTtl="5" entryTtlUnit="HOURS" />
+
+------------------------------------------------------------------------
+
+

@@ -1,0 +1,294 @@
+-------------------------------------------------------------------------------------------
+//1.Read data from customer table and write into multiple files read first 10 files records and write into
+single file first then 
+2. create 10 files and store each record into individual file..
+
+1. 
+listner path: /usecase4/files
+logger message: 
+------------------
+#['\n']
+ Usecase 4 invoke
+#['\n']
+------------------
+Query: SELECT  TOP 10 * FROM employees  ;
+
+Transform message: <---- to convert payload media-type from java to json
+%dw 2.0
+output application/json
+---
+payload
+
+write
+path: customer.txt
+config: C:\Users\BHARAT\Desktop\Rough\worksp\nana\
+write mode: overide (default)
+content: payload
+
+
+Transform message:
+%dw 2.0
+output application/json
+---
+"File writen done succesfully"
+
+2. Same flow but need following changes , now wrap write and logger componet in for-each remainig as it is..
+--->
+write
+path: "employees" ++ payload.EMPLOYEE_ID  ++ ".txt"
+config: C:\Users\BHARAT\Desktop\Rough\worksp\nana\
+write mode: overwrite (default)
+content: payload
+
+logger:
+------------------
+#['\n']
+#[vars.counter]
+#['\n']
+------------------
+
+------------------------------------------------------------------------------------------
+Usecase-5:
+Read data from snowflake and write every 20 records into single file , Note: Read data automatically for 
+every 10 minutes/1hr..
+-->
+Use scheduler:
+Need to add counter variable - 0 keep on increase if (count == 5) need to write into file and set the 
+counter as 0 --> else --> need to increase counter ++  append the record into list..
+
+listner path: /usecase5/split-records
+
+logger message
+#['\n']
+-----------> Usecase 5 trigger
+#['\n']
+
+Snowflake select operation query:
+SELECT  TOP 20 * FROM employees  ;
+
+
+set payload
+%dw 2.0
+output application/json
+---
+payload
+
+Set variable name: count , value: 0 
+
+Set variable name: list , value: []
+
+------- inside for each ------------
+
+logger message:
+#['\n']
+-----------> Inside for-each
+#['\n']
+
+choice: 
+1. vars.count as Number == 5
+2. Default
+
+1. vars.count as Number == 5
+Write
+path: "employees-" ++ payload.EMPLOYEE_ID ++ ".txt"
+content: vars.list
+write mode: overwrite(default)
+
+logger message
+#['\n']
+-------------------> File wriiten completed..
+#['\n']
+
+Set variable
+name: count 
+value: 0 
+
+Set variable 
+name: list 
+value: []
+
+2. Default
+logger message
+#['\n']
+-------------> Count is not match skip record: #[vars.count] 
+#['\n']
+
+Set variable: Set Count Plus One
+name: count 
+value: vars.count as Number + 1
+
+Set variable: Combine Previous Payloads
+name: list 
+value: 
+%dw 2.0
+output application/json
+---
+vars.list << payload
+
+---------------- out of for each ------------
+Transform message
+%dw 2.0
+output application/json
+---
+"Successfully split the file"
+----------------------------------------------------------------------------
+//Accumulate values in foreach:
+
+listner path: /foreach-demo
+
+logger message
+#['\n']
+----------->  Flow started
+#['\n']
+
+Set variable name: employeeList , value: []
+ 
+Db select query: select emp_id, emp_name, emp_status from onboard.emp_master
+
+------- inside for each ------------
+
+logger message
+#['\n']
+-----------  #[payload.emp_id]
+#['\n']
+
+HTTP request: Consume Finance Service <--- as Name
+URL: https://emp-finance-api-9dg8k8.5sc6y6-4.usa-e2.cloudhub.io/employees/{id}
+method: GET
+URI parameters:
+output application/java
+---
+{
+	"id" : payload.emp_id
+}
+
+Set vatible name: employeeList
+%dw 2.0
+output application/java
+---
+vars.employeeList << {
+	emp_age: payload.'employee_age',
+	emp_salary: payload.'employee_salary',
+	emp_id: payload.id
+}
+---------------- out of for each ------------
+
+Db insert query: insert into onboard.emp_fin_master(emp_id, emp_salary, emp_age) 
+values(:emp_id, :emp_salary, :emp_age)
+
+Input parameters: vars.employeeList
+
+Transform message: Set Response <-- as name
+%dw 2.0
+output application/json
+---
+{
+	"status": "200",
+	"message": "success"
+}
+
+logger message
+#['\n']
+----------->  Flow completed
+#['\n']
+----------------------------------------------------------------------------------------------
+//SFTP connector chinna-reddy: 001
+
+Create directory 'covid-cases' on sftp-server also, create subdirectories name it as 'new, processed, upload'.
+covid-case-csv-metadata  <-- inbound transformation
+covid-case-json-metadata <-- outbound transformation
+
+<sftp:config
+<sftp:connection
+        host="us-east-1.sftpcloud.io"
+        username="4699ddcf1ce24c4a9fb9010c331458ff"
+        password="my8KP1c44prHnbdmNxfMIKEPCCNC4sL8" />
+</sftp:config>
+        <sftp:listener doc:name="On New or Updated File" 
+        directory="/covid-cases/new" 
+        timeBetweenSizeCheck="5" sec 
+        applyPostActionWhenFailed="false" 
+        renameTo='#["/covid-cases/processed/cvd-cases-pro"++ now() as String ++".csv"]'>
+        <scheduling-strategy >
+        <fixed-frequency frequency="5000"/>
+        </scheduling-strategy>
+        <sftp:matcher filenamePattern="cvd-cases.csv" />
+</sftp:listener>
+<logger message="------------- #['\n'] File received successfully. #['\n']----------------"/>
+<ee:transform 
+        %dw 2.0
+        output application/json
+        ---
+        payload map ( payload01 , indexOfPayload01 ) -> {
+        source: payload01.source,
+        caseType: payload01."case-type",
+        firstName: payload01."first-name",
+        lastName: payload01."last-name",
+        phone: payload01.phone,
+        email: payload01.email,
+        dob: payload01.dob,
+        nationalId: payload01."national-id",
+        nationalIdType: payload01."national-id-type",
+        address: {
+        streetAddress: payload01."street-address",
+        city: payload01.city,
+        state: payload01.state,
+        postal: payload01.postal,
+        country: payload01.country
+        }}
+</ee:transform>
+<logger message="----------------#['\n'] #[payload] #['\n']----------------"/>
+------------------------------------------------------------------------------
+//SFTP connector chinna-reddy: 002
+use case:  read the data from database and write the data into excel-sheets, then upload the excel-sheets 
+into the SftP location.
+
+covid-case-csv-metadata  <-- inbound transformation
+who-excel-metadata       <-- outbound metada
+create 2 sheet for excel cases and contact
+
+
+<flow name="read-and-writeFlow">
+        <http:listener path="/file-demo"/>
+        <logger  message="----------------#['\n'] "Flow started.&quot" #['\n']----------------"/>
+        <file:read  path="E:/sftp-ftp-client/cvd-cases.csv"/>
+        <ee:transform>
+            %dw 2.0
+            output application/xlsx
+            ---
+            {
+            cases: payload map ( payload01 , indexOfPayload01 ) -> {
+            source: payload01.source,
+            "case-type": payload01."case-type",
+            email: payload01.email,
+            dob: payload01.dob
+            },
+            contact: payload map ( payload01 , indexOfPayload01 ) -> {
+            "first-name": payload01."first-name",
+            "last-name": payload01."last-name",
+            phone: payload01.phone,
+            email: payload01.email
+            }}
+        <ee:set-variable variableName="fileName"
+            %dw 2.0
+            output application/json
+            ---
+            now()as String ++'.xlsx'
+        </ee:variables>
+        </ee:transform>
+
+        <sftp:write  path="#['/covid-cases/upload/cvd-cases'++ vars.fileName]"/>
+
+        <ee:transform>
+        %dw 2.0
+        output application/json
+        ---
+        {
+        "status": 'successful' ,
+        "message": attributes.fileName ++ ' file is converted to ' ++ 'cvd-cases' ++ vars.fileName
+        }
+        </ee:transform>
+        <logger message="----------------['\n'] #[attributes] #['\n']----------------"/>
+</flow>
+
+---------------------------------------------------------------------------------------------

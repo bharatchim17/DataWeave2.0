@@ -5,7 +5,7 @@ output application/json --- payload.^mediaType
 ----------------------------------------------
 JSON string:
 %dw 2.0
-output application/json --- write(payload , "application/json")
+output application/json --- write(payload, "application/json")
 ---------------------------------------------
 %dw 2.0
 output application/json --- attributes.headers.'x-correlation-id' default ""
@@ -19,6 +19,18 @@ output application/json --- attributes.headers.'x-transaction-id' default uuid()
 "payload is sent successfully"
 #['\n']
 ----------------
+
+          #[   
+
+          '\n**********************\n' 
+                ++ 'Flow End' ++
+          '\n**********************\n'
+          
+          ]
+
+To check incoming mule-events:
+%dw 2.0 output application/json --- message
+
 
 //We can know exact error sometimes by ---> error.exception.message , get name_space:indeifier by error.errorType
 -------------------------------------------------------------------------------------------------
@@ -44,6 +56,28 @@ we pull out the inner object into a separate variable...
 var inpPayload = []
 ---
 inpPayload << payload reduce ((item, accumulator) -> item)
+
+-----------or------------------
+
+var inpPayload , value: #[ %dw 2.0 output application/json --- payload ]
+
+-------------------------------------------------------------------------------------
+//Supose we have payload we want to save it into variable how can we do it ...?
+//How to store all value from payload to one array..?
+//What is reduce function..?
+//Supose we have  payload we want to save it into variable how can we do it ...?
+-->
+
+In 'set variable' transformer:
+Name: inpPayload
+value:
+#[
+%dw 2.0 
+output application/json
+var inpPayload = []
+---
+inpPayload << payload reduce ((item, accumulator) -> item)   //will give in <-- [{}]
+]
 -----------------------------------------------------------------------------------------
 To externalize dataweave create folder 'Dataweave' under src/main/resources now , create dataweave file here
 and slect 'dataweve/file_name.dwl' or give file_name for example: 'filename.dwl' and add it in 'Dataweave' 

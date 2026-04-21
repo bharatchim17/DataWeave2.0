@@ -1,0 +1,26 @@
+{
+    "category": "employee",    
+    "employees":
+    [
+        {
+            "empId": 1 ,
+            "empName": "gomu ganesh",
+            "status": "Active"
+        },
+        {
+            "empId": 2 ,
+            "empName": "maru hojo",
+            "status": "Suspended"
+        },
+        {
+            "empId": 3 ,
+            "empName": "shlu shamal",
+            "status": "Active"
+        },
+        {
+            "empId": 4 ,
+            "empName": "nija hatodi",
+            "status": "Suspended"
+        }
+    ]
+}

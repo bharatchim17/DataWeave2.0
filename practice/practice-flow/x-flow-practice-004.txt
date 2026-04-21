@@ -1,0 +1,113 @@
+--------------------------------------------------------------------------
+mongo-tutorials-pedia:
+
+In globle.xml
+    <mongo:config>
+        <mongo:connection-string-connection connectionString="${connection.String}" />
+    </mongo:config>
+
+In src/main/resources/common.yaml
+    #mongo:connection-string-connection 
+    connection:
+        String: "mongodb+srv://admin:s0El8IFmvbHjv4Sg@cluster0.cczlymp.mongodb.net/mydb?retryWrites=true&w=majority" 
+-----------------------------------------------------------------------------
+<flow name="mongo-db-flowFlow" 
+    <http:listener doc:name="Listener To 6061"   path="${http.subPath}"/>
+    <tracking:transaction id=%dw 2.0output application/json --- attributes.headers.'x-transaction-id' default uuid()
+    <ee:transform 
+            %dw 2.0
+            output application/json
+            ---
+            {
+            collectionName: payload.category,
+            documents: payload.employees map ( employee , indexOfEmployee ) -> {
+            empId: employee.empId,
+            empName: employee.empName,
+            status: employee.status
+            }}
+            
+    </ee:transform message name="Set Correlation Id & Input Payload" 
+            <ee:set-variable variableName="x-correlation-id" >correlationId default ""
+            <ee:set-variable variableName="inpPayload" >%dw 2.0
+                                        output application/json
+                                        ---
+                                        payload
+            <ee:set-variable variableName="collection" >attributes.queryParams.collection
+    </ee:transform>
+    <choice doc:name="Check  Request Method" 
+        <when expression= message.attributes.method == "POST"
+            <flow-ref doc:name="post-data-to-mongo-db"  name="post-data-to-mongo-db"/>
+        </when>
+        <otherwise >
+            <flow-ref doc:name="get-data-from-mongo-db" name="get-data-from-mongo-db"/>
+        </otherwise>
+    </choice>
+</flow>
+--------------------------------------------------------------------------
+<sub-flow name="post-data-to-mongo-db"
+    <mongo:collection-exists  collectionName="#[vars.inpPayload.collectionName]" />
+    <choice doc:name="Check Payload Exist In Mongo" <when expression='#[payload == false]'>
+         <logger  message="#['\n**********************\n'++ 'Creating collection and saving data' ++
+                            '\n**********************\n']
+         <mongo:create-collection  collectionName="#[vars.inpPayload.collectionName]"/>
+         <mongo:insert-documents collectionName="#[vars.inpPayload.collectionName]">
+         <mongo:documents >#[vars.inpPayload.documents]</mongo:documents>
+         </mongo:insert-documents>
+         <mongo:count-documents collectionName="#[vars.inpPayload.collectionName]"/>
+        <ee:transform doc:name="Set Response" >
+            %dw 2.0
+            output application/json
+            ---
+            {
+            "total-records": payload
+            }
+            </ee:transform>
+    </when>
+   <otherwise>
+        <logger message="#['\n**********************\n' ++ 'collection already exist saving data'  
+                            '\n**********************\n']" />
+        <mongo:insert-documents collectionName="#[vars.inpPayload.collectionName]">
+        <mongo:documents >#[vars.inpPayload.documents]</mongo:documents>
+        </mongo:insert-documents>
+        <mongo:count-documents  collectionName="#[vars.inpPayload.collectionName]"/>
+    </otherwise>
+    </choice>
+</sub-flow>
+
+<sub-flow name="get-data-from-mongo-db">
+        <logger  message='starting flow'/>
+        <mongo:find-documents  collectionName="#[vars.collection]" fields="status">
+                            <mongo:query >{"status": "Active"}</mongo:query>
+        </mongo:find-documents>
+        <ee:transform>%dw 2.0 output application/json --- payload </ee:transform>
+</sub-flow>
+----------------------------------------------------------------------------------------------
+In src/main/resources/employees.json:
+    {
+        "category": "employee",
+        "employees":
+        [
+            {
+                "empId": 1 ,
+                "empName": "gomu ganesh",
+                "status": "Active"
+            },
+            {
+                "empId": 2 ,
+                "empName": "maru hojo",
+                "status": "Suspended"
+            },
+            {
+                "empId": 3 ,
+                "empName": "shlu shamal",
+                "status": "Active"
+            },
+            {
+                "empId": 4 ,
+                "empName": "nija hatodi",
+                "status": "Suspended"
+            }
+        ]
+    }
+
+-------------------------------------------------------------------
