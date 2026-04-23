@@ -1,19 +1,2 @@
 -------------------------------------------------------------------------------------------------
-The schema format not available for avro so, without define-metadata place .avsc file in: 
-src/main/resources/schemas  and refer it: schemaUrl="classpath://schemas/user.avsc" 
 
-%dw 2.0 output application/avro  schemaUrl="classpath://schemas/user.avsc" ---
-{
-
-}
-
-1. Use classpath:// (most-common)
-    When .avsc file is inside: src/main/resources/schemas
-    schemaUrl="classpath://schemas/user.avsc"
-
-2. Use file:// (local-system-path)
-    If schema is outside project: schemaUrl="file:///C:/schemas/user.avsc"
-
-3. Use http:// or https://
-    If schema is hosted remotely: schemaUrl="https://example.com/user.avsc"
----------------------------------------------------------------------------------------------
