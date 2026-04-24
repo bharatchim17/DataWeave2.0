@@ -136,7 +136,7 @@
 
 
 // %dw 2.0 
-output application/json
+// output application/json
 // var studentArrayList = 
 // [
 
@@ -405,5 +405,3 @@ output application/json
 // }
 
 // ----------------------------------------------------------------------------------
-
-
