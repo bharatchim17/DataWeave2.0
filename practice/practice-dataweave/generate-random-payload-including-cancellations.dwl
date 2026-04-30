@@ -3,7 +3,11 @@ output application/json
 import * from dw::core::Strings
 import * from dw::core::Periods
 ---
-(1 to 10) as Array map (value) -> do {
+(1 to 10) as Array map (value) -> {
+    "orderId": randomInt(899) + 100 ++ "-" ++ randomInt(899999999) + 100000000,
+} ++ if (randomInt(6) == 5) {
+    "orderCanceled": true
+} else do {
     var orderCreatedTS = ((randomInt(24) + 2000) ++ "-"
                            ++ ((randomInt(11) + 1) as String {format: "00"}) ++ "-"
                            ++ ((randomInt(27) + 1) as String {format: "00"})) as Date
@@ -25,7 +29,6 @@ import * from dw::core::Periods
         }
     ---
     {
-        "orderId": randomInt(899) + 100 ++ "-" ++ randomInt(899999999) + 10000000,
         "orderCreatedTS": orderCreatedTS,
 		"customerEMailAddress": "email" ++ ((randomInt(99) + 1) as String {format: "00"}) ++ "@domain"
                                         ++ ((randomInt(99) + 1) as String {format: "00"}) ++ ".com",
