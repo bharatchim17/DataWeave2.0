@@ -297,7 +297,7 @@ logger message: #[payload]
 	</flow>
 ------------------------------------------------------------------------
 
-//globle.xml
+//global.xml
 
 	<http:listener-config name="HTTP_Listener_config"
 		doc:name="HTTP Listener config"

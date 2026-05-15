@@ -1,0 +1,23 @@
+https://anypoint.mulesoft.com/exchange/org.mule.templates/template-sfdc2db-account-bidirectional-sync/minor/2.1/
+
+The synchronization works in both directions, meaning data changes in Salesforce are updated in the database and 
+database changes are also updated in Salesforce. The template allows us to easily configure which fields need 
+to be synchronized, how the field mapping should happen and what conditions should trigger the synchronization 
+process. It can work using a polling mechanism or can also be modified to use Salesforce outbound messages to 
+reduce Salesforce API usage. The template also uses watermarking to process only newly added or updated records, 
+which improves performance, and batch processing to handle large amounts of data efficiently.
+
+this project fetches data for changes (new or modified accounts) that have occurred in Salesforce and database 
+instances during a certain defined period of time. For those accounts that were identified as not present in 
+the target instance, the integration triggers an insert or update operation on the existence of the object in 
+the target instance taking the last modification of the object as the one that should be applied.
+
+businessLogic.xml
+This file holds the functional aspect of the template. Its main component is a batch job, and it includes steps 
+for both executing the synchronization from Salesforce to the database, and the other way around.
+
+
+https://anypoint.mulesoft.com/exchange/?search=aws&type=rest-api&type=template&show=mulesoft&sort=score&view=grid
+
+https://anypoint.mulesoft.com/exchange/?search=jira&type=rest-api&type=template&show=mulesoft&sort=score&view=grid
+

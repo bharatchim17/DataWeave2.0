@@ -1,0 +1,59 @@
+-------------------------------------------------------------------------------------------------
+//Design an API for lock/unlock account (admin/banks):
+As developer i want to design RAML by using the below requirements:
+/AccountLockUnLock:
+Method: PUT
+Body: json
+user with default value "admin"
+password with default value "admin"
+accountNum - required should be string and min max length 10..
+bank- required should be one of enum value ICICI , AXIS , HDFC , SBI
+type- required should be one for enum value Lock , unLock..
+sample response: 200
+{
+ "status": "Your Account- XXXXXXXXXXX With Bank- HDFC  is Unlocked/Locked Now"
+}
+
+Note: Implement basic security for the API..
+-------------------------------------------------------------------------------------------------
+As developer i want to develop API based on RAML and based on below requirements:
+/AcctLockUnLock:
+Unlock resource is used to unlock the locked account 
+Check if user and password = admin
+Check if valid combination of bank and account Number is given:
+- If no return the response saying "Account 534674 does not exist Enter valid details"...
+- If yes , check wether "accountStatus" = "Active" if yes return response saying Account 122585855 is Active..
+- If "accountStatus"= "Locked" update accountStatus to "Active" and wrongPin column to 0 , return response saying
+Account 118588 is Unlocked"...
+- If "accountStatus"= "Active" update accountStatus to "Lock" and wrongPin column to 0 , return response saying
+Account 118588 is locked"...
+Note:
+upon successfully lock/unlock send out mail using Gmail:
+subject: Account Unlocked..
+To: the emailId sent in body..
+From: your gmailId..
+Body: This is to inform you that your account has been Unlocked 
+Note: same for Locked cards..
+---------------------------------------------------------------------------------------------------
+//In select operation we will check account status so size of payload is 1
+1. Update the DB As Deactive:
+sizeOf(payload) == 1 
+and payload[0].ACCOUNTSTATUS == "Active" 
+and vars.inpPayload.acctStatus == "Lock"
+
+2. No need to update:
+sizeOf(payload) == 1 
+and payload[0].ACCOUNTSTATUS == "Deactive" 
+and vars.inpPayload.acctStatus == "Lock"
+
+3. Update the DB As Active:
+sizeOf(payload) == 1 
+and payload[0].ACCOUNTSTATUS == "Deactive" 
+and vars.inpPayload.acctStatus == "Unlock"
+
+4. No need to update:
+sizeOf(payload) == 1 
+and payload[0].ACCOUNTSTATUS == "Active" 
+and vars.inpPayload.acctStatus == "Unlock"
+---------------------------------------------------------------------------------------------
+

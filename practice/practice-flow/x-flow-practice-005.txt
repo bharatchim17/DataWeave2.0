@@ -1,0 +1,105 @@
+---------------------------------------------------------------------------------------------
+//useCase: an existing integration service was failing due to a database connectivity issue and instead of only 
+sending an email, we integrated the application with ServiceNow for automated incident management. We implemented 
+exception handling in the mule-application using Try-scope and on-error-components. Whenever the database 
+connection failed, the application captured the complete error information such as error message, server details, 
+environment and timestamp. Then, using the ServiceNow REST API, the system automatically created an incident 
+ticket assigned to the DB-admin support team with appropriate priority and issue details. this automation helped 
+reduce manual effort, improved monitoring, enabled faster issue tracking and resolution, and ensured better 
+production support handling.
+
+we also use error-handler, if an existing service fails because of a database connectivity issue, the integration 
+should handle the exception properly instead of stopping abruptly. We can implement error handling using mechanisms 
+like Try scope, on-error-continue, or on-error-propagate. when the database connection failure occurs, the 
+application captures the error details such as timestamp, application name, environment and error message. after 
+that, the system automatically triggers a notification process by sending an email or creating an incident/ticket 
+for the DB-admin team through tools like ServiceNow or Jira. this helps the support team quickly identify and 
+resolve the issue, improves monitoring and ensures better reliability and faster incident management in 
+production environments.
+
+
+<servicenow:basic-connection
+	username="admin"
+	password="ir$U4Tul!QV0"
+	serviceAddress="https://dev397012.service-now.com" />
+</servicenow:config>
+
+flow name="service-nowFlow"
+
+%dw 2.0
+output application/xml
+ns ns0 http://www.service-now.com/incident
+---
+{
+	ns0#getRecords: {
+		number: attributes.queryParams.incident
+}
+
+servicenow:invoke
+			service="incident"
+			operation="getRecords" 
+
+transform-message: %dw 2.0 output application/json --- payload
+logger-message="#['\n ------------\n'] #[payload] #['\n ------------\n']" 
+
+//Set property service=incident, operation=insert and set transform-message before invoke then search key from 
+outbound metadata and double-click it will propagate in transform-message-section 
+
+%dw 2.0 output application/xml 
+ns ns0 http://www.service-now.com/incident
+---
+{
+	ns0#insert: {
+		active: true,
+		assignment_group: "integration.alc17@gmail.com",
+		description: "We are enable to connect with db",
+		impact: 1,
+		priority: 3,
+		short_description: "Dataabase connectivity issue with snowflake",
+		urgency: 1
+	}
+}
+
+
+servicenow:invoke
+			service="incident"
+			operation="insert"
+			doc:name="Invoke"
+
+transform-message: %dw 2.0 output application/json --- payload
+logger-message="#['\n ------------\n'] #[payload] #['\n ------------\n']" 
+------------------------------------------------------------------------------
+//We need to take input-payload dynamically not hardcore as above:
+%dw 2.0 output application/xml 
+ns ns0 http://www.service-now.com/incident
+---
+{
+	ns0#insert: {
+		active: payload.active,
+		assignment_group: payload.assignment_group,
+		description: payload.description,
+		impact: payload.impact,
+		priority: payload.priority,
+		short_description: payload.short_description,
+		urgency: payload.urgency
+	}
+}
+
+Wrap key-value in double-quotes"" cause it's json:
+{
+"active": true,
+"assignment_group": "integration.alc17@gmail.com",
+"description": "We are enable to connect with db",
+"impact": 1,
+"priority": 3,
+"short_description": "Dataabase connectivity issue with snowflake",
+"urgency": 1
+}
+-----------------------------------------------------------------------------
+{
+lecture: https://www.youtube.com/watch?v=QxU-JrfA824
+serviceNow-jira: https://youtu.be/ZFRe864mX9E?si=Bx1KdbvLhMbQ7yi1
+https://youtu.be/WDYnVyM2668?si=ZSQxwXw8wNO31Gj1
+https://youtu.be/ZFRe864mX9E?si=wf_Ty_7YLEpInptW
+https://www.youtube.com/watch?v=FFtjQa3LKAQ&t=2419s
+}

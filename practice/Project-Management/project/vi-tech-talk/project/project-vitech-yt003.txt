@@ -1,0 +1,279 @@
+-----------------------------------------------------------------------------------------------------------
+//As developer i want to design RAML using the below requirments:
+/checkBalance:
+Method: GET 
+queryParams: bank required: should one of enum values ICICI , AXIS , HDFC
+type: required: should be on of enum values[saving , current]
+Body: json
+accountNum - required : should be string and min and max length is 10 
+atmPin: required : type string (but pass number in string) min max length: 4
+sample response:200
+{
+status: "Your total balance is xxxxxxxxxxx as on 20-jan-2026"}
+Note: Implement basic security for API...
+---------------------------------------------------------------------------------------------------------
+As developer i want to develop API based on RAML on below requrements:
+/checkBalance:
+checkbalance: resource is used to check the total balance of valid account 
+- Before fetching total balance you have to check whether there is any account existing with "accountNumber" and
+bankName..
+- If no , return the response saying "Account 156888556 does not exist ,please enter valid details...
+- If yes , check whether "accountStatus" = "Active" if not return response saying "Account 1586486 temporaily
+locked please visit nearest branch..
+- If account exists with accountNumber and bank name and status is "active"  check for atm pin wheter it is 
+valid or not...
+- If atmPin is incorrect and wrongPin value is already 3 attempt then update , accountStatus column in DB to 
+"Locked" and return response..
+"Maximum attempt reached your account 254848 is temporaily locked please reached nearest bank"..
+- If "wrongPin" value is less than 3 , then increment by 1 for every wrongPin attempt and return response saying
+"Login Attempt failed".. Attempts left: 2  
+If atmPin is correct , the display the response saying "Login attempt failed attempts: "2" left..
+If atmPin is correct , display response as describe in RAML..
+Upon failure attempts , send out mail using GMAIL:
+- Subject: failed Attempt..!
+- To: the email-id sent in Body..
+- From: your gmail id..
+Body: This is to inform you that there's failed attempt happened while transaction.. Your account will be
+locked after 3 attempts..
+Upon all attempts failed , send out mail using Gmail:
+Subject: Account Locked !
+To: The email-id sent in Body..
+From: your gmail-id
+Body: This is to inform you that Account has been locked due to 3 failed attempts.. please reach out nearest
+branch to unlock...
+No mail should be sent on successful transaction..
+-----------------------------------------------------------------------------------------------------------
+Scratch: From starting design , develop , deployment [new product]..
+Enhancehents: some one is already build the product and we are going add new features[modifications].. 
+---------------------------------------------------------------------------------------------------------
+//Set variable
+
+Display Name: Input Attributes
+Name: inpAttributes
+
+%dw 2.0 output application/java
+---
+{
+	bankName: attributes.queryParams.bank ,
+	accountType: attributes.queryParams.acctType ,
+	accountNumber: attributes.queryParams.accountNum ,
+	atmPin: attributes.queryParams.atmPin
+}
+
+Display Name: Input Payload
+Name: inpPayload
+
+Value: 
+%dw 2.0 
+output application/json
+var inpPayload = []
+---
+inpPayload << payload reduce ((item, accumulator) -> item)
+
+-----------------------------------------------------------------------------------------------
+//We gone check bank and account by using select operation and get sizeOf(payload)
+
+Select operation Query and Input parameter:
+SELECT * FROM VITECH.BFS.BANK_TRANSACTIONS
+WHERE CUSTACCNUM =:accountNum AND BANKNAME =:bankName ;
+
+%dw 2.0
+output application/java
+---
+{
+   "accountNum": vars.inpAttributes.accountNumber ,
+   "bankName": vars.inpAttributes.bankName   
+}
+
+We apply choice condition:
+1. Active or Deactive
+1.1 sizeOf(payload) >= 1 and payload.ACCOUNTSTATUS[0] as String == 'Active'
+1.2 sizeOf(payload) >= 1 and payload.ACCOUNTSTATUS[0] as String != 'Active'
+1.3 Default
+
+2. If it's Active
+2.1 vars.inpAttributes.atmPin == payload.ATMPIN[0] and (payload.WRONGPIN[0] == 2 or payload.WRONGPIN[0] == 1)
+2.2 vars.inputVariable.atmPin == payload.ATMPIN[0] and payload.WRONGPIN[0] == 0
+2.3 In default 
+ 2.3.1 vars.wrongPinAttempt == 3 
+ 2.3.2 Default
+----------------------------------------------------------------------------------------------------------------
+1.1 sizeOf(payload) >= 1 and payload.ACCOUNTSTATUS[0] as String == 'Active'
+
+2.1 vars.inpAttributes.atmPin == payload.ATMPIN[0] and (payload.WRONGPIN[0] == 2 or payload.WRONGPIN[0] == 1)
+Set variable:
+Display Name: totalBalance
+value: vars.inpPayload.TOTALBALANCE[0]
+
+Update:
+UPDATE VITECH.BFS.BANK_TRANSACTIONS
+SET WRONGPIN = :attemptwrongPin ,
+WHERE CUSTACCNUM = :accountNumber  AND BANKNAME = :bankName ;
+output application/java
+---
+{
+	attemptwrongPin: 0 ,
+	accountNumber: vars.inpAttributes.accountNumber ,
+	bankName: vars.inpAttributes.bankName
+}
+
+Transform message:
+%dw 2.0
+output application/json
+---
+{
+  Status: "Your total balance is: $(vars.totalBalance) 
+of $(vars.inputVariable.bankName) bank on today's date: $(now() as Date)"
+}
+
+--------------------------------------------------------------------------------------------
+2.2 vars.inputVariable.atmPin == payload.ATMPIN[0] and payload.WRONGPIN[0] == 0 
+Logger: Pin Match
+#['\n']
+----------------
+#['\n']
+---------------- pin match and wrong pin is 0
+#['\n']
+----------------
+#['\n']
+
+Transform Message:
+%dw 2.0
+output application/json
+---
+{
+  Status: "Your total balance is: $(payload.TOTALBALANCE[0]) 
+of $(vars.inputVariable.bankName) bank on today's date: $(now() as Date)"
+}
+----------------------------------------------------------------------------------------------------
+2.3 In default 
+Before choice roter:
+Set Variable:
+payload.WRONGPIN[0] + 1
+
+
+ 2.3.1 vars.wrongPinAttempt == 3 
+ Logger:
+ #['\n']
+--------------
+#['\n']
+Wrong pin reach: 3
+#['\n']
+--------------
+#['\n']
+
+Update: Update To Lock For Wrong Pin
+UPDATE VITECH.BFS.BANK_TRANSACTIONS
+SET WRONGPIN = :attemptwrongPin ,
+ ACCOUNTSTATUS = :acctStatus
+WHERE CUSTACCNUM = :accountNumber  AND BANKNAME = :bankName ;
+
+output application/java
+---
+{
+	attemptwrongPin: vars.wrongPinAttempt ,
+	acctStatus:  'Locked'  ,
+	accountNumber: vars.inpAttributes.accountNumber ,
+	bankName: vars.inpAttributes.bankName
+}
+
+
+Transform Message: Email Content
+%dw 2.0
+output application/json
+---
+{
+	"subject": "Account Locked..!" ,
+	"emailBody": "This is to inform you that Account has been locked due to 3 failed attempts.. please reach 
+    out nearest branch of $(vars.inputVariable.bankName) to unlock..."
+}
+
+Transform Message: Max Pin Try
+%dw 2.0
+output application/json
+---
+{
+"Status": "Maximum attempt reached your " ++ vars.inputVariable.accountNumber ++ "account is temporaily locked 
+please reached nearest bank"
+}
+------------------------------------------------------------------------------------------
+2.3.2 Default
+Logger: Login Attempt Failed
+
+----------
+#['\n']
+Login Attempt Failed..
+#['\n']
+----------
+
+
+Update: Update Wrong Pin
+UPDATE VITECH.BFS.BANK_TRANSACTIONS
+SET WRONGPIN = :attemptwrongPin
+WHERE CUSTACCNUM = :accountNumber  AND BANKNAME = :bankName ;
+
+%dw 2.0 
+output application/java
+---
+{
+	attemptwrongPin: vars.wrongPinAttempt ,
+	accountNumber: vars.inputAttributes.accountNumber ,
+	bankName: vars.inputAttributes.bankName
+}
+
+Transform Message: Email Content
+%dw 2.0
+output application/json
+---
+{
+"subject": "failed Attempt..!" ,
+"emailBody": "This is to inform you that there's failed attempt happened while transaction , Your account will be blocked after $((3 - vars.wrongPinAttempt) as Number) attempts"
+}
+
+Transform Message:
+%dw 2.0
+output application/json
+var attemptsLeft = 3 - vars.wrongPinAttempt
+---
+{
+ "message": "Login attempt failed",
+ "attemptsLeft": attemptsLeft
+}
+---------------------------------------------------------------------------------------------------------
+1.2 sizeOf(payload) >= 1 and payload.ACCOUNTSTATUS[0] as String != 'Active'
+
+Logger:
+
+--------------
+#['\n']
+Account status is not active 
+#['\n'] 
+--------------
+
+
+Transform Message: Card Is Lock(Deactive)
+%dw 2.0
+output application/json
+---
+"Account " ++ vars.inputVariable.accountNumber
+++ " temporarilly block please visit nearest branch of " 
+++ vars.inputVariable.bankName
+---------------------------------------------------------------------------
+1.3 Default
+Logger: Record Not Found In Database
+---------
+#['\n']
+Record Not Found In Database
+#['\n'] 
+---------
+
+Transform Message:
+%dw 2.0
+output application/json
+---
+{
+"message": "Account " ++ vars.inputVariable.accountNumber 
+++ " does not exist , in " ++ vars.inputVariable.bankName
+++ " bank please enter valid details." 
+}
+-----------------------------------------------------------------------------------------

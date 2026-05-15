@@ -1,0 +1,55 @@
+-------------------------------------------------------------------------------------------
+//Scheduler:
+As developer i want to develop scheduler flow using the below requirememts it should have scheduler in our 
+application which will trigger flow daily at 6pm where it should fetch Locked accounts and send out individual
+email to customer:
+subject: Your account status is Locked.
+To:  id sent in body..
+From: our mailId
+body: Your account is locked temorarily with account number xxxxx from bank unlock please use our website or contact
+customer care 12285
+
+Send out all list of locked account to bank vendors in table format..
+Name , Email , Account Number , Bank , Account status..
+---------------------------------------------------------------------------------------------
+
+For each:
+It run in sequential mode suppose there are 10 records , if flow failed at 5th record the entire flow will get
+stopped..(stop at 5th record)
+payload scope after foreach not changed..
+Parallel for each:
+It will run in parallel mode suppose there are 10 records , if flow failed at 5th record the entire flow will 
+not stop it will run other record and failed record get display at last..(process 9 record extempt 5th)..
+payload scope after parallel-foreach will changed..
+
+
+How to create sprint & what are the user stories we are going to pick up..
+How to create sub task for that..
+Email enhancements..
+Cache implementation..
+sprint- 1 and 2 completed
+
+https://www.w3schools.com/html/html_table_borders.asp
+-------------------------------------------------------------------------------------------------------
+As developer i want to develop schedluar flow using the below requirements it should run at 7PM every-day
+have schedluar in our application Which will trigger flow daily at 7PM where it should fetch the current totalBalance
+of every account and send out mail to respective mail Id's:
+- Send ot mail using Gmail
+- Subject: Today's total balace!
+- To: email id send in Body..
+- From: Our gmailId
+- Body: Your total balance an on today is xxxxx
+Use for-each and no record should stop sending out mail if there is any error occured for any account we have to continue..
+------------------------------------------------------------------------
+//What is the difference between API between Batch..?
+-->
+Api -> Needs manual intervention..
+Batch -> There is no manual intervention , automatically it will run based on the time it schedule..
+------------------------------------------------------------------------
+Scheduler:
+Scheduling Strategy: Cron
+Expression: 0 0 19 1/1 * ? * <-- every day at 7pm
+Expression: 0 0/5 * 1/1 * ? * <-- every 5 minute
+timezone: Asia/Kolkata
+
+ ------------------------------------------------------------------------------------------------------

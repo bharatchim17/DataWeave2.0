@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------
 mongo-tutorials-pedia:
 
-In globle.xml
+In global.xml
     <mongo:config>
         <mongo:connection-string-connection connectionString="${connection.String}" />
     </mongo:config>

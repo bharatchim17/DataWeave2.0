@@ -1,0 +1,181 @@
+---------------------------------------------------------------------------------------------------
+//Usecase: whenever the record for customer is inserted into need to send an email:
+
+CREATE database VITech ;
+CREATE schema BFS ;
+
+CREATE TABLE Bank_Transactions (
+    cid INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    custName VARCHAR(45) NOT NULL,
+    custAccNum VARCHAR(10) NOT NULL,
+    atmPin VARCHAR(4) NOT NULL,
+    bankName VARCHAR(10) NOT NULL,
+    accountType VARCHAR(10) NOT NULL,
+    ifscCode VARCHAR(45) NOT NULL,
+    branchName VARCHAR(45) NOT NULL,
+    totalBalance DECIMAL(19,9) NOT NULL DEFAULT 0.000000000,
+    transactionTimeStamp VARCHAR(45) NOT NULL,
+    accountStatus VARCHAR(10) NOT NULL DEFAULT 'Active',
+    wrongPin INT DEFAULT 0,
+    mailId VARCHAR(45) NOT NULL,
+    phoneNumber VARCHAR(45) NOT NULL
+);
+
+DESC TABLE VITECH.BFS.BANK_TRANSACTIONS;
+SELECT * FROM VITECH.BFS.BANK_TRANSACTIONS;
+DELETE FROM VITECH.BFS.BANK_TRANSACTIONS;
+-----------------------------------------------------------------------------------------------
+In src/main/resource folder create file --> myConfig-dev.yaml
+http:
+  port: "8081"
+
+db:
+  sfc:
+    accountName: "BZAXLZZ-BJ08531"
+    warehouse: "COMPUTE_WH"
+    database: "VITECH"
+    schema: "BFS"
+    user: "![Alchemist17]"
+    password: "![A9284799919@chim]"
+    role: "ACCOUNTADMIN" 
+    
+
+accountName: BZAXLZZ-BJ08531 <-- Account/Server URL
+Add secure property | config property
+---------------------------------------------------------------------------------------------
+//Set variable: 
+
+Display Name: Input Attributes
+Name: inpAttributes
+
+Value: 
+%dw 2.0
+output application/json
+---
+{
+	customerName: attributes.queryParams.customerName ,
+	bank: attributes.queryParams.bank ,
+	acctType: attributes.queryParams.acctType ,
+	branchName: attributes.queryParams.branchName
+}
+
+Display Name: Input Payload
+Name: inpPayload
+
+Value: 
+%dw 2.0 
+output application/json
+var inpPayload = []
+---
+inpPayload << payload reduce ((item, accumulator) -> item)
+---------------------------------------------------------------------------------------------
+//Select  operation
+Query:
+SELECT custAccNum, bankName
+FROM VITECH.BFS.BANK_TRANSACTIONS
+WHERE custAccNum = :custAccNum ;
+
+
+Input parameter:
+%dw 2.0
+output application/java
+---
+{
+	custAccNum: vars.inpPayload.accountNumber ,
+	bank: vars.inpAttributes.bank
+}
+
+//Before inserting record , we have to check wheather there is any account existing with same accountNumber and 
+bankName if yes return the response saying "Account 1234567890 already exist"..
+--> use choice --> sizeOf(payload) >= 1
+------------------------------
+//Insert operation:
+
+Query:
+Insert into VITECH.BFS.BANK_TRANSACTIONS (custName , custAccNum , atmPin , bankName , accountType , ifscCode , branchName , 
+transactionTimeStamp , mailId , phoneNumber)
+VALUES
+(:custName , :custAccNum , :atmPin , :bankName , :accountType , :ifscCode , :branchName , :transactionTimeStamp ,
+:mailId , :phoneNumber)
+
+Input parameter:
+%dw 2.0
+output application/java
+---
+{
+	custName: vars.inpAttributes.customerName ,
+	custAccNum: vars.inpPayload.accountNumber ,
+	atmPin: vars.inpPayload.atmPin ,
+	bankName: vars.inpAttributes.bank ,
+	accountType: vars.inpAttributes.acctType,
+	ifscCode: vars.inpPayload.ifscCode ,
+	branchName: vars.inpAttributes.branchName,
+	transactionTimeStamp: now() as String {format: "yyyy-MM-dd HH:mm:ss"} ,
+	mailId: vars.inpPayload.mailId,
+	phoneNumber: vars.inpPayload.contact
+}
+
+--------------------------------------------------------------------------------------------------------------
+//Email integration:
+
+Logger1:
+
+
+----------------
+#['\n']
+"Before sending mail:"
+#['\n']
+----------------
+
+
+Send email:
+
+
+Logger2:
+
+
+----------------
+#['\n']
+"After sending mail:"
+#['\n']
+----------------
+
+
+--------------------------------------------------------------------------------------------------
+In src/main/resource folder create file --> dev-email-config.yaml
+email:
+  host:     "smtp.gmail.com" 
+  user:     "bharatchim17@gmail.com" 
+  password: "syml dlrr hmqt ntqb" 
+  port:     "587"
+Create config property: dev/dev-email-config.yaml
+
+Gmail integration --> goto manage your google account --> 🤞on security --> complete 2 step verification
+--> App passwords --> appName: mule-bfs-project: uqyc dtoi doss dvst
+
+Advanced --> properties: Edit inline --> key: mail.smtp.starttls.enable ; value: true
+connectionTimeout= 10000
+
+In the VM Arguments box, add:
+-Dmule.verbose.exceptions=true
+----------------------------------------------------------------------------------------------------------
+//Set varible:
+Display Name: Set Var For Email
+Name: emailBody
+%dw 2.0
+output application/json
+---
+"Congratulations..! Your account has been created successfully, 
+Account Number: $(vars.inpPayload.accountNumber as String) , Bank: $(vars.inpAttributes.bank as String)"
+
+//Parse template:
+Location: html\email.template
+
+In src/main/resource create folder html and file email.template:
+<body>
+<h1>Welcome to #[vars.inpAttributes.bank] bank</h1>
+<h3>#[vars.emailBody]</h3>
+<h4> Note: This is an automated email please do not reply to this email</h5>
+<a href="put link here">Visit VITech Talk!</a>
+</body>
+-------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,49 @@
+----------------------------------------------------------------------------------------
+Task (similar to check balance 16/17)
+Design-create REST API for withdraw an amount.
+as developer i want to design RAML by using the below requirements..
+/withdraw:
+Method: POST 
+queryParams: bank-required: should be one of enum values ICICI , AXIS , HDFC , SBI..
+type -required: should be on of enum values [savings , current]
+accountNum-required: should be string and min max length is 10..
+atmPin-required: type string (but pass Numbers in string) min max length = 4 
+amountToBeWithdraw: required
+sample response: 200
+{"status": "Amount xxxxxxx is debited. Your total balance is xxxxxxxxx"}
+
+//Develop: REST API for withdraw an amount.
+/withDraw:
+withDraw resource is used to withdraw the amount from valid account all validations done for checkBalance
+should be done here as well (make use of sub-flow so that we can reuse the logic)..
+-Before fetching total balance , we have to check wether there is any account existing existing with accountNum
+and bankName..
+If no , return the response saying "Account 1234567890 does not exist enter valid details..
+
+If yes , check wether "accountStatus" = "Active" if not , return response saying Account 556253261 temporarily
+locked. please visit nearest Branch"..
+If account exists with accountNum and bankName and status is "Active" ..
+check for atmPin is valid or not 
+If atmPin is incorrect , and "wrongPin" value is already 3 then update as "Deactive" Send
+"Maximum attempts reached your account 12364558 is temporarily locked please reach nearest Branch"..
+If wrongPin value is less than 3 , then increment by 1 for every wrong attempt and return response saying 
+"login attempt failed"..
+If atmPin is correct:
+- check if total balance is less than amountToBeWithdraw , then send out response saying "Insufficient Funds"..
+- If total balance is greater than amountToBeWithdraw then deduct amount and update DB with final balance 
+after deduction , send respose as per RAML..
+Note:
+Upon failure attempts , send out mail using Gmail..
+subject: failed attempt..!
+To: the email send in body..
+from: our mail
+Body: This is to inform you that there's failure attempt happened while transaction your account will be locked
+after 3 attempts..
+Upon all attempt failed send out mail using Gmail:
+Subject: Account locked !
+Body: This is to inform you that your account has been locked due to 3 failed attempts.. please reach out 
+nearest branch to unlock..
+Upon syccesful withdraw , send out mail:
+Subject: Transaction Successful..!
+Body: This is inform your Account has been debited with xxxxxxx amount and your total balance xxxxxx..
+-----------------------------------------------------------------------------------------

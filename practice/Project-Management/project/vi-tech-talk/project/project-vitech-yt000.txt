@@ -1,0 +1,215 @@
+----------------------------------------------------------------------------------------------------
+//What is Software Development Life Cycles SDLC..?
+
+1. Requirement gathering:  
+We will get Requirement from clients(product owner) , here buisness analyst and architect are invloved..
+2. Analysis:  
+Analysis done by techanical lead , architect..
+3. Design: 
+By using raml we design api , here developer and tech lead..
+4. Coding: 
+By using anypoint-studio we develop api, here developer for develop and tach lead for 
+supervise it..
+5. Testing: 
+quality analyst , tester test the api..
+6. Deployment & support: 
+we can deploy on cloudhub or on-permise..
+
+SDLC Methodology:
+- Water fall
+- V model
+- Spiral model
+- Increment model
+- Agile model
+---------------------------------------------------------------------------------------------------------
+Requirements --> Product owner - (Clients) , BA 
+Analysis --> Architect , Tech lead..
+Design --> Tech lead / Developer
+Development --> Developer
+Testing --> QA/Testers
+Deployment & Support
+Testing --> QA/Testers
+Deployment & Support
+
+//What is waterfall & Agile process..?
+--------------------------------------------------------------------------------------------------------
+//What is SRS and BRD..?
+-->
+Software Requirements Specification (SRS) is document describes the intended purpose , requirements and nature 
+of Software to be developed.. It's also , include the yeild and cost of Software..
+BRD is buisness Requirement document..
+------------------------------------------------------------------------------------------------------
+//What type of meetings are arranged if organization follows agile process..?
+-->
+1. Backlog grooming:   --> 1 week
+ Requirement for product , groom stories..
+
+2. Sprint planning: 2 weeks
+dev/QA they need to pick assign the user stories..
+
+3. Daily scrum /Standup: 
+every day it will happen (7pm IST) for 15 minuts
+what we have done yesterday and what are we going to do today what issue you are 
+facing..
+
+4. Sprint review / Demo: 2 weeks once-demo with PO and-Team.. we get suggestions..
+
+5. Sprint retrospective:
+What went wrong..?
+What went well..?
+What we need to improve..?
+
+//In this meetings all team members , PO , BA , Scrum master , Architect , tester are invloved..
+----------------------------------------------------------------------------------
+Task: create microsoft account..
+-----------------------------------------------------------------------------------
+//What is domain and what are the domains its available in IT/software..?
+
+//What is technology:
+Technology: Mulesoft , java , html , css etc..
+
+Domain: 
+1. Banking and Finacial Services (BFS):
+ Software solutions for the banks (HDFC,SBI ..Morganstanly ..etc)..
+2. Ecommerce:
+To buy or purchase some goods (Flipkart, Amazon , Myntra..etc)
+3. Health care and Medical : Appolo 
+4. Travles: Abhibus , red bus..
+5. Supply Chain Management(SCM):
+6. Agriculture
+--------------------------------------------------------------------------------------
+//Difference b/w domain & Tecnology..?
+//How to access and work with Azure Devops..?
+//How to create a group /project..?
+//How to add the users into project..? 
+//Explain Requiremnts based on document..?
+//How to create user stories in ADO board..?
+
+Azure Devops: 
+its a cloud platform where we can create a repos, pipelines , create work items 
+(user stories,bugs) Work tracking tool..
+
+JIRA : work tracking tool.. 
+			  
+dev.azure.com ---> to access ADO portal 
+----------------------------------------------------------------------------------------
+//Azure Devops:
+
+Project requirements documentation..
+
+ User story -> it is nothing but a task/requirement 
+ Requirements --> PO (product owner ) 
+                         --> BA (Business analyst)
+						      --> Architech/Tech lead ( project architecture )
+							    --> Dveloper/QA (Create technical userstories/sub tasks)
+
+ 
+ Scrum master - schedlue meetings, work progress , issues ..etc  
+ 
+Backlog grooming /refinement - 1 week   --> done 
+Spring plannig - 2 weeks once 
+Daily scrum meeting - daily for the 15 mins (15-30)
+sprint review/demo - 2 weeks once 
+retrospective - 2 weeks once 
+ 
+ 1. As a Customer
+	I want to Login to my account using card and PIN code
+	So that I can perform the transactions.
+	Acceptance Criteria:
+	• System must validate the card and pin code 
+	• In case Customer enters wrong Pin code three times then the system locks the card...
+	
+
+ As an Architect i want to design project architecture based on the requirements.. 
+ As a developer i want to design/develop the project based on the requirements..
+ As a QA i want to test the application based on the requirements..
+ 
+ 
+ Install softwares: https://www.youtube.com/watch?v=0im6CwPhNBA&list=PLFPnaYaZXRwwsUvW4_SKTrWZmBXfifpIF
+ -------------------------------------------------------------------------------------
+//What is difference between api and batch..?
+API:
+it needs manual intervention..
+Client <----------> Server 
+(request---> <---response)
+Application ---API Request---> Server|Database --->Response
+Batch:
+There is no manual intervention , automatically it will run based on the time we schedlue..
+example: every one month payslips..? credit card by using schedluar we can do this..
+---------------------------------------------------------------------------------------------------
+//Azure devops:
+It's cloud platform where we can create a repos , create work items(user , stories , work tracking tool)..
+
+//JIRA:
+work tracking tool..
+--------------------------------------------------------------------------------------------------
+//snowflakes:
+userName: Alchemist17
+passworld: A9284799919@chim
+https://bzaxlzz-bj08531.snowflakecomputing.com/console/login
+-------------------------------------------------------------------------------------------------
+//Azure devops:
+project requirements documentation
+user story --> it's nothing but task/requirement
+requirements --> PO(product owner) --> BA (Business analyst)..
+
+//User story:
+1. As customer:
+I want to login to my account using card and PIN code..
+so , that i can perform the transactions..
+Acceptance criteria:
+- System must validate the card and pin code..
+- In case customer enters wrong pin code three times then the system locks the card..
+------------------------------------------------------------------------------------------------
+//Create environments in Anypoint platform:
+dev - 1st <-- Developers
+qa -  2nd (testers are going to test our application)..
+qa-1 -  (optional)..
+prod - 3rd production (live) customer/end users..
+
+//Which repository you used to store code..?
+--> Github , Azure repo , bitbucket
+
+----------------------------------------------------------------------------------------------------------
+//Create repo and clone the project:
+clone project-url -b branchName
+copy project code in repo-folder
+git status
+git add .
+git commit -m "intial commit"
+git push -u origin branchName
+---------------------------------------------------------------------------------------------------
+//How the team is going to interact in realtime..?
+--> 
+Slack 
+Skype
+Zoom
+----------------------------------------------------------------------------------------------------
+Create repository in ADO..
+Create sample project from anypoint studio
+Copy sample project code into ADO repo...
+Delete sample project from anypoint studio and import the project from ADO repo...
+
+Import the RAML from design centre RAML will be available in src/main/resource..
+------------------------------------------------------------------------------------------------
+📝 Backlog Grooming (1 week)
+• 	Definition: A session where the team reviews the product backlog to ensure items are well-defined, prioritized, and ready for upcoming sprints.
+• 	Purpose: Clarify requirements, estimate effort, and remove outdated or irrelevant items.
+• 	Frequency: Typically once a week.
+📅 Sprint Planning (2 weeks)
+• 	Definition: A meeting at the start of each sprint where the team decides what work will be delivered and how it will be achieved.
+• 	Purpose: Align on sprint goals, select backlog items, and break them into tasks.
+• 	Frequency: Every 2 weeks (at the beginning of the sprint).
+⏰ Daily Scrum (Every day, 15–30 minutes)
+- Definition: A short, daily stand-up meeting where team members share progress, plans, and blockers.
+- Purpose: Keep everyone aligned, identify impediments quickly, and adjust plans if needed.
+- Frequency: Every day, usually 15–30 minutes.
+🎤 Sprint Demo (2 weeks)
+- Definition: Also called the Sprint Review, this is a meeting at the end of the sprint where the team demonstrates completed work to stakeholders.
+- Purpose: Gather feedback, showcase progress, and ensure the product is evolving in the right direction.
+- Frequency: Every 2 weeks (end of sprint).
+🔄 Sprint Retrospective (2 weeks)
+- Definition: A meeting after the sprint demo where the team reflects on the sprint process.
+- Purpose: Discuss what went well, what didn’t, and identify improvements for the next sprint.
+- Frequency: Every 2 weeks (end of sprint, after the demo)..
+-------------------------------------------------------------------------------------------------------------

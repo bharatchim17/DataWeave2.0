@@ -1,0 +1,122 @@
+-------------------------------------------------------------------------------
+by 3 ways we can import raml in anypoint studio:
+1. import published api
+    - from exchange: before importing raml from exchange make sure that api assest has stable-state.
+    - from maven
+2. download raml from muleSoft VCS
+3. import raml from local file
+
+✅ Scafold flows from api-specification
+-----------------------------------------------------------------------
+3. import raml from local file:
+project name: uhub-sapi
+location: choose zip-file location
+
+base-path: /covid
+path: /v1/*   <---  /* is a wildcard path means match any path that comes after this point.
+
+
+src/main/resources
+    'global'.xml        <-- mule configuration file-name 
+    'global-error-handler'.xml 
+'implementations'       <-- folder-name
+    register-covid-case.xml 
+'subflows' 
+    uhub.xml 
+
+In beging of private-flow set variable: 'inpPayload' and 'correlationId'.
+Move api-kit-error-handler into global error handler and refer main-flow to 'global-error-handler'.
+------------------------------------------------------------------------
+//Set 'Set Transaction Id' component in-between listner and api-kit-router:
+A good practice in mule applications is to create the transactionId variable before the api-kit-router, 
+because this value is common for all services and should stay consistent across the entire request lifecycle. 
+since every request needs a unique transaction identifier, placing it before the router ensures that all 
+private flows inherit it automatically. However, the correlationId is typically derived from either the 
+incoming request headers or from specific fields in the payload. because this value may vary based on the 
+specific resource being invoked, it is recommended to set or map the correlationId inside the private flow. 
+this allows each implementation to extract or generate the appropriate correlation identifier based on its own 
+input structure..
+{
+Request lifecycle simply means the entire journey of a request from the moment it enters the mule application 
+until the final response is sent back.
+request lifecycle = the full flow of processing a request from start to finish.
+Service = an api endpoint or business functionality provided by the mule application.
+Inherit means to automatically receive something from a parent or previous level without needing to recreate it.
+Inherit = automatically receive something defined earlier.
+}
+------------------------------------------------------------------------------------
+In 'on-error-progagate' block of global-error-handler add 3 variable
+name: httpStatus , value: 400 
+name: errorMessage, value: #["Bad request"]
+name: errorDescription , value: #[error.description]
+Now ,  extract transform message to subflow , flow-name: 'set-global-response-sub-flow' , target mule 
+configuration: current 
+Transform message: 'Intial Variable' <-- as name  % dw 2.0 output application/json ---
+if(vars.errorDescription?) vars.errorDescription
+else error.exception.detailMessage
+Transform message: 'Error Response' <-- as name  % dw 2.0 output application/json encoding = "UTF-8" ,
+skipNullOn = "everywhere"  ---
+{
+"code": vars.httpStatus ,
+"message": if(vars.errorMessage != null) vars.errorMessage else (error.errorType.identifier)   ,
+"description": if(vars.errorDescription != null) vars.errorDescription else error.description ,
+"dateTime": now() as String {format: "yyyy-MM-dd'T'HH:mm:ss'Z'"} ,
+"transactionId": vars.transactionId
+}
+logger message: ----- #['\n'] Transaction #[vars.transactionId] , Error code  #[vars.httpStatus],
+Error Message #[error.errorType.identifier default ""]  #['\n'] -----
+Level: Error
+
+Create oracle account on cloud-cluster platform and link it with local-db:
+new database connection
+name: uhub-cloud-dev
+username: 
+password:
+hostname: oracle-784484-0cloudcluster.net
+port: 18026
+SID: xe
+Now , go to 'global'.xml tab add above config and test connection.
+--------------------------------------------------------------------------------------------------
+{
+In mule, various types of errors can occur across different components and most of them can be handled through 
+the platform's error-handling framework. for example, when we use a Transform Message component, it may 
+generate transformation errors if the data mapping or structure is incorrect. Similarly, when working with a 
+Router, we may encounter routing-related errors based on conditions or routing logic. When connecting to 
+external systems such as databases, HTTP services, or any backend system, connectivity errors may occur if the 
+system is unreachable. Connectors also allow us to configure retries, and if the connection still fails after 
+the configured retry attempts, MuleSoft throws a retry-exhausted error. We may also face expression errors when 
+DataWeave or MEL expressions fail at runtime. In the case of consuming secured services—whether HTTP or SOAP
+there is a possibility of encountering client-side or server-side security errors. Additionally, there are 
+scenarios where MuleSoft cannot determine the exact cause of the issue; in such cases, it throws an unknown 
+error. All these categories of errors can be handled using MuleSoft's error-handling strategies such as 
+on-error-continue, on-error-propagate, or custom error handlers. However, certain critical errors, such as 
+fatal errors or overload errors, cannot be managed through MuleSoft's error-handling framework. These typically 
+involve underlying system-level issues—such as running out of memory—which require manual intervention and 
+cannot be resolved programmatically within the application.
+
+muleSoft projects, each customer typically has their own database environment, and the DBA
+(database-administrators) are responsible for providing the necessary details to connect mule applications to 
+that database. this usually includes the database host, port, username, password and sometimes additional 
+parameters like SSL certificates. since mule applications running on cloudHub are hosted in the cloud, they 
+cannot directly access an on-premise customer database for security reasons. To enable secure communication, 
+the customer's network team sets up a VPN or VPC-to-VPN tunnel that connects cloudHub to their on-premise data 
+center. This VPN setup ensures that data travels through a private and encrypted channel rather than the open 
+internet. 
+An on-premise database is a database that is installed, managed, and hosted inside the customer's own physical 
+infrastructure, such as their data center or office servers. it is not stored on the cloud.
+On-premise database = a database running on the customer's own servers, inside their company network.
+So when muleSoft (running on cloudHub) needs to access an on-prem database, a secure connection like VPN or 
+direct connect is required to reach the customer's internal network safely.
+
+//Good-practice: database configurations such as usernames, passwords, and connection URLs often change 
+especially during routine maintenance when customers update their database passwords every quarter. It is 
+considered bad practice to modify and redeploy the mule application every time these credentials change. 
+similarly, each environment Dev, Test, UAT, prod typically has its own database configuration. manually updating 
+the code for each environment before deployment is inefficient, error-prone and violates deployment best 
+practices. To avoid touching the code repeatedly for environment-specific or frequently changing values, 
+muleSoft provides a properties management mechanism using external property files. These files allow the 
+application to read configuration values dynamically at runtime, so the same codebase can be deployed across 
+environments without modification. Each environment simply supplies its own property file, ensuring consistent, 
+secure and maintainable configuration management—just like in other modern technologies.
+}
+---------------------------------------------------------------------------------------------------------

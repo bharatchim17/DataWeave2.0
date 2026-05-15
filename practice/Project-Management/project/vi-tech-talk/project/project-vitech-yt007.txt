@@ -1,0 +1,61 @@
+------------------------------------------------------------------------------------------------
+//Munit: 
+is mule application testing framework it allows to easily build automated tests for our integrations and APIs..
+Implementation of Munit:
+1. We need to create empty test case..
+2. We need to click on the flow and perform auto record option..
+3. We can gotp postman/thunder client to record test cases..
+
+Test cases:
+1. Account not exist in database..
+2. Account exist in database with Active status wrong pin first attempt.
+3. Account exist in database with Active status wrong-pin-2nd-attempt
+4. Account exist in database with Active status wrong-pin-3rd-attempt (Locked)
+5. Account exist in database with Deactive status user are trying to fetch account balance..
+6. Account exists with Active status wrong pin first-2-attempt-and-3rd-attempt-successful
+7. Account exist in database with active-status-correct-pin
+
+//Qestions:
+1. What is Munit and importance..
+2. How to create Munit Test cases..
+3. What is code coverage..
+4. How to generate code coverage report..
+5. How to mock data..
+
+//By using target value and target variable payload not get change in entire flow..
+
+
+Authentification: Verifying the identity of users or systems attempting to access the resources or services.
+Authentification: Granting permissions and rights to authenticated users or system based on their roles..
+
+//How to apply security for APIs..?
+-->
+Anypoint platform --> Anypoint manager --> Create API: copy api instanceId: 1254858 --> 
+goto project Global config --> Select auto discovery --> add api-id and select main flow..
+Copy clientId and secret from access manager..
+goto project --> need to add below values in configuration section:
+<anypoint.platform.client_id>54544</anypoint.platform.client_id>
+<anypoint.platform.client_secret>51854</anypoint.platform.client_secret>
+push code into ADO repo/gitHub/bitbucket
+Deploy code  in cloudhub and verify status once , it's Active we can apply security policies..
+
+//What is the difference between proxy api and without proxy..?
+
+//How to encrypt and decrypt userName/password..?
+-->
+https://secure-properties-api.us-e1.cloudhub.io/
+
+Exchange find: secure properties and add it in Global element
+$(secure::snow.port) <---> port: "![8081]"
+
+//Error Handling:
+Handling errors are much important when dealing with APIs..
+Compile time: Handle by using Anypoint Studio..
+Run Time: We need to handle using error handling connector in Mulesoft..
+
+Connectors:
+- On error continue: It will not intrupt the entire flow and it will continue with error..
+- On error propagate: It will intrupt the flow and throw an error message to use..
+- Raise error: If user want to throw custom errors..
+- Error handler
+-----------------------------------------------------------------------------------------------

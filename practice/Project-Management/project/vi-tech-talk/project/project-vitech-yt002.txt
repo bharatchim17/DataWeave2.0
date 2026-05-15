@@ -1,0 +1,27 @@
+------------------------------------------------------------------------
+//As developer i want to design RAML by using the below requirements:
+/deposit:
+Method: PUT
+Body: json
+accountNum: required should be string and min max length is 10
+bank: required should be enum values ICICI , AXIS , HDFC , SBI 
+depositAmount: not mandatory , if sent it should be Number..
+sample response: 200 
+[status: "Amount deposit successfully done for the Account Number xxxxxx"]
+Note: Implment basic security for the API..
+
+As developer i want to develop API based on RAML and based on below requirements:
+/deposit:
+deposit resource is used to deposit the balance of valid account..
+Before deposit fetching total balance , we have to check whether there is any account existing with accountNum 
+and bankName..
+If no , return the response saying "Account 11854488 does not exist..
+Enter valid details..
+If yes deposit the amount , fetch previous balance and add the current deposit amount..
+Note:
+upon successful deposit amount , send mail using Gmail..
+Subject: Amount deposit done for SBI is done today..!
+To: The email-id sent in body..
+From: our gmail-id
+Body: This is to inform us that our account has been credited 5550 today and total balance is 65484..
+-----------------------------------------------------------------------------------------------------

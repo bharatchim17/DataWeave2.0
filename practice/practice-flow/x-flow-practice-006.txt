@@ -1,0 +1,1 @@
+amezonS3 by chinna-reddy use-case: receive the document and upload it to the amazon S3.
